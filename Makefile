@@ -1,5 +1,5 @@
 # Nom du projet
-NAME = googoo.exe
+NAME = gougou.exe
 
 # Drapeaux de compilation
 CFLAGS = -Wdeprecated-declarations
