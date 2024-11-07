@@ -39,7 +39,10 @@ Intitulé : C programming
 > - 50% Lancement et présentation du programme, parcours des fonctionnalités
 > - 50% Présentation du code, de l’organisation de travail, questions techniques
 
-![image trop cool](https://ibb.co/TPp567R)
+
+| <img src="https://i.ibb.co/RQZWfsP/die-wand.jpg" alt="image trop cool" width="400"> |
+| :-: |
+
 
 # Gougou - Projet
 
