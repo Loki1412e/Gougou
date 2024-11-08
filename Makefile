@@ -15,11 +15,15 @@ LIB_DIR = ./lib/CSFML_2.6.1/lib/gcc
 CSFML = -lcsfml-graphics -lcsfml-system -lcsfml-audio -lcsfml-window
 
 # Permet à GCC de compiler ton programme en une application graphique, sans associer un terminal à l'exécutable.
-NO_TERMINAL = -mwindows
+NO_TERMINAL = 
 
 # Compilation et Liaison du projet
 all:
 	gcc $(SRC) -o $(NAME) -I$(INCLUDE_DIR) -L$(LIB_DIR) $(CFLAGS) $(CSFML) $(NO_TERMINAL)
+
+#Version sans terminale (pas de debug oof)
+noterm: NO_TERMINAL += -mwindows
+noterm: all
 
 # Débogage : ajout de l'option -g pour inclure les symboles de débogage
 debug: CFLAGS += -g3 -W -Wall -Wextra
