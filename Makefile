@@ -1,6 +1,14 @@
 # Nom du projet
 NAME = gougou.exe
 
+# Chemins vers icon
+ICON_O = rc\icon.o
+
+# Chemins vers setup
+SETUP_WIN = setup\mysetup_win.exe
+ISCC = setup\windows\Inno_Setup_6\ISCC.exe
+SETUP_ISS = setup\windows\set_setup.iss
+
 # Drapeaux de compilation
 CFLAGS = -Wdeprecated-declarations
 
@@ -41,9 +49,9 @@ clean:
 
 # Suppression de l'exécutable et autres fichiers temporaires
 fclean:
-	rm .\$(NAME)
-	rm .\rc\icon.o
-	rm .\setup\mysetup_win.exe
+	-rm .\$(NAME)
+	-rm .\$(ICON_O)
+	-rm .\$(SETUP_WIN)
 
 # Recompilation complète (nettoie et reconstruit)
 re: fclean all
@@ -54,7 +62,7 @@ gdb: debug
 
 # Compilation de l'installeur sous windows (avec inno setup 6)
 win_setup:
-	.\setup\windows\Inno_Setup_6\ISCC.exe .\setup\windows\set_setup.iss
+	.\$(ISCC) .\$(SETUP_ISS)
 
 # Make all project
 gougou: noterm
