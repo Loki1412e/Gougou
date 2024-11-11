@@ -19,7 +19,8 @@ NO_TERMINAL =
 
 # Compilation et Liaison du projet
 all:
-	gcc $(SRC) -o $(NAME) -I$(INCLUDE_DIR) -L$(LIB_DIR) $(CFLAGS) $(CSFML) $(NO_TERMINAL)
+	windres rc/icon.rc -o rc/icon.o
+	gcc $(SRC) rc/icon.o -o $(NAME) -I$(INCLUDE_DIR) -L$(LIB_DIR) $(CFLAGS) $(CSFML) $(NO_TERMINAL)
 
 #Version sans terminale (pas de debug oof)
 noterm: NO_TERMINAL += -mwindows
@@ -36,10 +37,13 @@ perf: all
 
 # Nettoyage de l'exécutable
 clean:
-	rm ./$(NAME)
+	rm .\$(NAME)
 
 # Suppression de l'exécutable et autres fichiers temporaires
-fclean: clean
+fclean:
+	rm .\$(NAME)
+	rm .\rc\icon.o
+	rm .\setup\mysetup_win.exe
 
 # Recompilation complète (nettoie et reconstruit)
 re: fclean all
@@ -47,6 +51,15 @@ re: fclean all
 # Lancement du débogage avec GDB
 gdb: debug
 	"$(shell where gdb)" ./$(NAME)
+
+# Compilation de l'installeur sous windows (avec inno setup 6)
+win_setup:
+	.\setup\windows\Inno_Setup_6\ISCC.exe .\setup\windows\set_setup.iss
+
+# Make all project
+gougou: noterm
+gougou: all
+gougou:	win_setup
 
 # Cibles génériques
 .PHONY: all clean fclean debug perf re gdb
