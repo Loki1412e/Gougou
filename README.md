@@ -46,17 +46,46 @@ Intitulé : C programming
 
 # Gougou - Projet
 
-Projet en C sous windows utilisant la librairie `CSFML` version `2.6.1`, `gcc` ainsi que `make`.
+Projet en C sous windows utilisant : 
+- la librairie `CSFML` v`2.6.1`, `gcc`, `make`
+- `python`, `gdown`
 
-## Setup et Utilisation :
+## Setup le projet :
 
+### Rejoindre le projet git
 ```bash
 git clone git@github.com:Loki1412e/Gougou.git
 ```
 
+### Installer les assets via vscode
+> Lien Google Drive : [Gougou/assets](https://drive.google.com/drive/folders/15sd0438qO_FXb29Fui7wP_V4YEVF39cv?usp=sharing)
+
+Il faut entrer les commandes dans la racine du projet.
+
+Prérequis :
+- python
+
 ```bash
-C:/path/Gougou> make
-C:/path/Gougou> .\gougou.exe
+pip install gdown
+```
+
+> les fichiers deja existant en local ne seront PAS remplacés
+> donc si besoin, supprimer le contenu du dossier ./assets puis entrer les commandes qui suivent
+
+```bash
+python -m gdown --folder https://drive.google.com/drive/folders/15sd0438qO_FXb29Fui7wP_V4YEVF39cv?usp=sharing
+```
+
+## Utilisation
+
+> Compile uniquement .\gougou.exe (en mode terminal)
+```bash
+make
+```
+
+> Compile tout le projet (en mode sans terminal)
+```bash
+make gougou
 ```
 
 ## Aide CSFML :
