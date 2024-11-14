@@ -39,9 +39,9 @@ int main() {
 
 
     /* Create the main window */
-    window = sfRenderWindow_create((sfVideoMode) {window_info.size.x, window_info.size.y, 32}, "Googoo Gagaga", !sfResize | sfClose, NULL);
+    window = sfRenderWindow_create((sfVideoMode) {window_info.size.x, window_info.size.y, 32}, "Googoo Gagaga", sfResize | sfClose, NULL);
     if (!window) { EXIT_DEBUG_WINDOW; }
-    
+
 
     /* Start the game loop */
     while (sfRenderWindow_isOpen(window)) {
@@ -73,10 +73,10 @@ int main() {
                     break;
                 }
                 
-                // NUMP PAD -> voir config_screen.c
+                // NUMP PAD -> voir screen.c
                 if (resize_screen(event.key.code, &window_info)) {
                     sfRenderWindow_destroy(window);
-                    window = sfRenderWindow_create((sfVideoMode) {window_info.size.x, window_info.size.y, 32}, "Googoo Gagaga", sfClose | !sfResize, NULL);
+                    window = sfRenderWindow_create((sfVideoMode) {window_info.size.x, window_info.size.y, 32}, "Googoo Gagaga", sfClose | sfResize, NULL);
                     if (!window) { EXIT_DEBUG_WINDOW; }
                 }
             }

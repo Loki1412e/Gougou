@@ -3,3 +3,4 @@ test/
 setup/
 *.o
 *.exe
+.vscode/

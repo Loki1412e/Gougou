@@ -6,7 +6,6 @@ void set_bg(sfRenderWindow* window, sfTexture *tex_bg, sfSprite *sp_bg, myWindow
 void set_start_btn(sfRenderWindow* window, sfTexture *tex_start_btn, sfSprite *sp_start_btn, myWindowInfo window_info);
 void click_on_btn_start(sfRenderWindow* window, sfEvent *event, sfTexture *tex_start_btn, sfSprite *sp_start_btn, unsigned *program_step);
 
-
 // Calcul pour centrer le bg (./src/menu.c)
 void set_bg(sfRenderWindow* window, sfTexture *tex_bg, sfSprite *sp_bg, myWindowInfo window_info) {
 
@@ -38,7 +37,6 @@ void set_start_btn(sfRenderWindow* window, sfTexture *tex_start_btn, sfSprite *s
         // window_info.size.x / 2. - size.x * scale.x / 2.,
         // window_info.size.y / 2. - size.y * scale.y / 2.
     };
-    
     
     sfSprite_setPosition(sp_start_btn, position);
 }

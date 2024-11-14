@@ -2,7 +2,7 @@
     #define MENU_H_
 
     #include "../include/my.h"
-    #include "../include/config_screen.h"
+    #include "../include/screen.h"
 
     // Gerer le resize
     void set_bg(sfRenderWindow* window, sfTexture *tex_bg, sfSprite *sp_bg, myWindowInfo window_info);

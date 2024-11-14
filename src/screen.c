@@ -1,5 +1,5 @@
 
-#include "../include/config_screen.h"
+#include "../include/screen.h"
 
 
 int resize_screen(sfKeyCode code, myWindowInfo *window_info);
