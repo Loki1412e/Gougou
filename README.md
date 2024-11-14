@@ -70,10 +70,11 @@ pip install gdown
 ```
 
 > les fichiers deja existant en local ne seront PAS remplacés
-> donc si besoin, supprimer le contenu du dossier ./assets puis entrer les commandes qui suivent
+> donc si besoin : supprime le dossier ./assets puis entre la commande pour recharger les assets
 
+>
 ```bash
-python -m gdown --folder https://drive.google.com/drive/folders/15sd0438qO_FXb29Fui7wP_V4YEVF39cv?usp=sharing
+python -m gdown --folder https://drive.google.com/drive/folders/1eYqVpx6OT2iBl6RiNMA0K5kwdwIUOAKj?usp=sharing
 ```
 
 ## Utilisation
