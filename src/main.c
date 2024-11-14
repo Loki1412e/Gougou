@@ -10,7 +10,7 @@
 
 int main() {
 
-    sfVector2u window_size = _1920x1200;
+    myWindowInfo window_info = _1920x1200;
     sfRenderWindow* window;
     sfEvent event;
 
@@ -22,7 +22,7 @@ int main() {
     sfTexture* tex_start_btn;
     sfSprite* sp_start_btn;
 
-    unsigned program_setp = MENU_step;
+    unsigned program_step = MENU_step;
 
     // Background
     tex_bg = sfTexture_createFromFile("./assets/menu/background.png", NULL);
@@ -39,13 +39,13 @@ int main() {
 
 
     /* Create the main window */
-    window = sfRenderWindow_create((sfVideoMode) {window_size.x, window_size.y, 32}, "Googoo Gagaga", sfResize | sfClose, NULL);
+    window = sfRenderWindow_create((sfVideoMode) {window_info.size.x, window_info.size.y, 32}, "Googoo Gagaga", !sfResize | sfClose, NULL);
     if (!window) { EXIT_DEBUG_WINDOW; }
-
+    
 
     /* Start the game loop */
     while (sfRenderWindow_isOpen(window)) {
-        
+
         /* Process events */
         while (sfRenderWindow_pollEvent(window, &event)) {
 
@@ -57,52 +57,47 @@ int main() {
                 sfRenderWindow_close(window);
             
             if (event.type == sfEvtKeyPressed) {
-                
+
                 switch (event.key.code)
                 {
                 case sfKeyNum1:
-                    program_setp = MENU_step;
+                    program_step = MENU_step;
                     break;
                 
                 case sfKeyNum2:
-                    program_setp = TEMP_step;
+                    program_step = TEMP_step;
                     break;
                 
                 case sfKeyEnter:
-                    program_setp = TEMP_step;
+                    program_step = TEMP_step;
                     break;
-
-                case sfKeyNumpad1:
-                    sfRenderWindow_setSize(window, _1920x1200);
-                    window_size = sfRenderWindow_getSize(window);
-                    break;
+                }
                 
-                case sfKeyNumpad2:
-                    sfRenderWindow_setSize(window, _1680x1050);
-                    window_size = sfRenderWindow_getSize(window);
-                    break;
+                // NUMP PAD -> voir config_screen.c
+                if (resize_screen(event.key.code, &window_info)) {
+                    sfRenderWindow_destroy(window);
+                    window = sfRenderWindow_create((sfVideoMode) {window_info.size.x, window_info.size.y, 32}, "Googoo Gagaga", sfClose | !sfResize, NULL);
+                    if (!window) { EXIT_DEBUG_WINDOW; }
                 }
             }
         }
 
-
         /* PROGRAM STEPS */
-        switch (program_setp) {
+        switch (program_step) {
 
             case MENU_step:
 
                 // Clear window
                 sfRenderWindow_clear(window, sfColor_fromRGB(0, 0, 0));
-                // Mise en place du background
-                set_bg(window, tex_bg, sp_bg, &window_size);
-                sfRenderWindow_drawSprite(window, sp_bg, NULL);
                 
-                // onclick btn_start
-                click_on_btn_start(window, &event, tex_start_btn, sp_start_btn, &program_setp);
+                // Mise en place du background
+                setup_sprite(window, tex_bg, sp_bg, window_info);
                 
                 // Mise en place du btn_start
-                set_start_btn(window, tex_start_btn, sp_start_btn, &window_size);
-                sfRenderWindow_drawSprite(window, sp_start_btn, NULL);
+                setup_sprite(window, tex_start_btn, sp_start_btn, window_info);
+                
+                // onclick btn_start
+                click_on_btn_start(window, &event, tex_start_btn, sp_start_btn, &program_step);
                 
                 break;
             
@@ -113,17 +108,15 @@ int main() {
                 sfRenderWindow_clear(window, sfColor_fromRGB(48, 12, 1));
                 
                 // Mise en place du background
-                set_bg(window, tex_bg, sp_bg, &window_size);
-                sfRenderWindow_drawSprite(window, sp_bg, NULL);
-
+                setup_sprite(window, tex_bg, sp_bg, window_info);
+                
                 break;
         }
-
 
         /* Update the window */
         sfRenderWindow_display(window);
     }
-    
+
 
     /* Cleanup resources */
     CLEANUP_RESOURCES_
