@@ -58,7 +58,7 @@ git clone git@github.com:Loki1412e/Gougou.git
 ```
 
 ### Installer les assets via vscode
-> Lien Google Drive : [Gougou/assets](https://drive.google.com/drive/folders/15sd0438qO_FXb29Fui7wP_V4YEVF39cv?usp=sharing)
+> Lien Google Drive : [Gougou/assets](https://drive.google.com/drive/folders/1eYqVpx6OT2iBl6RiNMA0K5kwdwIUOAKj?usp=sharing)
 
 Il faut entrer les commandes dans la racine du projet.
 
