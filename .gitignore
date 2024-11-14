@@ -1,6 +1,6 @@
 assets/
 test/
-setup/
+# setup/
 *.o
 *.exe
 .vscode/
