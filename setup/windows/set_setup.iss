@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "Gougou Gaga"
-#define MyAppVersion "0.1"
+#define MyAppVersion "0.0000001"
 #define MyAppPublisher "Loki1412e"
 ; #define MyAppURL "https://github.com/Loki1412e/Gougou"
 #define MyAppExeName "gougou.exe"

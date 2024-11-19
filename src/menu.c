@@ -42,7 +42,7 @@ void set_start_btn(sfRenderWindow* window, sfTexture *tex_start_btn, sfSprite *s
 }
 
 
-void click_on_btn_start(sfRenderWindow* window, sfEvent *event, sfTexture *tex_start_btn, sfSprite *sp_start_btn, unsigned *program_setp) {
+void click_on_btn_start(sfRenderWindow* window, sfEvent *event, sfTexture *tex_start_btn, sfSprite *sp_start_btn, unsigned *program_step) {
     
     // Coordonnée de la souris
     sfVector2i mouse_position = sfMouse_getPositionRenderWindow(window);
@@ -64,7 +64,7 @@ void click_on_btn_start(sfRenderWindow* window, sfEvent *event, sfTexture *tex_s
         || (event->type == sfEvtKeyPressed && event->key.code == sfKeyEnter)
         ) {
 
-        /* Change the program_setp */
-        *program_setp = TEMP_step;
+        /* Change the program_step */
+        *program_step = TEMP_step;
     }
 }
