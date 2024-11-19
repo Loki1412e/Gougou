@@ -24,7 +24,8 @@ int main() {
 
     int program_step = MENU_step;
 
-    
+    sfVector2u size;
+    sfVector2f scale;
     sfVector2f position;
     unsigned SPEED;
 
@@ -122,16 +123,19 @@ int main() {
 ///////////////////////////////////////////////////////////////////////////////
 
 /*
-                Les coordonnées (1920, 1200) sont en dehors de la fenetre ????
+                > (window_info.size.x - size.x * scale.x)
+                
+                - Correspond à la taille de l'écran en x moins la taille du btn en x (size * scale pour avoir la taille du sprite)
+                - Ainsi on empeche le sprite de sortir de la fenetre HEHEHEHE
 
-                > window_info.size.x = 1920
-                > window_info.size.y = 1200
 */
 
+                size = sfTexture_getSize(tex_start_btn);
+                scale = sfSprite_getScale(sp_start_btn);
                 position = sfSprite_getPosition(sp_start_btn);
                 SPEED = 1; // position est unsigned donc speed aussi :/
 
-                if (sfKeyboard_isKeyPressed(sfKeyRight) && position.x <= window_info.size.x)
+                if (sfKeyboard_isKeyPressed(sfKeyRight) && position.x <= (window_info.size.x - size.x * scale.x) - 100)
                     position.x += SPEED;
 
                 if (sfKeyboard_isKeyPressed(sfKeyLeft) && position.x >= 100)
@@ -140,7 +144,7 @@ int main() {
                 if (sfKeyboard_isKeyPressed(sfKeyUp) && position.y >= 100)
                     position.y -= SPEED;
 
-                if (sfKeyboard_isKeyPressed(sfKeyDown) && position.y <= window_info.size.x)
+                if (sfKeyboard_isKeyPressed(sfKeyDown) && position.y <= (window_info.size.y - size.y * scale.y) - 100)
                     position.y += SPEED;
 
                 if (sfKeyboard_isKeyPressed(sfKeyI))
@@ -151,7 +155,7 @@ int main() {
 
 ///////////////////////////////////////////////////////////////////////////////
 
-                
+
                 break;
         }
 
