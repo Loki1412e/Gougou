@@ -83,6 +83,7 @@ Faut juste pas oublié d'ajouter le chemin dans les variables d'environement (po
 
 > Sur MSYS2
 ```bash
+pacman -S mingw-w64-x86_64-gcc
 pacman -S make
 ```
 
