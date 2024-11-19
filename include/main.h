@@ -5,5 +5,6 @@
     #include "../include/screen.h"
     #include "../include/menu.h"
     #include "../include/sprites.h"
+    #include "../include/game_view.h"
 
 #endif

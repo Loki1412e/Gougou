@@ -52,7 +52,6 @@ void click_on_btn_start(sfRenderWindow* window, sfEvent *event, sfTexture *tex_s
     sfVector2f scale = sfSprite_getScale(sp_start_btn);
     sfVector2f position = sfSprite_getPosition(sp_start_btn);
 
-
     // si la souris est dans cette zone (qui correspond au btn start)
     // et que mouse est onclick
     if ((  (float) mouse_position.x >= position.x \
@@ -60,7 +59,7 @@ void click_on_btn_start(sfRenderWindow* window, sfEvent *event, sfTexture *tex_s
         && (float) mouse_position.y >= position.y \
         && (float) mouse_position.y <= position.y + (float) size.y * scale.y
         && event->type == sfEvtMouseButtonPressed )
-        // ou si la touche enter est entrée
+        // ou si la touche ENTER est press
         || (event->type == sfEvtKeyPressed && event->key.code == sfKeyEnter)
         ) {
 

@@ -24,6 +24,8 @@ int main() {
 
     unsigned program_step = MENU_step;
 
+    sfVector2f position;
+
     // Background
     tex_bg = sfTexture_createFromFile("./assets/menu/background.png", NULL);
     if (!tex_bg) { EXIT_DEBUG_TEXTURE; }
@@ -39,7 +41,7 @@ int main() {
 
 
     /* Create the main window */
-    window = sfRenderWindow_create((sfVideoMode) {window_info.size.x, window_info.size.y, 32}, "Googoo Gagaga", sfResize | sfClose, NULL);
+    window = sfRenderWindow_create((sfVideoMode) {window_info.size.x, window_info.size.y, 32}, "Googoo Gagaga", sfClose, NULL);
     if (!window) { EXIT_DEBUG_WINDOW; }
 
 
@@ -60,6 +62,12 @@ int main() {
 
                 switch (event.key.code)
                 {
+
+                // case sfKeyRight:
+                //     position = sfSprite_getPosition(sp_start_btn)
+                //     sfSprite_setPosition(sp_start_btn, position.x + 10)
+                //     break;
+
                 case sfKeyNum1:
                     program_step = MENU_step;
                     break;
@@ -76,7 +84,7 @@ int main() {
                 // NUMP PAD -> voir screen.c
                 if (resize_screen(event.key.code, &window_info)) {
                     sfRenderWindow_destroy(window);
-                    window = sfRenderWindow_create((sfVideoMode) {window_info.size.x, window_info.size.y, 32}, "Googoo Gagaga", sfClose | sfResize, NULL);
+                    window = sfRenderWindow_create((sfVideoMode) {window_info.size.x, window_info.size.y, 32}, "Googoo Gagaga", sfClose, NULL);
                     if (!window) { EXIT_DEBUG_WINDOW; }
                 }
             }
