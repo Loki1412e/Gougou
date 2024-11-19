@@ -64,6 +64,7 @@ Il faut entrer les commandes dans la racine du projet.
 
 Prérequis :
 - python
+- la lib gdown
 
 ```bash
 pip install gdown
