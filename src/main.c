@@ -27,7 +27,7 @@ int main() {
     sfVector2u size;
     sfVector2f scale;
     sfVector2f position;
-    unsigned SPEED;
+    float SPEED;
 
 
     // Background
@@ -84,6 +84,8 @@ int main() {
                     sfRenderWindow_destroy(window);
                     window = sfRenderWindow_create((sfVideoMode) {window_info.size.x, window_info.size.y, 32}, "Googoo Gagaga", sfClose, NULL);
                     if (!window) { EXIT_DEBUG_WINDOW; }
+                    set_position_center(window, tex_bg, sp_bg, window_info);
+                    set_position_center(window, tex_start_btn, sp_start_btn, window_info);
                 }
             }
         }
@@ -133,7 +135,7 @@ int main() {
                 size = sfTexture_getSize(tex_start_btn);
                 scale = sfSprite_getScale(sp_start_btn);
                 position = sfSprite_getPosition(sp_start_btn);
-                SPEED = 1; // position est unsigned donc speed aussi :/
+                SPEED = 0.6; // position est unsigned donc speed sera traité comme tel :/
 
                 if (sfKeyboard_isKeyPressed(sfKeyRight) && position.x <= (window_info.size.x - size.x * scale.x) - 100)
                     position.x += SPEED;
@@ -146,9 +148,6 @@ int main() {
 
                 if (sfKeyboard_isKeyPressed(sfKeyDown) && position.y <= (window_info.size.y - size.y * scale.y) - 100)
                     position.y += SPEED;
-
-                if (sfKeyboard_isKeyPressed(sfKeyI))
-                    printf("\nwindow_info (%u, %u) (%.2f, %.2f)", window_info.size.x, window_info.size.y, window_info.scale.x, window_info.scale.y);
                 
                 sfSprite_setPosition(sp_start_btn, position);
                 setup_sprite(window, tex_start_btn, sp_start_btn, window_info);
