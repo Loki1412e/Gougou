@@ -1,7 +1,7 @@
 #ifndef MY_H_
     #define MY_H_
 
-    /* Basics */
+    /* Basics  */
     #include <stdio.h>
     #include <stdlib.h>
     #include <math.h>
