@@ -22,9 +22,12 @@ int main() {
     sfTexture* tex_start_btn;
     sfSprite* sp_start_btn;
 
-    unsigned program_step = MENU_step;
+    int program_step = MENU_step;
 
+    
     sfVector2f position;
+    unsigned SPEED;
+
 
     // Background
     tex_bg = sfTexture_createFromFile("./assets/menu/background.png", NULL);
@@ -62,12 +65,6 @@ int main() {
 
                 switch (event.key.code)
                 {
-
-                // case sfKeyRight:
-                //     position = sfSprite_getPosition(sp_start_btn)
-                //     sfSprite_setPosition(sp_start_btn, position.x + 10)
-                //     break;
-
                 case sfKeyNum1:
                     program_step = MENU_step;
                     break;
@@ -99,9 +96,11 @@ int main() {
                 sfRenderWindow_clear(window, sfColor_fromRGB(0, 0, 0));
                 
                 // Mise en place du background
+                set_position_center(window, tex_bg, sp_bg, window_info);
                 setup_sprite(window, tex_bg, sp_bg, window_info);
                 
                 // Mise en place du btn_start
+                set_position_center(window, tex_start_btn, sp_start_btn, window_info);
                 setup_sprite(window, tex_start_btn, sp_start_btn, window_info);
                 
                 // onclick btn_start
@@ -116,7 +115,42 @@ int main() {
                 sfRenderWindow_clear(window, sfColor_fromRGB(48, 12, 1));
                 
                 // Mise en place du background
+                set_position_center(window, tex_bg, sp_bg, window_info);
                 setup_sprite(window, tex_bg, sp_bg, window_info);
+
+
+///////////////////////////////////////////////////////////////////////////////
+
+/*
+                Les coordonnées (1920, 1200) sont en dehors de la fenetre ????
+
+                > window_info.size.x = 1920
+                > window_info.size.y = 1200
+*/
+
+                position = sfSprite_getPosition(sp_start_btn);
+                SPEED = 1; // position est unsigned donc speed aussi :/
+
+                if (sfKeyboard_isKeyPressed(sfKeyRight) && position.x <= window_info.size.x)
+                    position.x += SPEED;
+
+                if (sfKeyboard_isKeyPressed(sfKeyLeft) && position.x >= 100)
+                    position.x -= SPEED;
+
+                if (sfKeyboard_isKeyPressed(sfKeyUp) && position.y >= 100)
+                    position.y -= SPEED;
+
+                if (sfKeyboard_isKeyPressed(sfKeyDown) && position.y <= window_info.size.x)
+                    position.y += SPEED;
+
+                if (sfKeyboard_isKeyPressed(sfKeyI))
+                    printf("\nwindow_info (%u, %u) (%.2f, %.2f)", window_info.size.x, window_info.size.y, window_info.scale.x, window_info.scale.y);
+                
+                sfSprite_setPosition(sp_start_btn, position);
+                setup_sprite(window, tex_start_btn, sp_start_btn, window_info);
+
+///////////////////////////////////////////////////////////////////////////////
+
                 
                 break;
         }

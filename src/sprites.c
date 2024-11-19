@@ -2,15 +2,35 @@
 #include "../include/sprites.h"
 
 
+void set_position_center(sfRenderWindow* window, sfTexture *texture, sfSprite *sprite, myWindowInfo window_info);
 void setup_sprite(sfRenderWindow* window, sfTexture* texture, sfSprite* sprite, myWindowInfo window_info);
 
 
+// Calcul pour centrer le bg et le btn start (./src/menu.c)
+void set_position_center(sfRenderWindow* window, sfTexture *texture, sfSprite *sprite, myWindowInfo window_info) {
+
+    sfSprite_setTexture(sprite, texture, sfTrue);
+
+    sfVector2u size = sfTexture_getSize(texture); // on recup la taille avec la texture
+    sfVector2f scale = sfSprite_getScale(sprite); // on recup son scale (son echelle)
+
+    sfVector2f position = {
+        window_info.size.x / 2. - size.x * (scale.x * window_info.scale.x) / 2.,
+        window_info.size.y / 2. - size.y * (scale.y * window_info.scale.y) / 2.
+        // window_info.size.x / 2. - size.x * (scale.x) / 2.,
+        // window_info.size.y / 2. - size.y * scale.y / 2.
+    };
+
+    sfSprite_setPosition(sprite, position);
+}
+
+
 // Mise en place d'un sprite
+// on doit appeler le set avant -> ex: set_bg(window, texture, sprite, window_info);
 void setup_sprite(sfRenderWindow* window, sfTexture* texture, sfSprite* sprite, myWindowInfo window_info) {
 
     sfVector2f scale;
 
-    set_bg(window, texture, sprite, window_info);
     scale = sfSprite_getScale(sprite);
 
     // on applique la mise a l'echelle de la taille de la fenetre
