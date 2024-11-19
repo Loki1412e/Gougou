@@ -72,10 +72,14 @@ pip install gdown
 > les fichiers deja existant en local ne seront PAS remplacés
 > donc si besoin : supprime le dossier ./assets puis entre la commande pour recharger les assets
 
->
 ```bash
 python -m gdown --folder https://drive.google.com/drive/folders/1eYqVpx6OT2iBl6RiNMA0K5kwdwIUOAKj?usp=sharing
 ```
+
+## ALORS ptit pbl
+
+J'ai été raciste pcque j'utilise `make` sous windows mdr, donc soit faut installer msys2 comme moi, soit un autre truc raciste.
+Faut juste pas oublié d'ajouter le chemin dans les variables d'environement (pour moi : `C:\msys64\usr\bin\`).
 
 ## Utilisation
 
