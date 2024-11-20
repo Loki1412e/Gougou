@@ -2,12 +2,22 @@
 #include "../include/sprites.h"
 
 
-void set_position_center(sfRenderWindow* window, sfTexture *texture, sfSprite *sprite, myWindowInfo window_info);
+int create_sprite(myObject *object, char *string);
+void set_position_center(sfRenderWindow* window, sfTexture* texture, sfSprite* sprite, myWindowInfo window_info);
 void setup_sprite(sfRenderWindow* window, sfTexture* texture, sfSprite* sprite, myWindowInfo window_info);
 
 
+int create_sprite(myObject *object, char *texure_path) {
+    object->texture = sfTexture_createFromFile(texure_path, NULL);
+    if (!object->texture) return 1;
+    object->sprite = sfSprite_create();
+    sfSprite_setTexture(object->sprite, object->texture, sfTrue);
+    return 0;
+}
+
+
 // Calcul pour centrer le bg et le btn start (./src/menu.c)
-void set_position_center(sfRenderWindow* window, sfTexture *texture, sfSprite *sprite, myWindowInfo window_info) {
+void set_position_center(sfRenderWindow* window, sfTexture* texture, sfSprite* sprite, myWindowInfo window_info) {
 
     sfSprite_setTexture(sprite, texture, sfTrue);
 

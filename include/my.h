@@ -12,10 +12,13 @@
     #include <SFML/System/Clock.h>
     #include <SFML/Audio.h>
 
+    /* My structs */
+    #include "../include/mystructs.h"
+
 
     /* Debug */
-    #define EXIT_DEBUG_WINDOW fprintf(stderr, "\n%s\n%d | WINDOW ERROR -> EXIT_FAILURE\n\n", __FILE__, __LINE__ - 1); return EXIT_FAILURE
-    #define EXIT_DEBUG_TEXTURE fprintf(stderr, "\n%s\n%d | TEXTURE ERROR -> EXIT_FAILURE\n\n", __FILE__, __LINE__ - 1); return EXIT_FAILURE
+    #define EXIT_DEBUG_WINDOW fprintf(stderr, "\n%s\n%d | WINDOW ERROR -> EXIT_FAILURE\n\n", __FILE__, __LINE__ - 1); return EXIT_FAILURE;
+    #define EXIT_DEBUG_TEXTURE fprintf(stderr, "\n%s\n%d | TEXTURE ERROR -> EXIT_FAILURE\n\n", __FILE__, __LINE__ - 1); return EXIT_FAILURE;
 
 
     /* Program Steps */
@@ -25,10 +28,10 @@
     
     /* Cleanup Resources */
     #define CLEANUP_RESOURCES_ \
-        sfSprite_destroy(sp_bg); \
-        sfTexture_destroy(tex_bg); \
-        sfSprite_destroy(sp_start_btn); \
-        sfTexture_destroy(tex_start_btn); \
+        sfSprite_destroy(menu_bg.sprite); \
+        sfTexture_destroy(menu_bg.texture); \
+        sfSprite_destroy(menu_btn.sprite); \
+        sfTexture_destroy(menu_btn.texture); \
         sfRenderWindow_destroy(window);
 
 #endif

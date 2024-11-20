@@ -2,6 +2,7 @@
     #define MAIN_H_
 
     #include "../include/my.h"
+//  #include "../include/mystructs.h" // include dans "my.h"
     #include "../include/screen.h"
     #include "../include/menu.h"
     #include "../include/sprites.h"

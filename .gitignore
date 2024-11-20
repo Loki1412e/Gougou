@@ -1,6 +1,7 @@
 assets/
 test/
-# setup/
-#*.o
-#*.exe
 .vscode/
+
+icon.o
+mysetup_win.exe
+gougou.exe
