@@ -1,6 +1,5 @@
 .vscode/
 assets/
 icon.o
-mysetup_win.exe
-gougou.exe
+output/*.exe
 test/
