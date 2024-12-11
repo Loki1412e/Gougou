@@ -31,7 +31,7 @@ DefaultGroupName={#MyAppName}
 AllowNoIcons=yes
 ; Uncomment the following line to run in non administrative install mode (install for current user only.)
 ;PrivilegesRequired=lowest
-OutputDir=..\..\setup
+OutputDir=..\..\output
 OutputBaseFilename=mysetup_win
 SetupIconFile=..\..\assets\myicon.ico
 Compression=lzma
@@ -46,12 +46,12 @@ Name: "french"; MessagesFile: "compiler:Languages\French.isl"
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
 
 [Files]
-Source: "..\..\{#MyAppExeName}"; DestDir: "{app}"; Flags: ignoreversion
-Source: "..\..\lib\CSFML_2.6.1\csfml-audio-2.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "..\..\lib\CSFML_2.6.1\csfml-graphics-2.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "..\..\lib\CSFML_2.6.1\csfml-network-2.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "..\..\lib\CSFML_2.6.1\csfml-system-2.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "..\..\lib\CSFML_2.6.1\csfml-window-2.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\..\output\{#MyAppExeName}"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\..\lib\CSFML_2.6.1\bin\csfml-audio-2.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\..\lib\CSFML_2.6.1\bin\csfml-graphics-2.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\..\lib\CSFML_2.6.1\bin\csfml-network-2.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\..\lib\CSFML_2.6.1\bin\csfml-system-2.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\..\lib\CSFML_2.6.1\bin\csfml-window-2.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\..\assets\*"; DestDir: "{app}\assets"; Flags: ignoreversion recursesubdirs createallsubdirs
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
@@ -63,4 +63,3 @@ Name: "{autodesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Tasks: de
 
 [Run]
 Filename: "{app}\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}"; Flags: nowait postinstall skipifsilent
-
