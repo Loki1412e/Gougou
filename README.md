@@ -79,7 +79,7 @@ python -m gdown --folder https://drive.google.com/drive/folders/1eYqVpx6OT2iBl6R
 
 ## ALORS ptit pbl
 
-J'ai été raciste pcque j'utilise `make` sous windows mdr, donc soit faut installer msys2 comme moi, soit un autre truc raciste.
+J'ai été raciste pcque j'utilise `make` sous windows mdr, donc soit faut installer [`msys2`](https://www.msys2.org/) comme moi, soit un autre truc raciste.
 Faut juste pas oublié d'ajouter le chemin dans les variables d'environement (pour moi : `C:\msys64\usr\bin\`).
 
 > Sur MSYS2
