@@ -2,16 +2,17 @@
 #include "../include/sprites.h"
 
 
-int create_sprite(myObject *object, char *string);
+int create_sprite(myObject *object, char *texure_path, sfVector2f scale);
 void set_position_center(sfRenderWindow* window, sfTexture* texture, sfSprite* sprite, myWindowInfo window_info);
 void setup_sprite(sfRenderWindow* window, sfTexture* texture, sfSprite* sprite, myWindowInfo window_info);
 
 
-int create_sprite(myObject *object, char *texure_path) {
+int create_sprite(myObject *object, char *texure_path, sfVector2f scale) {
     object->texture = sfTexture_createFromFile(texure_path, NULL);
     if (!object->texture) return 1;
     object->sprite = sfSprite_create();
     sfSprite_setTexture(object->sprite, object->texture, sfTrue);
+    sfSprite_setScale(object->sprite, scale);
     return 0;
 }
 

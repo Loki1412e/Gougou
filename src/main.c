@@ -25,21 +25,11 @@ int main() {
 
     // Background
     myObject menu_bg;
-    // if (create_sprite(&menu_bg, "./assets/menu/background.png")) { EXIT_DEBUG_TEXTURE }
-    menu_bg.texture = sfTexture_createFromFile("./assets/menu/background.png", NULL);
-    if (!menu_bg.texture) { EXIT_DEBUG_TEXTURE }
-    menu_bg.sprite = sfSprite_create();
-    sfSprite_setTexture(menu_bg.sprite, menu_bg.texture, sfTrue);
-
-
+    if (create_sprite(&menu_bg, "./assets/menu/background.png", (sfVector2f) {1., 1.})) { EXIT_DEBUG_TEXTURE }
 
     // Btn Start
     myObject menu_btn;
-    menu_btn.texture = sfTexture_createFromFile("./assets/menu/start.png", NULL);
-    if (!menu_btn.texture) { EXIT_DEBUG_TEXTURE }
-    menu_btn.sprite = sfSprite_create();
-    sfSprite_setTexture(menu_btn.sprite, menu_btn.texture, sfTrue);
-    sfSprite_setScale(menu_btn.sprite, (sfVector2f) {0.3, 0.3}); // on applique une mise à l'echelle
+    if (create_sprite(&menu_btn, "./assets/menu/start.png", (sfVector2f) {0.3, 0.3})) { EXIT_DEBUG_TEXTURE }
 
 
     /* Create the main window */
