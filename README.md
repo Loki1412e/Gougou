@@ -50,11 +50,27 @@ Projet en C sous windows utilisant :
 - la librairie `CSFML` v`2.6.1`, `gcc`, `make`
 - `python`, `gdown`
 
-## Setup le projet :
+## Setup l'environement du projet :
 
-### Rejoindre le projet git
+### Rejoindre le projet GIT
 ```bash
 git clone git@github.com:Loki1412e/Gougou.git
+```
+
+### GCC et Make (via MSYS2)
+
+#### Installer [**MSYS2**](https://www.msys2.org/) : https://www.msys2.org/
+
+Faut juste pas oublier d'ajouter les chemins de MSYS et de MINGW64 dans les variables d'environement (dans `PATH`) :
+- `C:\msys64\usr\bin\` -> pour `make` (et commandes bash)
+- `C:\msys64\mingw64\bin` -> pour `mingw64`
+
+#### Installer `mingw64` et `make` : à faire sur MSYS2
+```bash
+pacman -S mingw-w64-x86_64-gcc
+```
+```bash
+pacman -S make
 ```
 
 ### Installer les assets via vscode
@@ -62,9 +78,9 @@ git clone git@github.com:Loki1412e/Gougou.git
 
 Il faut entrer les commandes dans la racine du projet.
 
-Prérequis :
-- python
-- la lib gdown
+Prérequis pour installer les assets en lignes de commandes :
+- Python (va l'installer sur microsoft store)
+- La lib `gdown` (voir la ligne ci dessous)
 
 ```bash
 pip install gdown
@@ -75,17 +91,6 @@ pip install gdown
 
 ```bash
 python -m gdown --folder https://drive.google.com/drive/folders/1eYqVpx6OT2iBl6RiNMA0K5kwdwIUOAKj?usp=sharing
-```
-
-## ALORS ptit pbl
-
-J'ai été raciste pcque j'utilise `make` sous windows mdr, donc soit faut installer msys2 comme moi, soit un autre truc raciste.
-Faut juste pas oublié d'ajouter le chemin dans les variables d'environement (pour moi : `C:\msys64\usr\bin\`).
-
-> Sur MSYS2
-```bash
-pacman -S mingw-w64-x86_64-gcc
-pacman -S make
 ```
 
 ## Utilisation
