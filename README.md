@@ -95,12 +95,12 @@ python -m gdown --folder https://drive.google.com/drive/folders/1eYqVpx6OT2iBl6R
 
 ## Utilisation
 
-> Compile uniquement .\gougou.exe (en mode terminal)
+> Compile uniquement ./output/gougou.exe (avec terminal)
 ```bash
 make
 ```
 
-> Compile tout le projet (en mode sans terminal)
+> Compile tout le projet (./output/gougou.exe sans terminal)
 ```bash
 make gougou
 ```
