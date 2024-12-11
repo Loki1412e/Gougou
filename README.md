@@ -105,6 +105,11 @@ make
 make gougou
 ```
 
+> Lancer le projet apres compilation
+```bash
+./output/gougou.exe
+```
+
 ## Aide CSFML :
 
 * <a href="https://www.sfml-dev.org/download/csfml/" target="blank">CSFML Download</a>
