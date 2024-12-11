@@ -23,7 +23,8 @@
 
     /* Program Steps */
     #define MENU_step 0
-    #define TEMP_step 1
+    #define GAME_step 1
+    #define TEMP_step -1
 
     
     /* Cleanup Resources */

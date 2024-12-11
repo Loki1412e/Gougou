@@ -59,10 +59,11 @@ int main() {
                     break;
                 
                 case sfKeyNum2:
-                    program_step = TEMP_step;
+                    program_step = GAME_step;
                     break;
                 
-                case sfKeyEnter:
+                case sfKeyNum3:
+                    printf("ta mere\n");
                     program_step = TEMP_step;
                     break;
                 }
@@ -117,7 +118,6 @@ int main() {
                 
                 - Correspond à la taille de l'écran en x moins la taille du btn en x (size * scale pour avoir la taille du sprite)
                 - Ainsi on empeche le sprite de sortir de la fenetre HEHEHEHE
-
 */
 
                 size = sfTexture_getSize(menu_btn.texture);
@@ -142,6 +142,8 @@ int main() {
 
 ///////////////////////////////////////////////////////////////////////////////
 
+                case GAME_step:
+                    gam_ing(window, event, window_info);
 
                 break;
         }
