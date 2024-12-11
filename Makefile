@@ -1,5 +1,5 @@
 # Nom du projet
-NAME = gougou.exe
+NAME = ./output/gougou.exe
 
 # Chemins vers icon
 ICON_O = rc\icon.o
