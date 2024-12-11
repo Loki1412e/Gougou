@@ -63,8 +63,8 @@ git clone git@github.com:Loki1412e/Gougou.git
 Il faut entrer les commandes dans la racine du projet.
 
 Prérequis :
-- python
-- la lib gdown
+- Python (va l'installer sur microsoft store)
+- La lib `gdown` (voir la ligne ci dessous)
 
 ```bash
 pip install gdown
