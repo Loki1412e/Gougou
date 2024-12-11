@@ -1,11 +1,7 @@
 # Nom du projet
-NAME = ./output/gougou.exe
-
-# Chemins vers icon
-ICON_O = rc\icon.o
+NAME = gougou.exe
 
 # Chemins vers setup
-SETUP_WIN = setup\mysetup_win.exe
 ISCC = setup\windows\Inno_Setup_6\ISCC.exe
 SETUP_ISS = setup\windows\set_setup.iss
 
@@ -28,7 +24,7 @@ NO_TERMINAL =
 # Compilation et Liaison du projet
 all:
 	windres rc/icon.rc -o rc/icon.o
-	gcc $(SRC) rc/icon.o -o $(NAME) -I$(INCLUDE_DIR) -L$(LIB_DIR) $(CFLAGS) $(CSFML) $(NO_TERMINAL)
+	gcc $(SRC) ./rc/icon.o -o ./output/$(NAME) -I$(INCLUDE_DIR) -L$(LIB_DIR) $(CFLAGS) $(CSFML) $(NO_TERMINAL)
 
 #Version sans terminale (pas de debug oof)
 noterm: NO_TERMINAL += -mwindows
@@ -49,9 +45,8 @@ clean:
 
 # Suppression de l'exécutable et autres fichiers temporaires
 fclean:
-	-rm .\$(NAME)
-	-rm .\$(ICON_O)
-	-rm .\$(SETUP_WIN)
+	-rm ./rc/icon.o
+	-rm ./output/*.exe
 
 # Recompilation complète (nettoie et reconstruit)
 re: fclean all
