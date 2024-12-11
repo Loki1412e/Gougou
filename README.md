@@ -50,23 +50,26 @@ Projet en C sous windows utilisant :
 - la librairie `CSFML` v`2.6.1`, `gcc`, `make`
 - `python`, `gdown`
 
-## Setup le projet :
+## Setup l'environement du projet :
 
-### Rejoindre le projet git
+### Rejoindre le projet GIT
 ```bash
 git clone git@github.com:Loki1412e/Gougou.git
 ```
 
-## Prérequis
+### GCC et Make (via MSYS2)
 
-J'ai été raciste pcque j'utilise `make` sous windows mdr, donc soit faut installer [`msys2`](https://www.msys2.org/) comme moi, soit un autre truc raciste.
-Faut juste pas oublié d'ajouter les chemins de MSYS et de MINGW64 dans les variables d'environement, pour moi :
+#### Installer [**MSYS2**](https://www.msys2.org/) : https://www.msys2.org/
+
+Faut juste pas oublier d'ajouter les chemins de MSYS et de MINGW64 dans les variables d'environement (dans `PATH`) :
 - `C:\msys64\usr\bin\` -> pour `make` (et commandes bash)
 - `C:\msys64\mingw64\bin` -> pour `mingw64`
 
-> Sur MSYS2
+#### Installer `mingw64` et `make` : à faire sur MSYS2
 ```bash
 pacman -S mingw-w64-x86_64-gcc
+```
+```bash
 pacman -S make
 ```
 
