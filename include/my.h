@@ -28,9 +28,9 @@
 
 
     /* Attributs Player */
-    #define JUMP_player 520
+    #define JUMP_player 300
     #define SPEED_X_player 0.6
-    #define SPEED_Y_player 0.7
+    #define SPEED_Y_player 1.6
     #define HP_player 100 
 
 #endif
