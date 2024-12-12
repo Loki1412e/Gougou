@@ -6,6 +6,7 @@ int create_sprite(myObject *object, char *texure_path, sfVector2f scale);
 void destroy_object(myObject *object);
 void setup_sprite(sfRenderWindow* window, sfTexture* texture, sfSprite* sprite, myWindowInfo window_info);
 void set_position_center(sfRenderWindow* window, sfTexture* texture, sfSprite* sprite, myWindowInfo window_info);
+void set_position_bottom(sfRenderWindow* window, myObject *object, myWindowInfo window_info);
 
 
 int create_sprite(myObject *object, char *texure_path, sfVector2f scale) {
@@ -21,25 +22,6 @@ int create_sprite(myObject *object, char *texure_path, sfVector2f scale) {
 void destroy_object(myObject *object) {
     sfSprite_destroy(object->sprite);
     sfTexture_destroy(object->texture);
-}
-
-
-// Calcul pour centrer le bg et le btn start (./src/menu.c)
-void set_position_center(sfRenderWindow* window, sfTexture* texture, sfSprite* sprite, myWindowInfo window_info) {
-
-    sfSprite_setTexture(sprite, texture, sfTrue);
-
-    sfVector2u size = sfTexture_getSize(texture); // on recup la taille avec la texture
-    sfVector2f scale = sfSprite_getScale(sprite); // on recup son scale (son echelle)
-
-    sfVector2f position = {
-        window_info.size.x / 2. - size.x * (scale.x * window_info.scale.x) / 2.,
-        window_info.size.y / 2. - size.y * (scale.y * window_info.scale.y) / 2.
-        // window_info.size.x / 2. - size.x * (scale.x) / 2.,
-        // window_info.size.y / 2. - size.y * scale.y / 2.
-    };
-
-    sfSprite_setPosition(sprite, position);
 }
 
 
@@ -65,4 +47,31 @@ void setup_sprite(sfRenderWindow* window, sfTexture* texture, sfSprite* sprite, 
         scale.x,
         scale.y
     });
+}
+
+
+// Calcul pour centrer le bg et le btn start (./src/menu.c)
+void set_position_center(sfRenderWindow* window, sfTexture* texture, sfSprite* sprite, myWindowInfo window_info) {
+
+    sfVector2u size = sfTexture_getSize(texture); // on recup la taille avec la texture
+    sfVector2f scale = sfSprite_getScale(sprite); // on recup son scale (son echelle)
+
+    sfVector2f position = {
+        window_info.size.x / 2. - size.x * (scale.x * window_info.scale.x) / 2.,
+        window_info.size.y / 2. - size.y * (scale.y * window_info.scale.y) / 2.
+    };
+
+    sfSprite_setPosition(sprite, position);
+}
+
+
+// Calcul pour centrer le bg et le btn start (./src/menu.c)
+void set_position_bottom(sfRenderWindow* window, myObject *object, myWindowInfo window_info) {
+
+    sfVector2u size = sfTexture_getSize(object->texture); // on recup la taille avec la texture
+    sfVector2f scale = sfSprite_getScale(object->sprite); // on recup son scale (son echelle)
+
+    sfVector2f position = { 0, window_info.size.y - (size.y * scale.y) };
+
+    sfSprite_setPosition(object->sprite, position);
 }
