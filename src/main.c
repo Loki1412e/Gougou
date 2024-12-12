@@ -25,6 +25,9 @@ int main(int argc, char **argv) {
     /* Start GAME LOOP */
     while (sfRenderWindow_isOpen(window)) {
 
+        sfRenderWindow_clear(window, sfBlack);
+        sfRenderWindow_display(window);
+
         /* Process events */
         while (sfRenderWindow_pollEvent(window, &event)) {
             // Close window
