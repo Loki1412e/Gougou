@@ -10,11 +10,11 @@ int game_view(sfRenderWindow* window, sfEvent event, myWindowInfo *window_info, 
 
     // Floor
     myObject floor;
-    if (create_sprite(&floor, "./assets/game/floor.png", (sfVector2f) {0.8, 0.8})) { EXIT_DEBUG_TEXTURE };
+    if (create_sprite(&floor, "./assets/game/floor.png", (sfVector2f) {12., 2.})) { EXIT_DEBUG_TEXTURE };
 
     // Player
     myObject player;
-    if (create_sprite(&player, "./assets/game/player.gif", (sfVector2f) {0.6, 0.6})) { EXIT_DEBUG_TEXTURE };
+    if (create_sprite(&player, "./assets/game/player.gif", (sfVector2f) {0.4, 0.4})) { EXIT_DEBUG_TEXTURE };
     set_position_center(window, player.texture, player.sprite, *window_info);
 
 
@@ -42,7 +42,7 @@ int game_view(sfRenderWindow* window, sfEvent event, myWindowInfo *window_info, 
         sfRenderWindow_clear(window, sfBlack);
 
         // Dessine le sol
-        set_position_center(window, floor.texture, floor.sprite, *window_info);
+        set_position_bottom(window, &floor, *window_info);
         setup_sprite(window, floor.texture, floor.sprite, *window_info);
 
         // Dessine le Joueur
