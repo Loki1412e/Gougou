@@ -4,6 +4,7 @@
     /* Basics  */
     #include <stdio.h>
     #include <stdlib.h>
+    #include <string.h>
     #include <math.h>
 
     /* CSFML */
@@ -12,27 +13,14 @@
     #include <SFML/System/Clock.h>
     #include <SFML/Audio.h>
 
-    /* My structs */
-    #include "../include/mystructs.h"
-
 
     /* Debug */
-    #define EXIT_DEBUG_WINDOW fprintf(stderr, "\n%s\n%d | WINDOW ERROR -> EXIT_FAILURE\n\n", __FILE__, __LINE__ - 1); return EXIT_FAILURE;
-    #define EXIT_DEBUG_TEXTURE fprintf(stderr, "\n%s\n%d | TEXTURE ERROR -> EXIT_FAILURE\n\n", __FILE__, __LINE__ - 1); return EXIT_FAILURE;
-
+    #define EXIT_DEBUG_WINDOW fprintf(stderr, "\n%s\n%d | WINDOW ERROR -> EXIT_FAILURE\n\n", __FILE__, __LINE__); return 1;
+    #define EXIT_DEBUG_TEXTURE fprintf(stderr, "\n%s\n%d | TEXTURE ERROR -> EXIT_FAILURE\n\n", __FILE__, __LINE__); return 1;
+    
 
     /* Program Steps */
     #define MENU_step 0
     #define GAME_step 1
-    #define TEMP_step -1
-
-    
-    /* Cleanup Resources */
-    #define CLEANUP_RESOURCES_ \
-        sfSprite_destroy(menu_bg.sprite); \
-        sfTexture_destroy(menu_bg.texture); \
-        sfSprite_destroy(menu_btn.sprite); \
-        sfTexture_destroy(menu_btn.texture); \
-        sfRenderWindow_destroy(window);
 
 #endif

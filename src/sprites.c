@@ -3,8 +3,9 @@
 
 
 int create_sprite(myObject *object, char *texure_path, sfVector2f scale);
-void set_position_center(sfRenderWindow* window, sfTexture* texture, sfSprite* sprite, myWindowInfo window_info);
+void destroy_object(myObject *object);
 void setup_sprite(sfRenderWindow* window, sfTexture* texture, sfSprite* sprite, myWindowInfo window_info);
+void set_position_center(sfRenderWindow* window, sfTexture* texture, sfSprite* sprite, myWindowInfo window_info);
 
 
 int create_sprite(myObject *object, char *texure_path, sfVector2f scale) {
@@ -14,6 +15,12 @@ int create_sprite(myObject *object, char *texure_path, sfVector2f scale) {
     sfSprite_setTexture(object->sprite, object->texture, sfTrue);
     sfSprite_setScale(object->sprite, scale);
     return 0;
+}
+
+
+void destroy_object(myObject *object) {
+    sfSprite_destroy(object->sprite);
+    sfTexture_destroy(object->texture);
 }
 
 

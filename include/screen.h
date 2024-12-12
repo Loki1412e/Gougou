@@ -3,6 +3,7 @@
 
 
     #include "../include/my.h"
+    #include "../include/mystructs.h"
     
 
     /* Window Resolution */
