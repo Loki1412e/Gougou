@@ -18,4 +18,14 @@
         sfSprite* sprite;
     } myObject;
 
+
+    // Define Player
+    typedef struct __my_player__ {
+        myObject object;
+        sfVector2f speed;
+        int on_jump;
+        float hp;
+    } myPlayer;
+
+
 #endif

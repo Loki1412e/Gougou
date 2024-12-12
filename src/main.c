@@ -28,7 +28,7 @@ int main(int argc, char **argv) {
         /* Process events */
         while (sfRenderWindow_pollEvent(window, &event)) {
             // Close window
-            if (event.type == sfEvtClosed)
+            if (event.type == sfEvtClosed || (sfKeyboard_isKeyPressed(sfKeyLControl) && sfKeyboard_isKeyPressed(sfKeyEnter)))
                 sfRenderWindow_close(window);
         }
 
@@ -41,6 +41,10 @@ int main(int argc, char **argv) {
             
             case GAME_step:
                 if (game_view(window, event, &window_info, &program_step)) return EXIT_FAILURE;
+                break;
+
+            case DEATHMENU_step:
+                if (deathmenu_view(window, &event, &window_info, &program_step)) return EXIT_FAILURE;
                 break;
         }
 

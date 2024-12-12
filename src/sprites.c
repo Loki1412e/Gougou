@@ -7,6 +7,7 @@ void destroy_object(myObject *object);
 void setup_sprite(sfRenderWindow* window, sfTexture* texture, sfSprite* sprite, myWindowInfo window_info);
 void set_position_center(sfRenderWindow* window, sfTexture* texture, sfSprite* sprite, myWindowInfo window_info);
 void set_position_bottom(sfRenderWindow* window, sfTexture* texture, sfSprite* sprite, myWindowInfo window_info);
+int check_collision(sfSprite* A, sfSprite* B);
 
 
 int create_sprite(myObject *object, char *texure_path, sfVector2f scale) {
@@ -74,4 +75,15 @@ void set_position_bottom(sfRenderWindow* window, sfTexture* texture, sfSprite* s
     sfVector2f position = { 0, window_info.size.y - (size.y * scale.y) };
 
     sfSprite_setPosition(sprite, position);
+}
+
+
+int check_collision(sfSprite* A, sfSprite* B) {
+
+    // recupere les rectangles des sprites
+    sfFloatRect bounds_A = sfSprite_getGlobalBounds(A);
+    sfFloatRect bounds_B = sfSprite_getGlobalBounds(B);
+
+    // verifie si les rectangles se chevauchent
+    return sfFloatRect_intersects(&bounds_A, &bounds_B, NULL);
 }

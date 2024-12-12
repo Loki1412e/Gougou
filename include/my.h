@@ -12,6 +12,8 @@
     #include <SFML/Graphics/Rect.h>
     #include <SFML/System/Clock.h>
     #include <SFML/Audio.h>
+    // Mes structs
+    #include "../include/mystructs.h"
 
 
     /* Debug */
@@ -22,5 +24,13 @@
     /* Program Steps */
     #define MENU_step 0
     #define GAME_step 1
+    #define DEATHMENU_step 2
+
+
+    /* Attributs Player */
+    #define JUMP_player 520
+    #define SPEED_X_player 0.6
+    #define SPEED_Y_player 0.7
+    #define HP_player 100 
 
 #endif
