@@ -1,5 +1,7 @@
 .vscode/
 assets/*
+!assets/assets.md
 icon.o
 output/*.exe
 test/*
+!test/test.md
