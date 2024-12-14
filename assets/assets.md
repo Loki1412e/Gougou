@@ -6,7 +6,7 @@ Cependant si il y a besoin de download les assets définis sur le [Google Drive]
 
 Avec `gdown` il suffit de faire la commande suivante dans la racine du projet :
 ```bash
-py -m gdown --folder https://drive.google.com/drive/folders/1eYqVpx6OT2iBl6RiNMA0K5kwdwIUOAKj?usp=sharing
+gdown --folder https://drive.google.com/drive/folders/1eYqVpx6OT2iBl6RiNMA0K5kwdwIUOAKj?usp=sharing
 ```
 
 Si la commande ne fonctionne pas, regarde le `README.md` du projet.
