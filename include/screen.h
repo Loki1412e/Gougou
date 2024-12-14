@@ -3,13 +3,7 @@
 
 
     #include "../include/my.h"
-
-
-    /* Struct for window informations */
-    typedef struct __my_window_info__ {
-        sfVector2u size;
-        sfVector2f scale;
-    } myWindowInfo;
+    #include "../include/mystructs.h"
     
 
     /* Window Resolution */

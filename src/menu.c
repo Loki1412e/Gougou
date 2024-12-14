@@ -2,43 +2,60 @@
 #include "../include/menu.h"
 
 
-void set_bg(sfRenderWindow* window, sfTexture *tex_bg, sfSprite *sp_bg, myWindowInfo window_info);
-void set_start_btn(sfRenderWindow* window, sfTexture *tex_start_btn, sfSprite *sp_start_btn, myWindowInfo window_info);
+int menu_view(sfRenderWindow* window, sfEvent event, myWindowInfo *window_info, int *program_step);
 void click_on_btn_start(sfRenderWindow* window, sfEvent *event, sfTexture *tex_start_btn, sfSprite *sp_start_btn, unsigned *program_step);
 
-// Calcul pour centrer le bg (./src/menu.c)
-void set_bg(sfRenderWindow* window, sfTexture *tex_bg, sfSprite *sp_bg, myWindowInfo window_info) {
 
-    sfSprite_setTexture(sp_bg, tex_bg, sfTrue);
+int menu_view(sfRenderWindow* window, sfEvent event, myWindowInfo *window_info, int *program_step) {
 
-    sfVector2u size = sfTexture_getSize(tex_bg); // on recup la taille avec la texture
-    sfVector2f scale = sfSprite_getScale(sp_bg); // on recup son scale (son echelle)
+    // Background
+    myObject background;
+    if (create_sprite(&background, "./assets/menu/background.png", (sfVector2f) {1., 1.})) { EXIT_DEBUG_TEXTURE }
 
-    sfVector2f position = {
-        window_info.size.x / 2. - size.x * (scale.x * window_info.scale.x) / 2.,
-        window_info.size.y / 2. - size.y * (scale.y * window_info.scale.y) / 2.
-        // window_info.size.x / 2. - size.x * (scale.x) / 2.,
-        // window_info.size.y / 2. - size.y * scale.y / 2.
-    };
-
-    sfSprite_setPosition(sp_bg, position);
-}
+    // Btn Start
+    myObject start_btn;
+    if (create_sprite(&start_btn, "./assets/menu/start.png", (sfVector2f) {0.3, 0.3})) { EXIT_DEBUG_TEXTURE }
 
 
-// Calcul pour positionner le btn start (./src/menu.c)
-void set_start_btn(sfRenderWindow* window, sfTexture *tex_start_btn, sfSprite *sp_start_btn, myWindowInfo window_info) {
+    while (sfRenderWindow_isOpen(window) && *program_step == MENU_step) {
 
-    sfVector2u size = sfTexture_getSize(tex_start_btn); // on recup la taille avec la texture
-    sfVector2f scale = sfSprite_getScale(sp_start_btn); // on recup son scale (son echelle)
 
-    sfVector2f position = { // Comme le btn a été scale on inclus son scale dans les calculs
-        window_info.size.x / 2. - size.x * (scale.x * window_info.scale.x) / 2.,
-        window_info.size.y / 2. - size.y * (scale.y * window_info.scale.y) / 2.
-        // window_info.size.x / 2. - size.x * scale.x / 2.,
-        // window_info.size.y / 2. - size.y * scale.y / 2.
-    };
-    
-    sfSprite_setPosition(sp_start_btn, position);
+        // Process events
+        while (sfRenderWindow_pollEvent(window, &event)) {
+            if (event_behavior(window, event, window_info, program_step) == 1) { EXIT_DEBUG_WINDOW };
+        }
+
+        
+        /* MAIN */
+
+        sfRenderWindow_clear(window, sfBlack);
+                
+        // Dessine le background
+        set_position_center(window, background.texture, background.sprite, *window_info);
+        setup_sprite(window, background.texture, background.sprite, *window_info);
+                
+        // Dessine le boutton start
+        set_position_center(window, start_btn.texture, start_btn.sprite, *window_info);
+        setup_sprite(window, start_btn.texture, start_btn.sprite, *window_info);
+                
+        // onclick btn_start
+        click_on_btn_start(window, &event, start_btn.texture, start_btn.sprite, program_step);
+        
+
+        sfRenderWindow_display(window); // On recharge la window
+        
+    } // End GAME LOOP
+
+
+    /* Cleanup Resources */
+
+    sfSprite_destroy(background.sprite);
+    sfTexture_destroy(background.texture);
+
+    sfSprite_destroy(start_btn.sprite);
+    sfTexture_destroy(start_btn.texture);
+
+    return 0;
 }
 
 
@@ -52,7 +69,6 @@ void click_on_btn_start(sfRenderWindow* window, sfEvent *event, sfTexture *tex_s
     sfVector2f scale = sfSprite_getScale(sp_start_btn);
     sfVector2f position = sfSprite_getPosition(sp_start_btn);
 
-
     // si la souris est dans cette zone (qui correspond au btn start)
     // et que mouse est onclick
     if ((  (float) mouse_position.x >= position.x \
@@ -60,11 +76,11 @@ void click_on_btn_start(sfRenderWindow* window, sfEvent *event, sfTexture *tex_s
         && (float) mouse_position.y >= position.y \
         && (float) mouse_position.y <= position.y + (float) size.y * scale.y
         && event->type == sfEvtMouseButtonPressed )
-        // ou si la touche enter est entrée
+        // ou si la touche ENTER est press
         || (event->type == sfEvtKeyPressed && event->key.code == sfKeyEnter)
         ) {
 
         /* Change the program_step */
-        *program_step = TEMP_step;
+        *program_step = GAME_step;
     }
 }
