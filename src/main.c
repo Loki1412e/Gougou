@@ -16,11 +16,9 @@ int main(int argc, char **argv) {
 
     int program_step = MENU_step;
 
-
     /* Create the main window */
     window = sfRenderWindow_create((sfVideoMode) {window_info.size.x, window_info.size.y, 32}, "Googoo Gagaga", sfClose, NULL);
     if (!window) { EXIT_DEBUG_WINDOW }
-
 
     /* Start GAME LOOP */
     while (sfRenderWindow_isOpen(window)) {
@@ -30,7 +28,7 @@ int main(int argc, char **argv) {
             // Close window
             if (event.type == sfEvtClosed || (sfKeyboard_isKeyPressed(sfKeyLControl) && sfKeyboard_isKeyPressed(sfKeyEnter)))
                 sfRenderWindow_close(window);
-        }
+        } 
 
         /* PROGRAM STEPS */
         switch (program_step) {
@@ -47,7 +45,7 @@ int main(int argc, char **argv) {
                 if (deathmenu_view(window, &event, &window_info, &program_step)) return EXIT_FAILURE;
                 break;
         }
-
+    
     } // End GAME LOOP
 
     sfRenderWindow_destroy(window);

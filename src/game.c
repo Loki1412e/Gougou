@@ -28,7 +28,6 @@ int game_view(sfRenderWindow* window, sfEvent event, myWindowInfo *window_info, 
     if (create_sprite(&(player.object), "./assets/game/player.gif", (sfVector2f) {0.4, 0.4})) { EXIT_DEBUG_TEXTURE };
     set_position_center(window, player.object.texture, player.object.sprite, *window_info);
 
-
     // Start GAME LOOP
     while (sfRenderWindow_isOpen(window) && *program_step == GAME_step) {
 
