@@ -76,7 +76,7 @@ pacman -S make
 ### Installer les assets via vscode
 > Lien Google Drive : [Gougou/assets](https://drive.google.com/drive/folders/1eYqVpx6OT2iBl6RiNMA0K5kwdwIUOAKj?usp=sharing)
 
-Il faut entrer les commandes dans la racine du projet.
+### !!! Il faut entrer les commandes dans la racine du projet !!!
 
 Prérequis pour installer les assets en lignes de commandes :
 - Python (va l'installer sur microsoft store)
