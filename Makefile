@@ -68,5 +68,9 @@ gougou: win_setup
 test:
 	gcc $(wildcard ./test/*.c) -o ./output/test.exe -I./lib/CSFML_2.6.1/include/ -L./lib/CSFML_2.6.1/lib/gcc -Wdeprecated-declarations -lcsfml-graphics -lcsfml-system -lcsfml-audio -lcsfml-window
 
+# Make test file
+test:
+	gcc $(wildcard ./test/*.c) -o ./output/test.exe -I./lib/CSFML_2.6.1/include/ -L./lib/CSFML_2.6.1/lib/gcc -Wdeprecated-declarations -lcsfml-graphics -lcsfml-system -lcsfml-audio -lcsfml-window
+
 # Cibles génériques
 .PHONY: all clean fclean debug perf re gdb
