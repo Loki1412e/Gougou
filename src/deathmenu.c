@@ -12,11 +12,11 @@ int deathmenu_view(sfRenderWindow* window, sfEvent *event, myWindowInfo *window_
 
     // Background
     myObject background;
-    if (create_sprite(&background, "./assets/menu/background.png", (sfVector2f) {1., 1.})) { EXIT_DEBUG_TEXTURE }
+    if (create_sprite(&background, "./assets/deathmenu/background.png", (sfVector2f) {1., 1.})) { EXIT_DEBUG_TEXTURE }
 
     // Btn Start
     myObject restart_btn;
-    if (create_sprite(&restart_btn, "./assets/menu/quit.gif", (sfVector2f) {0.3, 0.3})) { EXIT_DEBUG_TEXTURE }
+    if (create_sprite(&restart_btn, "./assets/deathmenu/quit.gif", (sfVector2f) {0.3, 0.3})) { EXIT_DEBUG_TEXTURE }
 
 
     while (sfRenderWindow_isOpen(window) && *program_step == DEATHMENU_step) {
