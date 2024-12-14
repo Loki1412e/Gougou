@@ -1,5 +1,5 @@
 .vscode/
-assets/
+assets/*
 icon.o
 output/*.exe
-test/
+test/*
