@@ -6,4 +6,6 @@
 
     void player_basics_movements(sfRenderWindow* window, myWindowInfo window_info, myPlayer *player, myObject floor);
 
+void NewFunction(myPlayer * player);
+
 #endif
