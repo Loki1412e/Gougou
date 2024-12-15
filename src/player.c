@@ -1,6 +1,5 @@
 
 #include "../include/player.h"
-#include "player.h"
 
 #define GRAVITY 1.5
 
@@ -33,7 +32,7 @@ void player_basics_movements(sfRenderWindow* window, myWindowInfo window_info, m
     //     position.y += player->speed.y;
 
     // else if (sfKeyboard_isKeyPressed(sfKeyUp))
-NewFunction(player);
+    //   player->on_jump = JUMP_player;
 
 
     // Deplacements
@@ -47,8 +46,4 @@ NewFunction(player);
                 
     sfSprite_setPosition(player->object.sprite, position);
     setup_sprite(window, player->object.texture, player->object.sprite, window_info);
-}
-void NewFunction(myPlayer * player)
-{
-      player->on_jump = JUMP_player;
 }
