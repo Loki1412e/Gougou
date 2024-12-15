@@ -16,7 +16,7 @@ int menu_view(sfRenderWindow* window, sfEvent event, myWindowInfo *window_info, 
 
     // Btn Start
     myObject start_btn;
-    if (create_sprite(&start_btn, "./assets/menu/start.png", (sfVector2f) {0.3, 0.3})) { EXIT_DEBUG_TEXTURE }
+    if (create_sprite(&start_btn, "./assets/menu/test.png", (sfVector2f) {1, 1})) { EXIT_DEBUG_TEXTURE }
 
 
     while (sfRenderWindow_isOpen(window) && *program_step == MENU_step) {

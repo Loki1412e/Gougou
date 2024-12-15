@@ -24,8 +24,10 @@
         myObject object;
         sfVector2f speed;
         int on_jump;
+        int dash_duration;
+        int dash_cooldown;
+        char direction; // voir #define dans le my.h
         float hp;
     } myPlayer;
-
 
 #endif
