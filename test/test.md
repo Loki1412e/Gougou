@@ -4,7 +4,7 @@ Depuis le dossier `./test/` on peut compiler des mini projtes permettant ainsi d
 
 Pour cela il suffit de faire :
 ```bash
-make test
+make -B test
 ```
 
 *Tout les fichiers dans le dossier, exceptés `./test/test.md`, ne seront pas considérés par GIT (voir `.gitignore`)*
