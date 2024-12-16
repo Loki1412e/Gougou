@@ -58,15 +58,11 @@ void player_basics_movements(sfRenderWindow* window, myWindowInfo window_info, m
         dash_cooldown_timer -= TIME;
     }
 
-    // Deplacements
+    // Applique les vitesses horizontale et verticale
+    position.x += player->velocity.x;
+    position.y += player->velocity.y * TIME;
 
-    if (sfKeyboard_isKeyPressed(sfKeyRight))
-        position.x += player->speed.x;
-
-    if (sfKeyboard_isKeyPressed(sfKeyLeft))
-        position.x -= player->speed.x;
-
-                
+    // Met à jour la position du sprite
     sfSprite_setPosition(player->object.sprite, position);
     setup_sprite(window, player->object.texture, player->object.sprite, window_info);
 }
