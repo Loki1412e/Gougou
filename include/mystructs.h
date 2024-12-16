@@ -23,6 +23,7 @@
     typedef struct __my_player__ {
         myObject object;
         sfVector2f speed;
+        sfVector2f velocity;
         int on_jump;
         float hp;
     } myPlayer;

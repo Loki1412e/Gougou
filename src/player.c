@@ -1,7 +1,9 @@
 
 #include "../include/player.h"
 
-#define GRAVITY 1.5
+#define GRAVITY 9.81
+#define JUMP_INI  300
+#define TIME 0,327
 
 void player_basics_movements(sfRenderWindow* window, myWindowInfo window_info, myPlayer *player, myObject floor);
 
@@ -10,16 +12,19 @@ void player_basics_movements(sfRenderWindow* window, myWindowInfo window_info, m
 
     sfVector2f position = sfSprite_getPosition(player->object.sprite);
 
-    if(!check_collision(player->object.sprite, floor.sprite)) {
-        position.y += GRAVITY;
+    if (!check_collision(player->object.sprite, floor.sprite)) {
+        player->velocity.y += GRAVITY * TIME;
     } else {
+        player->velocity.y = 0;
         player->on_jump = 0;
     }
 
     if (sfKeyboard_isKeyPressed(sfKeyUp) && player->on_jump == 0) {
-        player->on_jump = 1;
-        position.y -= JUMP_player;
+        player->velocity.y = -JUMP_INI;
+        player->on_jump = 1; 
     }
+    
+    position.y += player->velocity.y;
 
     // Gravité
 
