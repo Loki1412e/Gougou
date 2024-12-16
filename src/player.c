@@ -1,9 +1,11 @@
 
 #include "../include/player.h"
 
-#define GRAVITY 981
-#define JUMP_FORCE  300
+#define GRAVITY 9.81
+#define JUMP_FORCE  80
 #define TIME 1.0/30.0
+#define DASH_COOLDOWN 3.0
+#define DASH_COOLDOWN 50.0
 
 void player_basics_movements(sfRenderWindow* window, myWindowInfo window_info, myPlayer *player, myObject floor);
 
@@ -30,6 +32,20 @@ void player_basics_movements(sfRenderWindow* window, myWindowInfo window_info, m
 
     position.y += player->velocity.y * TIME;
 
+    if(sfKeyboard_isKeyPressed(sfKeyLShift) && player->dash_timer == 0) {
+            player->is_dashing = 1;
+            player->dash_timer = DASH_COOLDOWN
+    }
+
+    if(player->is_dashing) {
+        position.x += (DASH_SPEED * TIME) * (sfKeyboard_isKeyPressed(sfKeyRight) ? 1 : -1);
+        player->is_dashing = 0;
+    } 
+    
+    if(player->dash_timer > 0) {
+        player->dash_timer -= TIME;
+    }    
+    
      // Gravité
 
     // if (player->on_jump) {
