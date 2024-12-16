@@ -26,8 +26,8 @@
         sfVector2f velocity;
         int on_jump;
         float hp;
-        int dash_ready;
-        float dash_cooldown_timer; 
+        int can_dash;
+        float dash_cooldown;
     } myPlayer;
 
 
