@@ -2,10 +2,9 @@
 
 #define GRAVITY 9.81
 #define JUMP_FORCE 80
-#define TIME (1.0 / 30.0)
-#define DASH_SPEED 300.0
-#define DASH_COOLDOWN 3.0
-#define DASH_DURATION 0.2
+#define TIME (1.0 / 32.0)
+#define DASH_FORCE 400
+#define DASH_DURATION 0.2*32
 
 void player_basics_movements(sfRenderWindow* window, myWindowInfo window_info, myPlayer *player, myObject floor) {
     // Récupère la position actuelle du joueur
@@ -17,6 +16,7 @@ void player_basics_movements(sfRenderWindow* window, myWindowInfo window_info, m
     } else {
         player->velocity.y = 0;
         player->on_jump = 0;
+        player->dash_ready = 1; 
     }
 
     // Gère le saut
@@ -25,43 +25,36 @@ void player_basics_movements(sfRenderWindow* window, myWindowInfo window_info, m
         player->on_jump = 1;
     }
 
-    // Gère le dash latéral
-    if (sfKeyboard_isKeyPressed(sfKeyLShift) && player->dash_timer == 0) {
+    // Gère le dash horizontal avec accélération et durée limitée
+    static float dash_timer = 0.0;  
+
+    if (player->dash_ready && sfKeyboard_isKeyPressed(sfKeyLShift)) {
         if (sfKeyboard_isKeyPressed(sfKeyRight)) {
-            player->velocity.x = DASH_SPEED * TIME;
-            player->is_dashing = 1;
-            player->dash_duration = DASH_DURATION;
-            player->dash_timer = DASH_COOLDOWN;
+            player->velocity.x = DASH_FORCE * TIME;
+            player->dash_ready = 0;
+            dash_timer = DASH_DURATION;
         } else if (sfKeyboard_isKeyPressed(sfKeyLeft)) {
-            player->velocity.x = -DASH_SPEED * TIME;
-            player->is_dashing = 1;
-            player->dash_duration = DASH_DURATION;
-            player->dash_timer = DASH_COOLDOWN;
+            player->velocity.x = -DASH_FORCE * TIME;
+            player->dash_ready = 0;
+            dash_timer = DASH_DURATION;
         }
     }
 
-    // Gère la durée du dash
-    if (player->is_dashing) {
-        player->dash_duration -= TIME;
-        if (player->dash_duration <= 0) {
-            player->is_dashing = 0;
-            player->velocity.x = 0;  
-        }
+    // Réduit le timer du dash
+    if (dash_timer > 0) {
+        dash_timer -= TIME;
+    } else {
+        // Si le timer atteint 0, on arrête le dash
+        player->velocity.x = 0;
     }
 
-    // Met à jour le cooldown du dash
-    if (player->dash_timer > 0) {
-        player->dash_timer -= TIME;
-    }
-
-    // Gère les déplacements horizontaux classiques (si pas en dash)
-    if (!player->is_dashing) {
-        if (sfKeyboard_isKeyPressed(sfKeyRight)) {
-            position.x += player->speed.x;
-        }
-        if (sfKeyboard_isKeyPressed(sfKeyLeft)) {
-            position.x -= player->speed.x;
-        }
+    // Applique la décélération naturelle après le dash si nécessaire
+    if (player->velocity.x > 0) {
+        player->velocity.x -= 20 * TIME;
+        if (player->velocity.x < 0) player->velocity.x = 0;
+    } else if (player->velocity.x < 0) {
+        player->velocity.x += 20 * TIME;
+        if (player->velocity.x > 0) player->velocity.x = 0;
     }
 
     // Applique les vitesses horizontale et verticale
