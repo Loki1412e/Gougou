@@ -56,16 +56,6 @@ void player_basics_movements(sfRenderWindow window, myWindowInfo window_info, my
         if (player->velocity.x > 0) player->velocity.x = 0;
     }
 
-    // Gère les déplacements horizontaux classiques (si pas en dash)
-    if (!player->is_dashing) {
-        if (sfKeyboard_isKeyPressed(sfKeyRight)) {
-            position.x += player->speed.x;
-        }
-        if (sfKeyboard_isKeyPressed(sfKeyLeft)) {
-            position.x -= player->speed.x;
-        }
-    }
-
     // Applique les vitesses horizontale et verticale
     position.x += player->velocity.x;
     position.y += player->velocity.y * TIME;
