@@ -29,6 +29,13 @@ void player_basics_movements(sfRenderWindow* window, myWindowInfo window_info, m
     // Met à jour la position en fonction de la vélocité
     position.y += player->velocity.y * TIME;    
 
+    if (check_collision(player->object.sprite, floor.sprite)) {
+        position.y = floor_y_position - sprite_height;  
+        player->velocity.y = 0;
+        player->on_jump = 0;
+    }
+
+
     // Gravité
 
     // if (player->on_jump) {
