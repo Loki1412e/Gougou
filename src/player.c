@@ -10,14 +10,15 @@ void player_basics_movements(sfRenderWindow* window, myWindowInfo window_info, m
 
 void player_basics_movements(sfRenderWindow* window, myWindowInfo window_info, myPlayer *player, myObject floor) {
 
+    // Récupère la position du joueur
     sfVector2f position = sfSprite_getPosition(player->object.sprite);
 
+    // Applique la gravité si le joueur ne touche pas le sol
     if(!check_collision(player->object.sprite, floor.sprite)) {
         player->velocity.y += GRAVITY * TIME;
     } else {
         sfFloatRect player_bounds = sfSprite_getGlobalBounds(player->object.sprite);
         sfFloatRect floor_bounds =  sfSprite_getGlobalBounds(floor.sprite);
-        position.y = floor_bounds.top - player_bounds.height;
         player->velocity.y = 0;
         player->on_jump = 0;
     }
