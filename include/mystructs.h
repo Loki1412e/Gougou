@@ -27,6 +27,7 @@
         int on_jump;
         float hp;
         int dash_ready;
+        float dash_cooldown_timer; 
     } myPlayer;
 
 
