@@ -9,7 +9,8 @@
 #define DASH_DECAY 0.9         // Décélération progressive après le dash
 
 void player_basics_movements(sfRenderWindow* window, myWindowInfo window_info, myPlayer *player, myObject floor) {
-    // Récupère la position actuelle du joueur
+
+    // Récupère la position du joueur
     sfVector2f position = sfSprite_getPosition(player->object.sprite);
 
     // Applique la gravité si le joueur ne touche pas le sol
@@ -84,7 +85,18 @@ void player_basics_movements(sfRenderWindow* window, myWindowInfo window_info, m
     position.x += player->velocity.x;
     position.y += player->velocity.y * TIME;
 
-    // Met à jour la position du sprite
+
+    
+
+    // Deplacements
+
+    if (sfKeyboard_isKeyPressed(sfKeyRight))
+        position.x += player->speed.x;
+
+    if (sfKeyboard_isKeyPressed(sfKeyLeft))
+        position.x -= player->speed.x;
+
+                
     sfSprite_setPosition(player->object.sprite, position);
     setup_sprite(window, player->object.texture, player->object.sprite, window_info);
 }
