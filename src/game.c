@@ -17,7 +17,7 @@ int game_view(sfRenderWindow* window, sfEvent event, myWindowInfo *window_info, 
 
     // Floor
     myObject floor;
-    if (create_sprite(&floor, "./assets/game/floor.png", (sfVector2f) {10., 2.})) { EXIT_DEBUG_TEXTURE };
+    if (create_sprite(&floor, "./assets/game/terre.png", (sfVector2f) {10., 2.})) { EXIT_DEBUG_TEXTURE };
 
     // Player
     myPlayer player = {
