@@ -22,11 +22,15 @@ int game_view(sfRenderWindow* window, sfEvent event, myWindowInfo *window_info, 
     // Player
     myPlayer player = {
         .on_jump = 0,
+        .dash_cooldown = 0,
+        .direction = RIGHT,
         .speed = (sfVector2f) { SPEED_X_player , SPEED_Y_player },
         .hp = HP_player
     };
     if (create_sprite(&(player.object), "./assets/game/player.gif", (sfVector2f) {0.4, 0.4})) { EXIT_DEBUG_TEXTURE };
     set_position_center(window, player.object.texture, player.object.sprite, *window_info);
+
+    int event_key_space = 0;
 
     // Start GAME LOOP
     while (sfRenderWindow_isOpen(window) && *program_step == GAME_step) {
@@ -49,7 +53,6 @@ int game_view(sfRenderWindow* window, sfEvent event, myWindowInfo *window_info, 
 
         
         /* PLAYER */
-        
         player_basics_movements(window, *window_info, &player, floor);
         
         // Mort par vide

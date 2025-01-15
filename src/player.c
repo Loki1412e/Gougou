@@ -30,15 +30,63 @@ void player_basics_movements(sfRenderWindow* window, myWindowInfo window_info, m
     position.y += player->velocity.y * TIME;
 
 
+        // Dash mais pas trop
+
+    // if (player->dash_duration)
+    //     player->dash_duration -= 1;
     
+    // else if (sfKeyboard_isKeyPressed(sfKeySpace)) {
+    //     player->dash_duration = 200;
+    //     dash = 100;
+    // }
 
-    // Deplacements
 
-    if (sfKeyboard_isKeyPressed(sfKeyRight))
-        position.x += player->speed.x;
+    if (((sfKeyboard_isKeyPressed(sfKeyRight) || sfKeyboard_isKeyPressed(sfKeyLeft)) && \
+        !(sfKeyboard_isKeyPressed(sfKeyRight) && sfKeyboard_isKeyPressed(sfKeyLeft))) && \
+        sfKeyboard_isKeyPressed(sfKeySpace) && \
+        !player->dash_cooldown
+    ) {
+        player->dash_duration = DASH_DURATION_player;
+        player->dash_cooldown = DASH_COOLDOWN_player;
+    }
 
-    if (sfKeyboard_isKeyPressed(sfKeyLeft))
-        position.x -= player->speed.x;
+    else if (player->dash_cooldown) {
+
+        player->dash_cooldown -= 1;
+
+        if (player->dash_duration) {
+
+        // printf("cool = %d\ndura = %d\n\n", player->dash_cooldown, player->dash_duration);
+        
+            player->dash_duration -= 1;
+        
+            switch (player->direction) {
+                case RIGHT:
+                    position.x += player->speed.x * DASH_SPEED_player;
+                    break;
+                
+                case LEFT:
+                    position.x -= player->speed.x * DASH_SPEED_player;
+                    break;
+            }
+        }
+    }
+
+    if (!player->dash_duration) {
+
+        // Deplacements
+
+        if (sfKeyboard_isKeyPressed(sfKeyRight)) {
+            position.x += player->speed.x;
+            player->direction = RIGHT;
+        }
+
+        if (sfKeyboard_isKeyPressed(sfKeyLeft)) {
+            position.x -= player->speed.x;
+            player->direction = LEFT;
+        }
+    
+    }
 
                 
     sfSprite_setPosition(player->object.sprite, position);
