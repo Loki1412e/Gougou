@@ -32,20 +32,12 @@ void player_basics_movements(sfRenderWindow* window, myWindowInfo window_info, m
 
         // Dash mais pas trop
 
-    // if (player->dash_duration)
-    //     player->dash_duration -= 1;
-    
-    // else if (sfKeyboard_isKeyPressed(sfKeySpace)) {
-    //     player->dash_duration = 200;
-    //     dash = 100;
-    // }
-
-
     if (((sfKeyboard_isKeyPressed(sfKeyRight) || sfKeyboard_isKeyPressed(sfKeyLeft)) && \
         !(sfKeyboard_isKeyPressed(sfKeyRight) && sfKeyboard_isKeyPressed(sfKeyLeft))) && \
         sfKeyboard_isKeyPressed(sfKeySpace) && \
         !player->dash_cooldown
     ) {
+        printf("oui\n");
         player->dash_duration = DASH_DURATION_player;
         player->dash_cooldown = DASH_COOLDOWN_player;
     }
