@@ -22,6 +22,7 @@ void player_basics_movements(sfRenderWindow* window, myWindowInfo window_info, m
         player->on_jump = 0;
     }
 
+    // Saut
     if(sfKeyboard_isKeyPressed(sfKeyUp) && player->on_jump == 0) {
         player->velocity.y = -JUMP_FORCE;
         player->on_jump = 1;
@@ -30,14 +31,15 @@ void player_basics_movements(sfRenderWindow* window, myWindowInfo window_info, m
     position.y += player->velocity.y * TIME;
 
 
-        // Dash mais pas trop
+    // Dash mais pas trop
+    // Apparement les boutons sfKeyLeft et sfKeySpace ne peuvent pas etre detecter en meme temps
+    // Donc pour dash le bouton sera : sfKeyLShift
 
     if (((sfKeyboard_isKeyPressed(sfKeyRight) || sfKeyboard_isKeyPressed(sfKeyLeft)) && \
         !(sfKeyboard_isKeyPressed(sfKeyRight) && sfKeyboard_isKeyPressed(sfKeyLeft))) && \
-        sfKeyboard_isKeyPressed(sfKeySpace) && \
+        sfKeyboard_isKeyPressed(sfKeyLShift) && \
         !player->dash_cooldown
     ) {
-        printf("oui\n");
         player->dash_duration = DASH_DURATION_player;
         player->dash_cooldown = DASH_COOLDOWN_player;
     }
@@ -66,7 +68,7 @@ void player_basics_movements(sfRenderWindow* window, myWindowInfo window_info, m
 
     if (!player->dash_duration) {
 
-        // Deplacements
+        // Deplacements : quand le joueur dash il ne peut pas bouger
 
         if (sfKeyboard_isKeyPressed(sfKeyRight)) {
             position.x += player->speed.x;
