@@ -28,9 +28,8 @@
         int dash_duration;
         int dash_cooldown;
         char direction; // voir #define dans le my.h
-        float hp;
         int can_dash;
-        float dash_cooldown;
+        float hp;
     } myPlayer;
 
 #endif
