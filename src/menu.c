@@ -59,12 +59,8 @@ int menu_view(sfRenderWindow* window, sfEvent event, myWindowInfo *window_info, 
 
 
     /* Cleanup Resources */
-
-    sfSprite_destroy(background.sprite);
-    sfTexture_destroy(background.texture);
-
-    sfSprite_destroy(start_btn.sprite);
-    sfTexture_destroy(start_btn.texture);
+    destroy_object(&background);
+    destroy_object(&start_btn);
 
     return 0;
 }

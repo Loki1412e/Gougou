@@ -94,13 +94,9 @@ int game_view(sfRenderWindow* window, sfEvent event, myWindowInfo *window_info, 
 
 
     /* Cleanup Resources */
-
-    sfSprite_destroy(floor.sprite);
-    sfTexture_destroy(floor.texture);
-
-    sfSprite_destroy(player.object.sprite);
-    sfTexture_destroy(player.object.texture);
-
+    destroy_object(&floor);
+    destroy_object(&player);
+    
     sfRenderWindow_setView(window, sfRenderWindow_getDefaultView(window));
     sfView_destroy(view);
 
