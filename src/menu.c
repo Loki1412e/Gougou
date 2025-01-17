@@ -21,9 +21,9 @@ int menu_view(sfRenderWindow* window, sfEvent event, myWindowInfo *window_info, 
     if (create_sprite(&settings_btn, "./assets/menu/settings.png", (sfVector2f) {0.3, 0.3})) { EXIT_DEBUG_TEXTURE }
     if (create_sprite(&quit_btn, "./assets/menu/quit.png", (sfVector2f) {0.3, 0.3})) { EXIT_DEBUG_TEXTURE }
 
-    sfSprite_setPosition(play_btn.sprite, (sfVector2f) {50, 150});
-    sfSprite_setPosition(settings_btn.sprite, (sfVector2f) {50, 250});
-    sfSprite_setPosition(quit_btn.sprite, (sfVector2f) {50, 350});
+    sfSprite_setPosition(play_btn.sprite, (sfVector2f) {80, 200});
+    sfSprite_setPosition(settings_btn.sprite, (sfVector2f) {80, 450});
+    sfSprite_setPosition(quit_btn.sprite, (sfVector2f) {80, 700});
 
     while (sfRenderWindow_isOpen(window) && *program_step == MENU_step) {
 

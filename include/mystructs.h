@@ -22,6 +22,7 @@
     typedef struct __my_player__ {
         myObject object;
         sfVector2f speed;
+        sfVector2f velocity;
         int on_jump;
         int dash_duration;
         int dash_cooldown;
