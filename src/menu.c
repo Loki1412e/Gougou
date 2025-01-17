@@ -1,6 +1,6 @@
 
 #include "../include/menu.h"
-
+#include "../include/sprites.h"
 
 int menu_view(sfRenderWindow* window, sfEvent event, myWindowInfo *window_info, int *program_step);
 
@@ -22,8 +22,8 @@ int menu_view(sfRenderWindow* window, sfEvent event, myWindowInfo *window_info, 
     if (create_sprite(&quit_btn, "./assets/menu/quit.png", (sfVector2f) {0.3, 0.3})) { EXIT_DEBUG_TEXTURE }
 
     sfSprite_setPosition(play_btn.sprite, (sfVector2f) {50, 100});
-    sfSprite_setPosition(settings_btn.sprite, (sfVector2f) {50, 100});
-    sfSprite_setPosition(quit_btn.sprite, (sfVector2f) {50, 100});
+    sfSprite_setPosition(settings_btn.sprite, (sfVector2f) {50, 200});
+    sfSprite_setPosition(quit_btn.sprite, (sfVector2f) {50, 300});
 
     while (sfRenderWindow_isOpen(window) && *program_step == MENU_step) {
 
@@ -39,7 +39,7 @@ int menu_view(sfRenderWindow* window, sfEvent event, myWindowInfo *window_info, 
                 bounds_settings_btn = sfSprite_getGlobalBounds(settings_btn.sprite) ;
                 bounds_quit_btn = sfSprite_getGlobalBounds(quit_btn.sprite);
 
-                if (sfFloatRect_contains(&bounds_play_btn, mouse_position.x; mouse_position.y)) {
+                if (sfFloatRect_contains(&bounds_play_btn, mouse_position.x, mouse_position.y)) {
                     *program_step = GAME_step; // Aller au jeu
                 } else if (sfFloatRect_contains(&bounds_settings_btn, mouse_position.x, mouse_position.y)) {
                     *program_step = SETTINGS_step; // Page des paramètres

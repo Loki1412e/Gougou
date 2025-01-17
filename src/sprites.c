@@ -43,7 +43,7 @@ void setup_sprite(sfRenderWindow* window, sfTexture* texture, sfSprite* sprite, 
     // on dessine le sprite
     sfRenderWindow_drawSprite(window, sprite, NULL);
                 
-    // on remet les valeurs scale initiales
+    // on remet les valeurs scale initiales 
     sfSprite_setScale(sprite, (sfVector2f) {
         scale.x,
         scale.y
