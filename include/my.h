@@ -29,7 +29,7 @@
     /* GRAVITY */
     #define GRAVITY 9.81
     #define JUMP_FORCE  80
-    #define TIME 1.0/FPS
+    #define TIME (1.0 / 32.0)
     
 
     /* Program Steps */
