@@ -21,7 +21,7 @@ int game_view(sfRenderWindow* window, sfEvent event, myWindowInfo *window_info, 
 
     // Player
     myPlayer player = {
-        .on_jump = 0,
+        .on_jump = 1,
         .dash_cooldown = 0,
         .direction = RIGHT,
         .speed = (sfVector2f) { SPEED_X_player , SPEED_Y_player },
