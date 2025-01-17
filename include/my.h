@@ -21,8 +21,6 @@
     #define EXIT_DEBUG_TEXTURE fprintf(stderr, "\n%s\n%d | TEXTURE ERROR -> EXIT_FAILURE\n\n", __FILE__, __LINE__); return 1;
     #define EXIT_DEBUG_MAP fprintf(stderr, "\n%s\n%d | MAP ERROR -> EXIT_FAILURE\n\n", __FILE__, __LINE__); return 1;
     
-    /* FPS */
-    #define FPS 60.0
 
     /* Program Steps */
     #define MENU_step 0

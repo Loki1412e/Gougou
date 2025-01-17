@@ -4,6 +4,10 @@
 
     #include "my.h"
     
+    
+    /* FPS */
+    #define FPS 60.0
+
 
     /* Window Resolution */
     // scale par rapport à 1920x1200
