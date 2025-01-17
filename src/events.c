@@ -23,21 +23,22 @@ int event_behavior(sfRenderWindow *window, sfEvent event, myWindowInfo *window_i
             case sfKeyNum2:
                 *program_step = GAME_step;
                 break;
-                
+            
             case sfKeyNum3:
+                *program_step = TMP_game;
+                break;
+                
+            case sfKeyNum4:
                 *program_step = DEATHMENU_step;
                 break;
+
         }
                 
         // NUMP PAD -> voir screen.c
         if (resize_screen(event.key.code, window_info)) {
-
             sfRenderWindow_destroy(window);
-
             window = sfRenderWindow_create((sfVideoMode) {window_info->size.x, window_info->size.y, 32}, "Googoo Gagaga", sfClose, NULL);
-            
             if (!window) return 1;
-            
             return 2;
         }
     }
