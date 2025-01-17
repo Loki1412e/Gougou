@@ -89,6 +89,28 @@ int check_collision(sfSprite* A, sfSprite* B) {
 }
 
 int create_button(myButton *button, char *normal_way, char *hovered_path, char *clicked_path, sfVector2f scale) {
-    button->texture_normal = sfTexture_createFromFile
+    button->texture_normal = sfTexture_createFromFile(normal_way, NULL);
+    button->texutre_hovered = sfTexture_createFromFile(hovered_path, NULL);
+    button->texture_clicked = sfTexture_createFromFile(clicked_path, NULL);
 
+    if (!button->texture_normal || !button->texutre_hovered || !button->texture_clicked) {
+        return 1;
+    }
+
+    button->sprite = sfSprite_create();
+    sfSprite_setTexture(button->sprite, button->texture_normal, sfTrue);
+    sfSprite_setScale(button->sprite, scale);
+
+    return 0;
+}
+
+void destroy_button(myButton *button) {
+    sfTexture_destroy(button->texture_normal);
+    sfTexture_destroy(button->texutre_hovered);
+    sfTexture_destroy(button->texture_clicked);
+    sfSprite_destroy(button->sprite);
+}
+
+void draw_button(sfRenderWindow *window, myButton *button) {
+    sfRenderWindow_drawSprite(window, button->sprite, NULL);
 }

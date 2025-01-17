@@ -45,3 +45,7 @@ int event_behavior(sfRenderWindow *window, sfEvent event, myWindowInfo *window_i
 
     return 0;
 }
+
+void handle_button_event(myButton *button, sfRenderWindow *window, sfEvent *event) {
+    sfVector2i m
+}
