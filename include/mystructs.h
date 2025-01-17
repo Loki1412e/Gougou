@@ -28,7 +28,7 @@
         int can_dash;         
         float dash_cooldown;  
         float dash_timer;  
-        int velocity;   
+        sfVector2f velocity;   
     } myPlayer;
 
 #endif
