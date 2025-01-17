@@ -31,7 +31,7 @@ int tmp_game(sfRenderWindow* window, sfEvent event, myWindowInfo *window_info, i
 
 
     /* Start GAME LOOP */
-    while (sfRenderWindow_isOpen(window) && *program_step == GAME_step) {
+    while (sfRenderWindow_isOpen(window) && *program_step == TMP_game) {
 
         // Process events
         while (sfRenderWindow_pollEvent(window, &event)) {
@@ -62,11 +62,10 @@ int tmp_game(sfRenderWindow* window, sfEvent event, myWindowInfo *window_info, i
     
     }
 
-    // Nettoyage
+    // Free Map
     sfSprite_destroy(map_tile);
     freeAllTextures(all_textures);
     freeMap(map, map_dimensions.y);
-    sfRenderWindow_destroy(window);
     
     // Free player
     destroy_object(&player);
