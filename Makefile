@@ -42,7 +42,7 @@ perf: all
 
 # Nettoyage de l'exécutable
 clean:
-	rm ./output/$(NAME)
+	- rm ./output/$(NAME)
 
 # Suppression de l'exécutable et autres fichiers temporaires
 fclean:
