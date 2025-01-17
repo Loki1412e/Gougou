@@ -88,14 +88,19 @@ void player_basics_movements(sfRenderWindow* window, myWindowInfo window_info, m
 
     
 
-    // Deplacements
+        // Deplacements
 
-    if (sfKeyboard_isKeyPressed(sfKeyRight))
-        position.x += player->speed.x;
+        if (sfKeyboard_isKeyPressed(sfKeyRight)) {
+            position.x += player->speed.x;
+            player->direction = RIGHT;
+        }
 
-    if (sfKeyboard_isKeyPressed(sfKeyLeft))
-        position.x -= player->speed.x;
-
+        if (sfKeyboard_isKeyPressed(sfKeyLeft)) {
+            position.x -= player->speed.x;
+            player->direction = LEFT;
+        }
+    
+    }
                 
     sfSprite_setPosition(player->object.sprite, position);
     setup_sprite(window, player->object.texture, player->object.sprite, window_info);

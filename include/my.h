@@ -25,12 +25,23 @@
     #define MENU_step 0
     #define GAME_step 1
     #define DEATHMENU_step 2
+    #define SETTINGS_step 3
 
 
     /* Attributs Player */
     #define JUMP_player 10.0
     #define SPEED_X_player 0.6
     #define SPEED_Y_player 1.6
-    #define HP_player 100 
+    #define DASH_DURATION_player 200
+    #define DASH_SPEED_player 10
+    #define DASH_COOLDOWN_player (DASH_DURATION_player * 10)
+    #define HP_player 100
+
+
+    /* Directions */
+    #define TOP 't'
+    #define BOTTOM 'b'
+    #define LEFT 'l'
+    #define RIGHT 'r'
 
 #endif

@@ -20,12 +20,15 @@
     typedef struct __my_player__ {
         myObject object;
         sfVector2f speed;
-        sfVector2f velocity;  
-        int on_jump;          
+        int on_jump;
+        int dash_duration;
+        float dash_cooldown;
+        char direction; // voir #define dans le my.h
         float hp;
         int can_dash;         
         float dash_cooldown;  
-        float dash_timer;     
+        float dash_timer;  
+        int velocity;   
     } myPlayer;
 
 #endif

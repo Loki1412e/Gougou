@@ -90,7 +90,7 @@ pip install gdown
 > donc si besoin : supprime le dossier ./assets puis entre la commande pour recharger les assets
 
 ```bash
-py -m gdown --folder https://drive.google.com/drive/folders/1eYqVpx6OT2iBl6RiNMA0K5kwdwIUOAKj?usp=sharing
+gdown --folder https://drive.google.com/drive/folders/1eYqVpx6OT2iBl6RiNMA0K5kwdwIUOAKj?usp=sharing
 ```
 
 ## Utilisation
