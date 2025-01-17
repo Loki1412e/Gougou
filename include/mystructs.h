@@ -25,8 +25,7 @@
         float dash_cooldown;
         char direction; // voir #define dans le my.h
         float hp;
-        int can_dash;         
-        float dash_cooldown;  
+        int can_dash;           
         float dash_timer;  
         sfVector2f velocity;   
     } myPlayer;
