@@ -15,8 +15,15 @@
     // Define an object
     typedef struct __my_object__ {
         sfTexture* texture;
-        sfSprite* sprite;
+        sfSprite* sprite;         
     } myObject;
+
+    typedef struct __my_button__ {
+        sfTexture* texture_normal;
+        sfTexture* texutre_hovered;
+        sfTexture* texture_clicked;
+        sfSprite* sprite;
+    } myButton;
 
     // Define Player
     typedef struct __my_player__ {

@@ -87,3 +87,8 @@ int check_collision(sfSprite* A, sfSprite* B) {
     // verifie si les rectangles se chevauchent
     return sfFloatRect_intersects(&bounds_A, &bounds_B, NULL);
 }
+
+int create_button(myButton *button, char *normal_way, char *hovered_path, char *clicked_path, sfVector2f scale) {
+    button->texture_normal = sfTexture_createFromFile
+
+}

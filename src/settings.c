@@ -36,6 +36,7 @@ int settings_view(sfRenderWindow* window, sfEvent event, myWindowInfo *window_in
         sfRenderWindow_clear(window, sfBlack);
 
         // Dessine le background
+        set_position_center(window, background.texture, background.sprite, *window_info);
         setup_sprite(window, background.texture, background.sprite, *window_info);
 
         // Dessine le bouton "Retour"
