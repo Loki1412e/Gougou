@@ -19,12 +19,14 @@
     /* Debug */
     #define EXIT_DEBUG_WINDOW fprintf(stderr, "\n%s\n%d | WINDOW ERROR -> EXIT_FAILURE\n\n", __FILE__, __LINE__); return 1;
     #define EXIT_DEBUG_TEXTURE fprintf(stderr, "\n%s\n%d | TEXTURE ERROR -> EXIT_FAILURE\n\n", __FILE__, __LINE__); return 1;
+    #define EXIT_DEBUG_MAP fprintf(stderr, "\n%s\n%d | MAP ERROR -> EXIT_FAILURE\n\n", __FILE__, __LINE__); return 1;
     
 
     /* Program Steps */
     #define MENU_step 0
     #define GAME_step 1
-    #define DEATHMENU_step 2
+    #define TMP_game  2
+    #define DEATHMENU_step 3
 
 
     /* Attributs Player */
