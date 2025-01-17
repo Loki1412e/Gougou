@@ -41,6 +41,10 @@ int main(int argc, char **argv) {
                 if (tmp_game(window, event, &window_info, &program_step)) return EXIT_FAILURE;
                 break;
 
+            case SETTINGS_step:
+                if (settings_view(window, event, &window_info, &program_step)) return EXIT_FAILURE;
+                break;
+
             case DEATHMENU_step:
                 if (deathmenu_view(window, &event, &window_info, &program_step)) return EXIT_FAILURE;
                 break;

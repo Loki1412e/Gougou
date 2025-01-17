@@ -1,3 +1,4 @@
+// Dans mystructs.h
 #ifndef MYSTRUCTS_H_
     #define MYSTRUCTS_H_
 
@@ -11,19 +12,16 @@
         sfVector2f scale;
     } myWindowInfo;
 
-
     // Define an object
     typedef struct __my_object__ {
         sfTexture* texture;
         sfSprite* sprite;
     } myObject;
 
-
     // Define Player
     typedef struct __my_player__ {
         myObject object;
         sfVector2f speed;
-        sfVector2f velocity;
         int on_jump;
         int dash_duration;
         int dash_cooldown;

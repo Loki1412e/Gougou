@@ -25,8 +25,9 @@
     /* Program Steps */
     #define MENU_step 0
     #define GAME_step 1
-    #define TMP_game  2
-    #define DEATHMENU_step 3
+    #define DEATHMENU_step 2
+    #define SETTINGS_step 3
+    #define TMP_game 4
 
 
     /* Attributs Player */
