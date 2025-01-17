@@ -1,9 +1,5 @@
 #include "../include/player.h"
 
-#define GRAVITY 9.81
-#define JUMP_FORCE  80
-#define TIME 1.0/30.0
-
 void player_basics_movements(sfRenderWindow* window, myWindowInfo window_info, myPlayer *player, myObject floor);
 
 
@@ -81,7 +77,6 @@ void player_basics_movements(sfRenderWindow* window, myWindowInfo window_info, m
         }
     
     }
-
                 
     sfSprite_setPosition(player->object.sprite, position);
     setup_sprite(window, player->object.texture, player->object.sprite, window_info);
