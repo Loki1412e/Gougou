@@ -23,6 +23,7 @@ NO_TERMINAL =
 
 # Compilation et Liaison du projet
 all:
+	make clean
 	windres rc/icon.rc -o rc/icon.o
 	gcc $(SRC) ./rc/icon.o -o ./output/$(NAME) -I$(INCLUDE_DIR) -L$(LIB_DIR) $(CFLAGS) $(CSFML) $(NO_TERMINAL)
 
@@ -41,7 +42,7 @@ perf: all
 
 # Nettoyage de l'exécutable
 clean:
-	rm .\$(NAME)
+	rm ./output/$(NAME)
 
 # Suppression de l'exécutable et autres fichiers temporaires
 fclean:
