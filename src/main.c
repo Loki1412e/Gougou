@@ -16,7 +16,7 @@ int main(int argc, char **argv) {
     if (!window) { EXIT_DEBUG_WINDOW }
 
     // Limite les fps, max fps = FPS
-    // sfRenderWindow_setFramerateLimit(window, FPS);
+    sfRenderWindow_setFramerateLimit(window, FPS);
 
 
     /* Start GAME LOOP */
