@@ -24,6 +24,12 @@
     
     /* FPS */
     #define FPS 60.0
+
+
+    /* GRAVITY */
+    #define GRAVITY 9.81
+    #define JUMP_FORCE  80
+    #define TIME 1.0/FPS
     
 
     /* Program Steps */
