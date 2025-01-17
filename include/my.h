@@ -13,7 +13,7 @@
     #include <SFML/System/Clock.h>
     #include <SFML/Audio.h>
     // Mes structs
-    #include "../include/mystructs.h"
+    #include "mystructs.h"
 
 
     /* Debug */

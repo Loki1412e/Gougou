@@ -1,7 +1,7 @@
 #ifndef SPRITES_H_
     #define SPRITES_H_
 
-    #include "../include/my.h"
+    #include "my.h"
 
     int create_sprite(myObject *object, char *texure_path, sfVector2f scale);
     void destroy_object(myObject *object);

@@ -1,15 +1,15 @@
 #ifndef MAIN_H_
     #define MAIN_H_
 
-    #include "../include/my.h"
-    #include "../include/mystructs.h"
+    #include "my.h"
+    #include "mystructs.h"
 
-    #include "../include/events.h"
-    #include "../include/screen.h"
-    #include "../include/sprites.h"
+    #include "events.h"
+    #include "screen.h"
+    #include "sprites.h"
     
-    #include "../include/menu.h"
-    #include "../include/game.h"
-    #include "../include/deathmenu.h"
+    #include "menu.h"
+    #include "game.h"
+    #include "deathmenu.h"
 
 #endif

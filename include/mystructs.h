@@ -2,7 +2,7 @@
     #define MYSTRUCTS_H_
 
 
-    #include "../include/my.h"
+    #include "my.h"
 
 
     // Window informations
