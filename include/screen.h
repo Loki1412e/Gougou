@@ -3,10 +3,6 @@
 
 
     #include "my.h"
-    
-    
-    /* FPS */
-    #define FPS 60.0
 
 
     /* Window Resolution */
