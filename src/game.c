@@ -71,7 +71,7 @@ int game_view(sfRenderWindow* window, sfEvent event, myWindowInfo *window_info, 
 
         // Recharge la camera a partir du Player
         sfView_setSize(view, (sfVector2f) { window_info->size.x , window_info->size.y });
-        sfView_setCenter(view, (sfVector2f) { sfSprite_getPosition(player.object.sprite).x , window_info->size.y / 2. });
+        sfView_setCenter(view, (sfVector2f) { sfSprite_getPosition(player.object.sprite).x , sfSprite_getPosition(player.object.sprite).y - window_info->size.y / 12. });
         sfRenderWindow_setView(window, view);
 
 
