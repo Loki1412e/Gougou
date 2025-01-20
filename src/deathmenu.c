@@ -4,7 +4,7 @@
 int deathmenu_view(sfRenderWindow* window, sfEvent *event, myWindowInfo *window_info, int *program_step) {
     // Background
     myObject background;
-    if (create_sprite(&background, "./assets/deathmenu/background.png", (sfVector2f) {1., 1.})) { EXIT_DEBUG_TEXTURE }
+    if (create_sprite(&background, "./assets/deathmenu/background.png", (sfVector2f) {0.8, 0.8})) { EXIT_DEBUG_TEXTURE }
 
     // Boutons
     myButton retry_btn, menu_btn, quit_btn, settings_btn;
@@ -19,8 +19,6 @@ int deathmenu_view(sfRenderWindow* window, sfEvent *event, myWindowInfo *window_
         // Process events
         while (sfRenderWindow_pollEvent(window, event)) {
             if (event_behavior(window, *event, window_info, program_step) == 1) { EXIT_DEBUG_WINDOW }
-            
-
 
             // Gérer les événements des boutons
             handle_button_event(&retry_btn, window, event, program_step, GAME_step);  // Recommencer le jeu
