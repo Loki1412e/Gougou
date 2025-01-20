@@ -53,7 +53,7 @@ int game_view(sfRenderWindow* window, sfEvent event, myWindowInfo *window_info, 
 
         
         /* PLAYER */
-        player_basics_movements(window, *window_info, &player, floor);
+        // player_basics_movements(window, *window_info, &player, floor);
         
         // Mort par vide
         size = sfTexture_getSize(player.object.texture);

@@ -1,19 +1,17 @@
 #include "../include/player.h"
 
-void player_basics_movements(sfRenderWindow* window, myWindowInfo window_info, myPlayer *player, myObject floor);
+void player_basics_movements(sfRenderWindow* window, myWindowInfo window_info, myPlayer *player, int** map, sfVector2u map_dimensions, sfSprite* map_tile);
 
 
-void player_basics_movements(sfRenderWindow* window, myWindowInfo window_info, myPlayer *player, myObject floor) {
+void player_basics_movements(sfRenderWindow* window, myWindowInfo window_info, myPlayer *player, int** map, sfVector2u map_dimensions, sfSprite* map_tile) {
 
     // Récupère la position du joueur
     sfVector2f position = sfSprite_getPosition(player->object.sprite);
 
     // Applique la gravité si le joueur ne touche pas le sol
-    if(!check_collision(player->object.sprite, floor.sprite)) {
+    if(!check_collisionMap(map, map_dimensions, map_tile, player->object, BOTTOM)) {
         player->velocity.y += GRAVITY * TIME;
     } else {
-        sfFloatRect player_bounds = sfSprite_getGlobalBounds(player->object.sprite);
-        sfFloatRect floor_bounds =  sfSprite_getGlobalBounds(floor.sprite);
         player->velocity.y = 0;
         player->on_jump = 0;
     }
@@ -67,13 +65,19 @@ void player_basics_movements(sfRenderWindow* window, myWindowInfo window_info, m
         // Deplacements : quand le joueur dash il ne peut pas bouger
 
         if (sfKeyboard_isKeyPressed(sfKeyRight)) {
-            position.x += player->speed.x;
+            
             player->direction = RIGHT;
+            
+            if (!check_collisionMap(map, map_dimensions, map_tile, player->object, RIGHT))
+                position.x += player->speed.x;
         }
 
         if (sfKeyboard_isKeyPressed(sfKeyLeft)) {
-            position.x -= player->speed.x;
+            
             player->direction = LEFT;
+            
+            if (!check_collisionMap(map, map_dimensions, map_tile, player->object, LEFT))
+                position.x -= player->speed.x;
         }
     
     }

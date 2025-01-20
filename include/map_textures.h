@@ -10,11 +10,12 @@
 
 
     // Faut penser a update le total a chaque fois
-    #define TOTAL_COUNT_MAP_TEXTURES 4
-    //      VOID_TEXTURE    0
-    #define TERRE_TEXTURE   1
-    #define MUR_TEXTURE     2
-    #define TEST_TEXTURE    3
+    #define TOTAL_COUNT_MAP_TEXTURES 5
+    #define VOID_TEXTURE    0
+    #define PLAYER_SPAWN    1
+    #define TERRE_TEXTURE   2
+    #define MUR_TEXTURE     3
+    #define TEST_TEXTURE    4
 
 
     int allTexturesAreLoad(sfTexture** textures);

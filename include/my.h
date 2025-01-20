@@ -20,6 +20,7 @@
     #define EXIT_DEBUG_WINDOW fprintf(stderr, "\n%s\n%d | WINDOW ERROR -> EXIT_FAILURE\n\n", __FILE__, __LINE__); return 1;
     #define EXIT_DEBUG_TEXTURE fprintf(stderr, "\n%s\n%d | TEXTURE ERROR -> EXIT_FAILURE\n\n", __FILE__, __LINE__); return 1;
     #define EXIT_DEBUG_MAP fprintf(stderr, "\n%s\n%d | MAP ERROR -> EXIT_FAILURE\n\n", __FILE__, __LINE__); return 1;
+    #define EXIT_DEBUG_SPAWN_PLAYER fprintf(stderr, "\n%s\n%d | SPAWN PLAYER ERROR -> EXIT_FAILURE\n\n", __FILE__, __LINE__); return 1;
     
     
     /* FPS */
@@ -28,7 +29,7 @@
 
     /* GRAVITY */
     #define GRAVITY 9.81
-    #define JUMP_FORCE  80
+    #define JUMP_FORCE  40
     #define TIME (1.0 / 32.0)
     
 

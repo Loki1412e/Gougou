@@ -44,7 +44,7 @@ int tmp_game(sfRenderWindow* window, sfEvent event, myWindowInfo *window_info, i
         .hp = HP_player
     };
     if (create_sprite(&(player.object), "./assets/player/Foxy/Sprites/idle/player-idle-1.png", (sfVector2f) {4, 4})) { EXIT_DEBUG_TEXTURE };
-    set_position_center(window, player.object.texture, player.object.sprite, *window_info);
+    if (set_player_spawn(map, map_dimensions, &(player.object))) { EXIT_DEBUG_SPAWN_PLAYER };
 
 
     /* Start GAME LOOP */
@@ -70,18 +70,18 @@ int tmp_game(sfRenderWindow* window, sfEvent event, myWindowInfo *window_info, i
         
         // Recharge la camera a partir du Player
         sfView_setSize(view, (sfVector2f) { window_info->size.x , window_info->size.y });
-        sfView_setCenter(view, (sfVector2f) { sfSprite_getPosition(player.object.sprite).x , window_info->size.y / 2. });
+        sfView_setCenter(view, (sfVector2f) { sfSprite_getPosition(player.object.sprite).x , sfSprite_getPosition(player.object.sprite).y - window_info->size.y / 16 });
         sfRenderWindow_setView(window, view);
 
 
         // Dessine la map
-        drawMap(window, map, map_dimensions, map_tile, all_textures);       
+        drawMap(window, map, map_dimensions, map_tile, all_textures);
 
         // Dessine le Joueur
         setup_sprite(window, player.object.texture, player.object.sprite, *window_info);
 
         // Pour bouger le joueur
-        // player_basics_movements(window, window_info, &player);
+        player_basics_movements(window, *window_info, &player, map, map_dimensions, map_tile);
 
         sfRenderWindow_display(window);
     
