@@ -151,3 +151,4 @@ int drawMap(sfRenderWindow* window, int** map, sfVector2u map_dimensions, sfSpri
         }
     }
 }
+
