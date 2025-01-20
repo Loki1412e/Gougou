@@ -3,7 +3,6 @@
 
     #include "my.h"
     #include "events.h"
-    #include "sprites.h"
 
     int deathmenu_view(sfRenderWindow* window, sfEvent *event, myWindowInfo *window_info, int *program_step);
 

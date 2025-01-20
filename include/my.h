@@ -28,6 +28,7 @@
     #define DEATHMENU_step 2
     #define SETTINGS_step 3
     #define TMP_game 4
+    #define QUIT_step 5
 
 
     /* Attributs Player */

@@ -34,6 +34,7 @@ int game_view(sfRenderWindow* window, sfEvent event, myWindowInfo *window_info, 
 
     // Start GAME LOOP
     while (sfRenderWindow_isOpen(window) && *program_step == GAME_step) {
+    printf("Current program step: %d\n", *program_step);
 
 
         // Process events

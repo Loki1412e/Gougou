@@ -1,5 +1,6 @@
 
 #include "../include/sprites.h"
+#include "../include/button.h"
 
 
 int create_sprite(myObject *object, char *texure_path, sfVector2f scale);
@@ -88,25 +89,33 @@ int check_collision(sfSprite* A, sfSprite* B) {
     return sfFloatRect_intersects(&bounds_A, &bounds_B, NULL);
 }
 
-int create_button(myButton *button, char *normal_way, char *hovered_path, char *clicked_path, sfVector2f scale) {
-    button->texture_normal = sfTexture_createFromFile(normal_way, NULL);
-    button->texutre_hovered = sfTexture_createFromFile(hovered_path, NULL);
+int create_button(myButton *button, char *normal_path, char *hovered_path, char *clicked_path, sfVector2f scale, sfVector2f position) {
+    button->texture_normal = sfTexture_createFromFile(normal_path, NULL);
+    button->texture_hovered = sfTexture_createFromFile(hovered_path, NULL);
     button->texture_clicked = sfTexture_createFromFile(clicked_path, NULL);
 
-    if (!button->texture_normal || !button->texutre_hovered || !button->texture_clicked) {
+    if (!button->texture_normal || !button->texture_hovered || !button->texture_clicked) {
         return 1;
     }
 
     button->sprite = sfSprite_create();
+    if (!button->sprite) {
+        return 1;
+    }
+
     sfSprite_setTexture(button->sprite, button->texture_normal, sfTrue);
     sfSprite_setScale(button->sprite, scale);
+    button->position = position;
+    sfSprite_setPosition(button->sprite, position);
 
     return 0;
 }
 
+
+
 void destroy_button(myButton *button) {
     sfTexture_destroy(button->texture_normal);
-    sfTexture_destroy(button->texutre_hovered);
+    sfTexture_destroy(button->texture_hovered);
     sfTexture_destroy(button->texture_clicked);
     sfSprite_destroy(button->sprite);
 }

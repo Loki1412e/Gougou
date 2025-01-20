@@ -30,7 +30,7 @@ int main(int argc, char **argv) {
         switch (program_step) {
 
             case MENU_step:
-                if (menu_view(window, event, &window_info, &program_step)) return EXIT_FAILURE;
+                if (menu_view(window, &event, &window_info, &program_step)) return EXIT_FAILURE;
                 break;
             
             case GAME_step:
@@ -42,7 +42,7 @@ int main(int argc, char **argv) {
                 break;
 
             case SETTINGS_step:
-                if (settings_view(window, event, &window_info, &program_step)) return EXIT_FAILURE;
+                if (settings_view(window, &event, &window_info, &program_step)) return EXIT_FAILURE;
                 break;
 
             case DEATHMENU_step:

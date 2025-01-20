@@ -20,9 +20,11 @@
 
     typedef struct __my_button__ {
         sfTexture* texture_normal;
-        sfTexture* texutre_hovered;
+        sfTexture* texture_hovered;
         sfTexture* texture_clicked;
         sfSprite* sprite;
+        sfVector2f position;
+        sfVector2f scale;
     } myButton;
 
     // Define Player

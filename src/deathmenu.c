@@ -1,78 +1,60 @@
-
 #include "../include/deathmenu.h"
-
-
-int deathmenu_view(sfRenderWindow* window, sfEvent *event, myWindowInfo *window_info, int *program_step);
-
+#include "../include/button.h"
 
 int deathmenu_view(sfRenderWindow* window, sfEvent *event, myWindowInfo *window_info, int *program_step) {
-
-    sfVector2i mouse_position;
-    sfFloatRect bounds_retry_btn, bounds_menu_btn, bounds_quit_btn;
-
     // Background
     myObject background;
     if (create_sprite(&background, "./assets/deathmenu/background.png", (sfVector2f) {1., 1.})) { EXIT_DEBUG_TEXTURE }
 
     // Boutons
-    myObject retry_btn, menu_btn, quit_btn;
-  
-    if(create_sprite(&retry_btn, "./assets/deathmenu/retry.png", (sfVector2f) {0.3, 0.3})) { EXIT_DEBUG_TEXTURE }
-    if(create_sprite(&menu_btn, "./assets/deathmenu/menu.png", (sfVector2f) {0.3, 0.3})) { EXIT_DEBUG_TEXTURE }
-    if(create_sprite(&quit_btn, "./assets/deathmenu/quit.png", (sfVector2f) {0.3, 0.3})) { EXIT_DEBUG_TEXTURE }
+    myButton retry_btn, menu_btn, quit_btn, settings_btn;
+    if (create_button(&retry_btn, "./assets/deathmenu/retry_normal.png", "./assets/deathmenu/retry_hovered.png", "./assets/deathmenu/retry_clicked.png", (sfVector2f) {8., 8.}, (sfVector2f) {100, 100})) { EXIT_DEBUG_TEXTURE }
+    if (create_button(&menu_btn, "./assets/deathmenu/menu_normal.png", "./assets/deathmenu/menu_hovered.png", "./assets/deathmenu/menu_clicked.png", (sfVector2f) {8., 8.}, (sfVector2f) {100, 350})) { EXIT_DEBUG_TEXTURE }
+    if (create_button(&settings_btn, "./assets/deathmenu/settings_normal.png", "./assets/deathmenu/settings_hovered.png", "./assets/deathmenu/settings_clicked.png", (sfVector2f) {8., 8.}, (sfVector2f) {100, 600})) { EXIT_DEBUG_TEXTURE }
+    if (create_button(&quit_btn, "./assets/deathmenu/quit_normal.png", "./assets/deathmenu/quit_hovered.png", "./assets/deathmenu/quit_clicked.png", (sfVector2f) {8., 8.}, (sfVector2f) {100, 850})) { EXIT_DEBUG_TEXTURE }
+    
 
-    sfSprite_setPosition(retry_btn.sprite, (sfVector2f) {100, 400});
-    sfSprite_setPosition(menu_btn.sprite, (sfVector2f) {100, 500});
-    sfSprite_setPosition(quit_btn.sprite, (sfVector2f) {100, 600});
 
     while (sfRenderWindow_isOpen(window) && *program_step == DEATHMENU_step) {
-
-
         // Process events
         while (sfRenderWindow_pollEvent(window, event)) {
-            if (event_behavior(window, *event, window_info, program_step) == 1) { EXIT_DEBUG_WINDOW };
+            if (event_behavior(window, *event, window_info, program_step) == 1) { EXIT_DEBUG_WINDOW }
+            printf("Current program step: %d\n", *program_step);
 
-            // Si clique sur bouton
-            if (event->type == sfEvtMouseButtonPressed && event->mouseButton.button == sfMouseLeft) {
-                mouse_position = sfMouse_getPositionRenderWindow(window);
-               
-                bounds_retry_btn = sfSprite_getGlobalBounds(retry_btn.sprite);
-                bounds_menu_btn = sfSprite_getGlobalBounds(menu_btn.sprite);
-                bounds_quit_btn = sfSprite_getGlobalBounds(quit_btn.sprite);
 
-                if (sfFloatRect_contains(&bounds_retry_btn, mouse_position.x, mouse_position.y)) {
-                    *program_step = GAME_step; // Recommencer le jeu
-                } else if (sfFloatRect_contains(&bounds_menu_btn, mouse_position.x, mouse_position.y)) {
-                    *program_step = SETTINGS_step; // Retourner au menu
-                } else if (sfFloatRect_coutains(&bounds_quit_btn, mouse_position.x, mouse_position.y)) {
-                    sfRenderWindow_close(window); // Quitter le jeu
-                }
-            }
+            // Gérer les événements des boutons
+            handle_button_event(&retry_btn, window, event, program_step, GAME_step);  // Recommencer le jeu
+            handle_button_event(&menu_btn, window, event, program_step, MENU_step);  // Retour au menu
+            handle_button_event(&quit_btn, window, event, program_step, QUIT_step);  // Quitter
+            handle_button_event(&settings_btn, window, event, program_step, SETTINGS_step); // Aller dans les parametres 
         }
 
-        
-        /* MAIN */
-
+        // Si l'utilisateur veut quitter
+        if (*program_step == QUIT_step) {
+            sfRenderWindow_close(window);
+        }
+        // Dessin
         sfRenderWindow_clear(window, sfBlack);
-                
+
         // Dessine le background
         set_position_center(window, background.texture, background.sprite, *window_info);
         setup_sprite(window, background.texture, background.sprite, *window_info);
-                
-        // Dessine les boutons
-        setup_sprite(window, retry_btn.texture, retry_btn.sprite, *window_info);
-        setup_sprite(window, menu_btn.texture, menu_btn.sprite, *window_info);
-        setup_sprite(window, quit_btn.texture, quit_btn.sprite, *window_info);
 
-        sfRenderWindow_display(window); // On recharge la window
-        
-    } // End GAME LOOP
+        // Dessine les boutons
+        sfRenderWindow_drawSprite(window, retry_btn.sprite, NULL);
+        sfRenderWindow_drawSprite(window, menu_btn.sprite, NULL);
+        sfRenderWindow_drawSprite(window, settings_btn.sprite, NULL);
+        sfRenderWindow_drawSprite(window, quit_btn.sprite, NULL);
+
+        sfRenderWindow_display(window); // Affichage
+    }
 
     /* Cleanup Resources */
     destroy_object(&background);
-    destroy_object(&retry_btn);
-    destroy_object(&menu_btn);
-    destroy_object(&quit_btn);
+    destroy_button(&retry_btn);
+    destroy_button(&menu_btn);
+    destroy_button(&settings_btn);
+    destroy_button(&quit_btn);
 
     return 0;
 }
