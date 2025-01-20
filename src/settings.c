@@ -18,7 +18,7 @@ int settings_view(sfRenderWindow* window, sfEvent *event, myWindowInfo *window_i
     
     while (sfRenderWindow_isOpen(window) && *program_step == SETTINGS_step) {
         // Gestion des événements
-        while (sfRenderWindow_pollEvent(window, &event)) {
+        while (sfRenderWindow_pollEvent(window, event)) {
             if (event_behavior(window, *event, window_info, program_step) == 1) { EXIT_DEBUG_TEXTURE }
             
 
