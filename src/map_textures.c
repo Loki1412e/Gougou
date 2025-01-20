@@ -11,7 +11,7 @@ sfVector2f normalizeScaleTexture(sfTexture* texture, size_t size);
 // Boolean
 int allTexturesAreLoad(sfTexture** textures) {
     
-    for (int i = 1; i < TOTAL_COUNT_MAP_TEXTURES; i++) {
+    for (int i = 2; i < TOTAL_COUNT_MAP_TEXTURES; i++) {
         if (!textures[i]) return 0;
     }
 
@@ -20,7 +20,7 @@ int allTexturesAreLoad(sfTexture** textures) {
 
 
 void freeAllTextures(sfTexture** textures) {
-    for(int i = 1; i < TOTAL_COUNT_MAP_TEXTURES; i++) sfTexture_destroy(textures[i]);
+    for(int i = 2; i < TOTAL_COUNT_MAP_TEXTURES; i++) sfTexture_destroy(textures[i]);
     free(textures);
 }
 
@@ -30,6 +30,7 @@ sfTexture** loadAllTextures() {
     sfTexture** all_textures = (sfTexture**) malloc(sizeof(sfTexture*) * TOTAL_COUNT_MAP_TEXTURES);
 
     all_textures[0] = NULL;
+    all_textures[1] = NULL;
     all_textures[TERRE_TEXTURE] = sfTexture_createFromFile("./assets/game/terre.png", NULL);
     all_textures[MUR_TEXTURE] = sfTexture_createFromFile("./assets/game/mur.png", NULL);
     all_textures[TEST_TEXTURE] = sfTexture_createFromFile("./assets/game/test.png", NULL);

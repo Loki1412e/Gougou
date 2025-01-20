@@ -3,6 +3,7 @@
 
     #include "my.h"
     #include "sprites.h"
+    #include "map.h"
 
     void applyTileGravity(int** map, sfVector2u map_dimensions, sfSprite* map_tile, myPlayer *player, sfVector2f* position);
     void player_TileMovements(sfRenderWindow* window, myWindowInfo window_info, myPlayer *player, int** map, sfVector2u map_dimensions, sfSprite* map_tile);

@@ -12,5 +12,4 @@
 
     int tmp_game(sfRenderWindow* window, sfEvent event, myWindowInfo *window_info, int *program_step);
 
-
 #endif

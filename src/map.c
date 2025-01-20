@@ -8,6 +8,8 @@ int** allocateMap(sfVector2u map_dimensions);
 void freeMap(int **map, int map_columns);
 int** use_map(char* file_path, sfVector2u* map_dimensions);
 int drawMap(sfRenderWindow* window, int** map, sfVector2u map_dimensions, sfSprite* map_tile, sfTexture **all_textures);
+int check_collisionMap(int** map, sfVector2u map_dimensions, sfSprite* map_tile, myObject object, char direction);
+int set_player_spawn(int** map, sfVector2u map_dimensions, myObject* player);
 
 
 int countLWithGetC(FILE * f) {
@@ -152,3 +154,96 @@ int drawMap(sfRenderWindow* window, int** map, sfVector2u map_dimensions, sfSpri
     }
 }
 
+
+// Boolean : Return 0 si pas collision et 1 si collision dans la direction indiqué (LEFT / RIGHT / TOP / BOTTOM)
+// Boolean : Return 0 si pas collision et 1 si collision dans la direction indiqué (LEFT / RIGHT / TOP / BOTTOM)
+int check_collisionMap(int** map, sfVector2u map_dimensions, sfSprite* map_tile, myObject object, char direction) {
+
+    sfVector2f obj_position = sfSprite_getPosition(object.sprite);
+    sfVector2f obj_scale = sfSprite_getScale(object.sprite);
+    sfVector2u obj_size = sfTexture_getSize(object.texture);
+
+    sfVector2f obj_coord_bot_left = {
+        obj_position.x,
+        obj_position.y + (obj_size.y * obj_scale.y) - TILE_SIZE
+    };
+
+    sfVector2u obj_coord_in_tile = { obj_coord_bot_left.x / TILE_SIZE , obj_coord_bot_left.y / TILE_SIZE};
+
+    sfSprite_setTextureRect(map_tile, (sfIntRect) { TILE_SIZE, TILE_SIZE, TILE_SIZE, TILE_SIZE });
+    sfVector2f map_tile_coord_in_game;
+
+    // printf("player in map = %.2f ; %.2f\n", obj_coord_bot_left.x, obj_coord_bot_left.y);
+    // printf("player in tile = %d ; %d\n", obj_coord_in_tile.x, obj_coord_in_tile.y);
+
+    char is_align = 0;
+
+    for (int y = obj_coord_in_tile.y - 2; y < obj_coord_in_tile.y + 2; y++) {
+        
+        // Si map[y] existe
+        if (y >= 0 && y < map_dimensions.y) {
+
+            for (int x = obj_coord_in_tile.x - 2; x < obj_coord_in_tile.x + 2; x++) {
+
+                // Si map[y][x] existe
+                if (x >= 0 && x < map_dimensions.x) {
+
+                    // printf("map[%d][%d] = %d\n", y, x, map[y][x]);
+
+                    switch (map[y][x]) {
+                        
+                        case TERRE_TEXTURE:
+                        case MUR_TEXTURE:
+                            
+                            map_tile_coord_in_game = (sfVector2f) { x * TILE_SIZE , y * TILE_SIZE };
+                            sfSprite_setPosition(map_tile, map_tile_coord_in_game);
+
+                            // Left && Right
+                            if ((direction == LEFT || direction == RIGHT) && \
+                                map_tile_coord_in_game.y <= obj_coord_bot_left.y && \
+                                map_tile_coord_in_game.y >= obj_position.y && \
+                                map_tile_coord_in_game.y + TILE_SIZE <= obj_coord_bot_left.y && \
+                                map_tile_coord_in_game.y + TILE_SIZE >= obj_position.y
+                            ) is_align = 1;
+
+                            if (direction == TOP && map_tile_coord_in_game.y < obj_coord_bot_left.y) is_align = 1;
+
+                            if (direction == BOTTOM && map_tile_coord_in_game.y > obj_coord_bot_left.y) is_align = 1;
+                            
+                            if (is_align && check_collision(map_tile, object.sprite)) return (int) direction;
+
+                            break;
+                    }
+                }
+            }
+        }
+    }
+
+    return 0; // not in collision
+}
+
+
+int set_player_spawn(int** map, sfVector2u map_dimensions, myObject* player) {
+
+    sfVector2u size = sfTexture_getSize(player->texture); // on recup la taille avec la texture
+    sfVector2f scale = sfSprite_getScale(player->sprite); // on recup son scale (son echelle)
+
+    for (int y = 0; y < map_dimensions.y; y++) {
+        for (int x = 0; x < map_dimensions.x; x++) {
+
+            if (map[y][x] == PLAYER_SPAWN) {
+
+                sfVector2f position = {
+                    (x * TILE_SIZE) + (TILE_SIZE / 2) - (size.x * scale.x) / 2., // Centrer le joueur horizontalement dans la tuile,
+                    (y * TILE_SIZE) + TILE_SIZE - (size.y * scale.y) - 1 // On place le joueur collé en bas de la tile PLAYER_SPAWN
+                };
+                
+                sfSprite_setPosition(player->sprite, position);
+                
+                return 0; // success
+            }
+        }
+    }
+
+    return 1; // error    
+}

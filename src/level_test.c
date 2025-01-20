@@ -81,7 +81,7 @@ int tmp_game(sfRenderWindow* window, sfEvent event, myWindowInfo *window_info, i
         setup_sprite(window, player.object.texture, player.object.sprite, *window_info);
 
         // Pour bouger le joueur
-        // player_basics_movements(window, window_info, &player);
+        // player_TileMovements(window, window_info, &player);
 
         sfRenderWindow_display(window);
     
