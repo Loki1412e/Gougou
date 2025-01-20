@@ -156,46 +156,70 @@ void drawMap(sfRenderWindow* window, int** map, sfVector2u map_dimensions, sfSpr
 
 
 // Boolean : Return 0 si pas collision et 1 si collision dans la direction indiqué (LEFT / RIGHT / TOP / BOTTOM)
+// Boolean : Return 0 si pas collision et 1 si collision dans la direction indiqué (LEFT / RIGHT / TOP / BOTTOM)
 int check_collisionMap(int** map, sfVector2u map_dimensions, sfSprite* map_tile, myObject object, char direction) {
-// int check_collisionMap(int** map, sfVector2u map_dimensions, myObject object, char direction) {
+
     sfVector2f obj_position = sfSprite_getPosition(object.sprite);
     sfVector2f obj_scale = sfSprite_getScale(object.sprite);
     sfVector2u obj_size = sfTexture_getSize(object.texture);
 
-    // Dimensions et positions du joueur
-    float obj_width = obj_size.x * obj_scale.x;
-    float obj_height = obj_size.y * obj_scale.y;
+    sfVector2f obj_coord_bot_left = {
+        obj_position.x,
+        obj_position.y + (obj_size.y * obj_scale.y) - TILE_SIZE
+    };
 
-    sfVector2f obj_top_left = obj_position;
-    sfVector2f obj_top_right = { obj_position.x + obj_width, obj_position.y };
-    sfVector2f obj_bot_left = { obj_position.x, obj_position.y + obj_height };
-    sfVector2f obj_bot_right = { obj_position.x + obj_width, obj_position.y + obj_height };
+    sfVector2u obj_coord_in_tile = { obj_coord_bot_left.x / TILE_SIZE , obj_coord_bot_left.y / TILE_SIZE};
 
-    // Parcours des tuiles autour du joueur
-    for (int y = (obj_position.y / TILE_SIZE) - 1; y <= (obj_bot_right.y / TILE_SIZE) + 1; y++) {
-        if (y < 0 || y >= map_dimensions.y) continue;
+    sfSprite_setTextureRect(map_tile, (sfIntRect) { TILE_SIZE, TILE_SIZE, TILE_SIZE, TILE_SIZE });
+    sfVector2f map_tile_coord_in_game;
 
-        for (int x = (obj_position.x / TILE_SIZE) - 1; x <= (obj_bot_right.x / TILE_SIZE) + 1; x++) {
-            if (x < 0 || x >= map_dimensions.x) continue;
+    // printf("player in map = %.2f ; %.2f\n", obj_coord_bot_left.x, obj_coord_bot_left.y);
+    // printf("player in tile = %d ; %d\n", obj_coord_in_tile.x, obj_coord_in_tile.y);
 
-            // Vérifier si la tuile est collidable
-            if (map[y][x] == TERRE_TEXTURE || map[y][x] == MUR_TEXTURE) {
-                sfFloatRect tile_rect = { x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE };
+    char is_align = 0;
 
-                // Détection selon la direction
-                if (direction == LEFT && obj_top_left.x <= tile_rect.left + tile_rect.width)
-                    return 1;
-                if (direction == RIGHT && obj_top_right.x >= tile_rect.left)
-                    return 1;
-                if (direction == TOP && obj_top_left.y <= tile_rect.top + tile_rect.height)
-                    return 1;
-                if (direction == BOTTOM && obj_bot_left.y >= tile_rect.top)
-                    return 1;
+    for (int y = obj_coord_in_tile.y - 2; y < obj_coord_in_tile.y + 2; y++) {
+        
+        // Si map[y] existe
+        if (y >= 0 && y < map_dimensions.y) {
+
+            for (int x = obj_coord_in_tile.x - 2; x < obj_coord_in_tile.x + 2; x++) {
+
+                // Si map[y][x] existe
+                if (x >= 0 && x < map_dimensions.x) {
+
+                    // printf("map[%d][%d] = %d\n", y, x, map[y][x]);
+
+                    switch (map[y][x]) {
+                        
+                        case TERRE_TEXTURE:
+                        case MUR_TEXTURE:
+                            
+                            map_tile_coord_in_game = (sfVector2f) { x * TILE_SIZE , y * TILE_SIZE };
+                            sfSprite_setPosition(map_tile, map_tile_coord_in_game);
+
+                            // Left && Right
+                            if ((direction == LEFT || direction == RIGHT) && \
+                                map_tile_coord_in_game.y <= obj_coord_bot_left.y && \
+                                map_tile_coord_in_game.y >= obj_position.y && \
+                                map_tile_coord_in_game.y + TILE_SIZE <= obj_coord_bot_left.y && \
+                                map_tile_coord_in_game.y + TILE_SIZE >= obj_position.y
+                            ) is_align = 1;
+
+                            if (direction == TOP && map_tile_coord_in_game.y < obj_coord_bot_left.y) is_align = 1;
+
+                            if (direction == BOTTOM && map_tile_coord_in_game.y > obj_coord_bot_left.y) is_align = 1;
+                            
+                            if (is_align && check_collision(map_tile, object.sprite)) return (int) direction;
+
+                            break;
+                    }
+                }
             }
         }
     }
 
-    return 0; // Pas de collision
+    return 0; // not in collision
 }
 
 
@@ -210,11 +234,8 @@ int set_player_spawn(int** map, sfVector2u map_dimensions, myObject* player) {
             if (map[y][x] == PLAYER_SPAWN) {
 
                 sfVector2f position = {
-                    (x * TILE_SIZE),
-                    (y * TILE_SIZE) + TILE_SIZE - (size.y * scale.y) // On place le joueur collé en bas de la tile PLAYER_SPAWN
-                    
-                    // (x * TILE_SIZE) + TILE_SIZE / 2 - (size.x * scale.x) / 2, // On place le joueur au milieu de la tile PLAYER_SPAWN
-                    // (y * TILE_SIZE) + TILE_SIZE - (size.y * scale.y) // On place le joueur collé en bas de la tile PLAYER_SPAWN
+                    (x * TILE_SIZE) + (TILE_SIZE / 2) - (size.x * scale.x) / 2., // Centrer le joueur horizontalement dans la tuile,
+                    (y * TILE_SIZE) + TILE_SIZE - (size.y * scale.y) - 1 // On place le joueur collé en bas de la tile PLAYER_SPAWN
                 };
                 
                 sfSprite_setPosition(player->sprite, position);

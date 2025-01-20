@@ -43,7 +43,7 @@ int tmp_game(sfRenderWindow* window, sfEvent event, myWindowInfo *window_info, i
         .speed = (sfVector2f) { SPEED_X_player , SPEED_Y_player },
         .hp = HP_player
     };
-    if (create_sprite(&(player.object), "./assets/player/Foxy/Sprites/idle/player-idle-1.png", (sfVector2f) {4, 4})) { EXIT_DEBUG_TEXTURE };
+    if (create_sprite(&(player.object), "./assets/player/tmp.png", (sfVector2f) {4, 4})) { EXIT_DEBUG_TEXTURE };
     if (set_player_spawn(map, map_dimensions, &(player.object))) { EXIT_DEBUG_SPAWN_PLAYER };
 
 
@@ -69,9 +69,9 @@ int tmp_game(sfRenderWindow* window, sfEvent event, myWindowInfo *window_info, i
 
         
         // Recharge la camera a partir du Player
-        sfView_setSize(view, (sfVector2f) { window_info->size.x , window_info->size.y });
-        sfView_setCenter(view, (sfVector2f) { sfSprite_getPosition(player.object.sprite).x , sfSprite_getPosition(player.object.sprite).y - window_info->size.y / 16 });
-        sfRenderWindow_setView(window, view);
+        // sfView_setSize(view, (sfVector2f) { window_info->size.x , window_info->size.y });
+        // sfView_setCenter(view, (sfVector2f) { sfSprite_getPosition(player.object.sprite).x , sfSprite_getPosition(player.object.sprite).y - window_info->size.y / 16 });
+        // sfRenderWindow_setView(window, view);
 
 
         // Dessine la map
