@@ -1,4 +1,4 @@
-#include "../include/deathmenu.h"
+#include "../include/deathmenu.h"a
 #include "../include/button.h"
 
 int deathmenu_view(sfRenderWindow* window, sfEvent *event, myWindowInfo *window_info, int *program_step) {
