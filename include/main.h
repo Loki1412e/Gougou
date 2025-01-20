@@ -15,5 +15,7 @@
     #include "game.h"
     #include "level_test.h"
     #include "deathmenu.h"
+    #include "settings.h"
+
 
 #endif
