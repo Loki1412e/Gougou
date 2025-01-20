@@ -43,7 +43,7 @@ int tmp_game(sfRenderWindow* window, sfEvent event, myWindowInfo *window_info, i
         .speed = (sfVector2f) { SPEED_X_player , SPEED_Y_player },
         .hp = HP_player
     };
-    if (create_sprite(&(player.object), "./assets/player/Foxy/Sprites/idle/player-idle-1.png", (sfVector2f) {4, 4})) { EXIT_DEBUG_TEXTURE };
+    if (create_sprite(&(player.object), "./assets/player/tmp.png", (sfVector2f) {4, 4})) { EXIT_DEBUG_TEXTURE };
     set_position_center(window, player.object.texture, player.object.sprite, *window_info);
 
 
