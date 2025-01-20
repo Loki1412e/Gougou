@@ -19,7 +19,7 @@ int deathmenu_view(sfRenderWindow* window, sfEvent *event, myWindowInfo *window_
         // Process events
         while (sfRenderWindow_pollEvent(window, event)) {
             if (event_behavior(window, *event, window_info, program_step) == 1) { EXIT_DEBUG_WINDOW }
-            printf("Current program step: %d\n", *program_step);
+            
 
 
             // Gérer les événements des boutons

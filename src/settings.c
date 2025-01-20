@@ -20,7 +20,7 @@ int settings_view(sfRenderWindow* window, sfEvent event, myWindowInfo *window_in
         // Gestion des événements
         while (sfRenderWindow_pollEvent(window, &event)) {
             if (event_behavior(window, event, window_info, program_step) == 1) { EXIT_DEBUG_TEXTURE }
-            printf("Current program step: %d\n", *program_step);
+            
 
 
             // Si on clique sur le bouton "Retour"
