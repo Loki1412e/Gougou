@@ -23,20 +23,12 @@ int menu_view(sfRenderWindow* window, sfEvent *event, myWindowInfo *window_info,
         // Process events
         while (sfRenderWindow_pollEvent(window, event)) {
             if (event_behavior(window, *event, window_info, program_step) == 1) { EXIT_DEBUG_WINDOW }
-            printf("Current program step: %d\n", *program_step);
-
 
             // Gérer les événements des boutons
             handle_button_event(&play_btn, window, event, program_step, GAME_step);      // Aller au jeu
             handle_button_event(&settings_btn, window, event, program_step, SETTINGS_step); // Aller aux paramètres
             handle_button_event(&quit_btn, window, event, program_step, QUIT_step);     // Quitter
         }
-
-        // Si l'utilisateur veut quitter, fermer la fenêtre
-        if (*program_step == QUIT_step) {
-            sfRenderWindow_close(window);
-        }
-
         // Dessin
         sfRenderWindow_clear(window, sfBlack);
 

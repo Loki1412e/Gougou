@@ -65,18 +65,10 @@ void handle_button_event(myButton *button, sfRenderWindow *window, sfEvent *even
     } else if (event->type == sfEvtMouseButtonReleased && event->mouseButton.button == sfMouseLeft) {
         // Effectue une action si le bouton est relâché sur lui-même
         if (sfFloatRect_contains(&bounds, mouse_position.x, mouse_position.y)) {
-            switch (action) {
-                case 1: // Recommencer le jeu
-                    *program_step = GAME_step;
-                    break;
-                case 2: // Retourner au menu
-                    *program_step = SETTINGS_step;
-                    break;
-                case 3: // Quitter le jeu
-                    sfRenderWindow_close(window);
-                    break;
-            }
+            if (action == QUIT_step) sfRenderWindow_close(window);
+            else *program_step = action;
         }
+        
         // Retourne à l'état normal ou hover après le clic
         if (sfFloatRect_contains(&bounds, mouse_position.x, mouse_position.y)) {
             sfSprite_setTexture(button->sprite, button->texture_hovered, sfTrue);

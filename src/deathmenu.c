@@ -27,6 +27,7 @@ int deathmenu_view(sfRenderWindow* window, sfEvent *event, myWindowInfo *window_
             handle_button_event(&menu_btn, window, event, program_step, MENU_step);  // Retour au menu
             handle_button_event(&quit_btn, window, event, program_step, QUIT_step);  // Quitter
             handle_button_event(&settings_btn, window, event, program_step, SETTINGS_step); // Aller dans les parametres 
+
         }
 
         // Si l'utilisateur veut quitter
