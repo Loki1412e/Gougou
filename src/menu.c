@@ -12,12 +12,9 @@ int menu_view(sfRenderWindow* window, sfEvent *event, myWindowInfo *window_info,
     // Boutons
     myButton play_btn, settings_btn, quit_btn;
 
-    if (create_button(&play_btn, "./assets/menu/play_normal.png", "./assets/menu/play_hovered.png", "./assets/menu/play_clicked.png",
-                      (sfVector2f) {8., 8.}, (sfVector2f) {80, 200})) { EXIT_DEBUG_TEXTURE }
-    if (create_button(&settings_btn, "./assets/menu/settings_normal.png", "./assets/menu/settings_hovered.png", "./assets/menu/settings_clicked.png",
-                      (sfVector2f) {8., 8.}, (sfVector2f) {80, 450})) { EXIT_DEBUG_TEXTURE }
-    if (create_button(&quit_btn, "./assets/menu/quit_normal.png", "./assets/menu/quit_hovered.png", "./assets/menu/quit_clicked.png",
-                      (sfVector2f) {8., 8.}, (sfVector2f) {80, 700})) { EXIT_DEBUG_TEXTURE }
+    if (create_button(&play_btn, "./assets/buttons/play_normal.png", "./assets/buttons/play_hovered.png", "./assets/buttons/play_clicked.png", (sfVector2f) {8., 8.}, (sfVector2f) {80, 200})) { EXIT_DEBUG_TEXTURE }
+    if (create_button(&settings_btn, "./assets/buttons/settings_normal.png", "./assets/buttons/settings_hovered.png", "./assets/buttons/settings_clicked.png", (sfVector2f) {8., 8.}, (sfVector2f) {80, 450})) { EXIT_DEBUG_TEXTURE }
+    if (create_button(&quit_btn, "./assets/buttons/quit_normal.png", "./assets/buttons/quit_hovered.png", "./assets/buttons/quit_clicked.png", (sfVector2f) {8., 8.}, (sfVector2f) {80, 700})) { EXIT_DEBUG_TEXTURE }
 
     while (sfRenderWindow_isOpen(window) && *program_step == MENU_step) {
         // Process events

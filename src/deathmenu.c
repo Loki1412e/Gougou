@@ -8,10 +8,10 @@ int deathmenu_view(sfRenderWindow* window, sfEvent *event, myWindowInfo *window_
 
     // Boutons
     myButton retry_btn, menu_btn, quit_btn, settings_btn;
-    if (create_button(&retry_btn, "./assets/deathmenu/retry_normal.png", "./assets/deathmenu/retry_hovered.png", "./assets/deathmenu/retry_clicked.png", (sfVector2f) {8., 8.}, (sfVector2f) {100, 100})) { EXIT_DEBUG_TEXTURE }
-    if (create_button(&menu_btn, "./assets/deathmenu/menu_normal.png", "./assets/deathmenu/menu_hovered.png", "./assets/deathmenu/menu_clicked.png", (sfVector2f) {8., 8.}, (sfVector2f) {100, 350})) { EXIT_DEBUG_TEXTURE }
-    if (create_button(&settings_btn, "./assets/deathmenu/settings_normal.png", "./assets/deathmenu/settings_hovered.png", "./assets/deathmenu/settings_clicked.png", (sfVector2f) {8., 8.}, (sfVector2f) {100, 600})) { EXIT_DEBUG_TEXTURE }
-    if (create_button(&quit_btn, "./assets/deathmenu/quit_normal.png", "./assets/deathmenu/quit_hovered.png", "./assets/deathmenu/quit_clicked.png", (sfVector2f) {8., 8.}, (sfVector2f) {100, 850})) { EXIT_DEBUG_TEXTURE }
+    if (create_button(&retry_btn, "./assets/buttons/retry_normal.png", "./assets/buttons/retry_hovered.png", "./assets/buttons/retry_clicked.png", (sfVector2f) {8., 8.}, (sfVector2f) {100, 100})) { EXIT_DEBUG_TEXTURE }
+    if (create_button(&menu_btn, "./assets/buttons/menu_normal.png", "./assets/buttons/menu_hovered.png", "./assets/buttons/menu_clicked.png", (sfVector2f) {8., 8.}, (sfVector2f) {100, 350})) { EXIT_DEBUG_TEXTURE }
+    if (create_button(&settings_btn, "./assets/buttons/settings_normal.png", "./assets/buttons/settings_hovered.png", "./assets/buttons/settings_clicked.png", (sfVector2f) {8., 8.}, (sfVector2f) {100, 600})) { EXIT_DEBUG_TEXTURE }
+    if (create_button(&quit_btn, "./assets/buttons/quit_normal.png", "./assets/buttons/quit_hovered.png", "./assets/buttons/quit_clicked.png", (sfVector2f) {8., 8.}, (sfVector2f) {100, 850})) { EXIT_DEBUG_TEXTURE }
     
 
 
