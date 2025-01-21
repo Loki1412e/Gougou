@@ -17,14 +17,14 @@ int game_view(sfRenderWindow* window, sfEvent event, myWindowInfo *window_info, 
 
     // Floor
     myObject floor;
-    if (create_sprite(&floor, "./assets/game/terre.png", (sfVector2f) {10., 2.})) { EXIT_DEBUG_TEXTURE };
+    if (create_sprite(&floor, "./assets/game/terre.png", (sfVector2f) {20., 1.})) { EXIT_DEBUG_TEXTURE };
 
     // Player
     myPlayer player = {
         .on_jump = 1,
         .dash_cooldown = 0,
         .direction = RIGHT,
-        .speed = (sfVector2f) { SPEED_X_player , SPEED_Y_player },
+        .speed = (sfVector2f) { SPEED_X_player , 0 },
         .hp = HP_player
     };
     if (create_sprite(&(player.object), "./assets/player/tmp.png", (sfVector2f) {4, 4})) { EXIT_DEBUG_TEXTURE };

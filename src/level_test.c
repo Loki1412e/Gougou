@@ -40,7 +40,7 @@ int tmp_game(sfRenderWindow* window, sfEvent event, myWindowInfo *window_info, i
         .on_jump = 0,
         .dash_cooldown = 0,
         .direction = RIGHT,
-        .speed = (sfVector2f) { SPEED_X_player , SPEED_Y_player },
+        .speed = (sfVector2f) { SPEED_X_player , 0 },
         .hp = HP_player
     };
     if (create_sprite(&(player.object), "./assets/player/tmp.png", (sfVector2f) {4, 4})) { EXIT_DEBUG_TEXTURE };
