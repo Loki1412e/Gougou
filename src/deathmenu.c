@@ -1,5 +1,7 @@
-#include "../include/deathmenu.h"a
+#include "../include/deathmenu.h"
 #include "../include/button.h"
+
+int deathmenu_view(sfRenderWindow* window, sfEvent *event, myWindowInfo *window_info, int *program_step);
 
 int deathmenu_view(sfRenderWindow* window, sfEvent *event, myWindowInfo *window_info, int *program_step) {
     // Background
@@ -28,10 +30,6 @@ int deathmenu_view(sfRenderWindow* window, sfEvent *event, myWindowInfo *window_
 
         }
 
-        // Si l'utilisateur veut quitter
-        if (*program_step == QUIT_step) {
-            sfRenderWindow_close(window);
-        }
         // Dessin
         sfRenderWindow_clear(window, sfBlack);
 
@@ -55,5 +53,5 @@ int deathmenu_view(sfRenderWindow* window, sfEvent *event, myWindowInfo *window_
     destroy_button(&settings_btn);
     destroy_button(&quit_btn);
 
-    return 0;
-}
+    return EXIT_SUCCESS;
+}   
