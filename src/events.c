@@ -79,15 +79,17 @@ void handle_button_event(myButton *button, sfRenderWindow *window, sfEvent *even
                     break;
                 case _1920:
                     *window_info = _1920x1200;
-                    save_config("./configs/config.test", window_info);
+                    if (save_config("./configs/config.test", window_info)) { EXIT_DEBUG_FILE }
                     break;
                 case _1680:
                     *window_info = _1680x1050;
-                    save_config("./configs/config.test", window_info);
+                    if (save_config("./configs/config.test", window_info)) { EXIT_DEBUG_FILE }
                     break;
                 case _1280:
+                    printf("ouo");
                     *window_info = _1280x800; 
-                    save_config("./configs/config.test", window_info);
+                    if (save_config("./configs/config.test", window_info)) { EXIT_DEBUG_FILE } 
+                    printf("aled");
                     break;
             }
         }
