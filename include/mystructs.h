@@ -1,0 +1,57 @@
+// Dans mystructs.h
+#ifndef MYSTRUCTS_H_
+    #define MYSTRUCTS_H_
+
+
+    #include "my.h"
+
+
+    // Window informations
+    typedef struct __my_window_info__ {
+        sfVector2u size;
+        sfVector2f scale;
+    } myWindowInfo;
+
+
+    // Define an object
+    typedef struct __my_object__ {
+        sfTexture* texture;
+        sfSprite* sprite;         
+    } myObject;
+
+
+    typedef struct __my_button__ {
+        sfTexture* texture_normal;
+        sfTexture* texture_hovered;
+        sfTexture* texture_clicked;
+        sfSprite* sprite;
+        sfVector2f position;
+        sfVector2f scale;
+    } myButton;
+
+
+    // Define Player
+    typedef struct __my_player__ {
+        myObject object;
+        sfVector2f speed;
+        sfVector2f velocity;
+        int on_jump;
+        int dash_duration;
+        int dash_cooldown;
+        char direction; // voir #define dans le my.h
+        int can_dash;
+        float hp;
+    } myPlayer;
+
+    
+    typedef struct __my_enemy__ {
+        myObject object;
+        sfVector2f speed;
+        sfVector2f velocity;
+        int on_jump;
+        char direction; // voir #define dans le my.h
+        float hp;
+        int isAlive;
+    } myEnemy;
+
+#endif
