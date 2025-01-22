@@ -112,7 +112,7 @@ int game_view(sfRenderWindow* window, sfEvent event, myWindowInfo *window_info, 
     /* Cleanup Resources */
     destroy_object(&floor);
     destroy_object(&(player.object));
-    destroy_object(&(enemy.object));
+    if (enemy.isAlive) destroy_object(&(enemy.object));
     
     sfRenderWindow_setView(window, sfRenderWindow_getDefaultView(window));
     sfView_destroy(view);
