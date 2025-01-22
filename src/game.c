@@ -1,6 +1,9 @@
 
 #include "../include/game.h"
 
+#define SPEED_LAYER1 1.0f
+#define SPEED_LAYER2 0.5f
+#define SPEED_LAYER3 0.2f
 
 int game_view(sfRenderWindow* window, sfEvent event, myWindowInfo *window_info, int *program_step);
 
@@ -43,6 +46,35 @@ int game_view(sfRenderWindow* window, sfEvent event, myWindowInfo *window_info, 
     position = sfSprite_getPosition(enemy.object.sprite);
     sfSprite_setPosition(enemy.object.sprite, (sfVector2f) { position.x + 200 , position.y });
 
+    // Création des layers du paralax
+    sfTexture* texture1 = sfTexture_createFromFile("./assets/parallax/layer1.png", NULL);
+    sfTexture* texture2 = sfTexture_createFromFile("./assets/parallax/layer2.png", NULL);
+    sfTexture* texture3 = sfTexture_createFromFile("./assets/parallax/layer3.png", NULL);
+
+    if (!texture1 || !texture2 || !texture3) {
+        printf("Erreur: Impossible de charger les textures du parallax.\n");
+        return 1;
+    }
+
+    sfSprite* layer1 = sfSprite_create();
+    sfSprite* layer2 = sfSprite_create();
+    sfSprite* layer3 = sfSprite_create();
+
+    sfSprite_setTexture(layer1, texture1, sfTrue);
+    sfSprite_setTexture(layer2, texture2, sfTrue);
+    sfSprite_setTexture(layer3, texture3, sfTrue);
+
+    sfVector2f pos1 = {0, 0};
+    sfVector2f pos2 = {0, 0};
+    sfVector2f pos3 = {0, 0};
+
+    sfClock* clock = sfClock_create();
+    float parallax_speed = 200.0f;
+
+    sfVector2u textureSize1 = sfTexture_getSize(texture1);
+    sfVector2u textureSize2 = sfTexture_getSize(texture2);
+    sfVector2u textureSize3 = sfTexture_getSize(texture3);
+
     // Start GAME LOOP
     while (sfRenderWindow_isOpen(window) && *program_step == GAME_step) {
 
@@ -61,6 +93,55 @@ int game_view(sfRenderWindow* window, sfEvent event, myWindowInfo *window_info, 
                     break;
             }
         }
+
+        // Update les positions du paralax
+        float deltaTime = sfTime_asSeconds(sfClock_restart(clock));
+        float offset = parallax_speed * deltaTime;
+
+        if (sfKeyboard_isKeyPressed(sfKeyRight)) {
+            pos1.x -= SPEED_LAYER1 * offset;
+            pos2.x -= SPEED_LAYER2 * offset;
+            pos3.x -= SPEED_LAYER3 * offset;
+        } else if (sfKeyboard_isKeyPressed(sfKeyLeft)) {
+            pos1.x += SPEED_LAYER1 * offset;
+            pos2.x += SPEED_LAYER2 * offset;
+            pos3.x += SPEED_LAYER3 * offset;
+        }
+
+        // Reset positions for infinite scrolling
+        if (pos1.x <= -((float)textureSize1.x)) {
+            // Si la position de la première couche dépasse la largeur de la texture vers la gauche
+            pos1.x = pos1.x + (float)textureSize1.x; // Réinitialise la position en ajoutant la largeur de la texture
+        }
+        if (pos1.x > 0) {
+            // Si la position de la première couche dépasse 0 vers la droite
+            pos1.x = pos1.x - (float)textureSize1.x; // Réinitialise la position en soustrayant la largeur de la texture
+        }
+
+        if (pos2.x <= -((float)textureSize2.x)) {
+            // Si la position de la deuxième couche dépasse la largeur de la texture vers la gauche
+            pos2.x = pos2.x + (float)textureSize2.x; // Réinitialise la position en ajoutant la largeur de la texture
+        }
+        if (pos2.x > 0) {
+            // Si la position de la deuxième couche dépasse 0 vers la droite
+            pos2.x = pos2.x - (float)textureSize2.x; // Réinitialise la position en soustrayant la largeur de la texture
+        }
+
+        if (pos3.x <= -((float)textureSize3.x)) {
+            // Si la position de la troisième couche dépasse la largeur de la texture vers la gauche
+            pos3.x = pos3.x + (float)textureSize3.x; // Réinitialise la position en ajoutant la largeur de la texture
+        }
+        if (pos3.x > 0) {
+            // Si la position de la troisième couche dépasse 0 vers la droite
+            pos3.x = pos3.x - (float)textureSize3.x; // Réinitialise la position en soustrayant la largeur de la texture
+        }
+
+        sfSprite_setPosition(layer1, pos1);
+        sfSprite_setPosition(layer2, pos2);
+        sfSprite_setPosition(layer3, pos3);
+
+
+
         /* PLAYER */
         player_movements(window, *window_info, &player, floor);
         
@@ -93,6 +174,26 @@ int game_view(sfRenderWindow* window, sfEvent event, myWindowInfo *window_info, 
         // Clear la window
         sfRenderWindow_clear(window, sfBlack);
 
+        // déssins du  parallax 
+        sfRenderWindow_drawSprite(window, layer3, NULL);
+        sfSprite_setPosition(layer3, (sfVector2f){pos3.x + (float)textureSize3.x, pos3.y});
+        sfRenderWindow_drawSprite(window, layer3, NULL);
+        sfSprite_setPosition(layer3, (sfVector2f){pos3.x - (float)textureSize3.x, pos3.y});
+        sfRenderWindow_drawSprite(window, layer3, NULL);
+
+        sfRenderWindow_drawSprite(window, layer2, NULL);
+        sfSprite_setPosition(layer2, (sfVector2f){pos2.x + (float)textureSize2.x, pos2.y});
+        sfRenderWindow_drawSprite(window, layer2, NULL);
+        sfSprite_setPosition(layer2, (sfVector2f){pos2.x - (float)textureSize2.x, pos2.y});
+        sfRenderWindow_drawSprite(window, layer2, NULL);
+
+        sfRenderWindow_drawSprite(window, layer1, NULL);
+        sfSprite_setPosition(layer1, (sfVector2f){pos1.x + (float)textureSize1.x, pos1.y});
+        sfRenderWindow_drawSprite(window, layer1, NULL);
+        sfSprite_setPosition(layer1, (sfVector2f){pos1.x - (float)textureSize1.x, pos1.y});
+        sfRenderWindow_drawSprite(window, layer1, NULL);
+        
+
         // Dessine le sol
         set_position_bottom(window, floor.texture, floor.sprite, *window_info);
         setup_sprite(window, floor.texture, floor.sprite, *window_info);
@@ -116,6 +217,13 @@ int game_view(sfRenderWindow* window, sfEvent event, myWindowInfo *window_info, 
     
     sfRenderWindow_setView(window, sfRenderWindow_getDefaultView(window));
     sfView_destroy(view);
+
+    sfSprite_destroy(layer1);
+    sfSprite_destroy(layer2);
+    sfSprite_destroy(layer3);
+    sfTexture_destroy(texture1);
+    sfTexture_destroy(texture2);
+    sfTexture_destroy(texture3);
 
     return 0;
 }
