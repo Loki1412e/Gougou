@@ -1,23 +1,23 @@
 #include "../include/main.h"
+#include "../include/config.h"
 
 
 int main(int argc, char **argv) {
-
     myWindowInfo window_info = _1920x1200;
     sfRenderWindow* window;
     sfEvent event;
 
     int program_step = MENU_step;
 
+    // Le chemin vers le fichier de configuration
+    const char config_path [] = "./configs/config.txt";
 
-    /* Create the main window */
+    // Initialisation de la fenêtre avec la configuration par défaut
     window = sfRenderWindow_create((sfVideoMode) {window_info.size.x, window_info.size.y, 32}, "Googoo Gagaga", sfClose, NULL);
     if (!window) { EXIT_DEBUG_WINDOW }
 
-
     /* Start GAME LOOP */
     while (sfRenderWindow_isOpen(window)) {
-
         /* Process events */
         while (sfRenderWindow_pollEvent(window, &event)) {
             // Close window
@@ -25,9 +25,10 @@ int main(int argc, char **argv) {
                 sfRenderWindow_close(window);
         }
 
+
+
         /* PROGRAM STEPS */
         switch (program_step) {
-
             case MENU_step:
                 if (menu_view(window, &event, &window_info, &program_step)) return EXIT_FAILURE;
                 break;
@@ -48,10 +49,8 @@ int main(int argc, char **argv) {
                 if (deathmenu_view(window, &event, &window_info, &program_step)) return EXIT_FAILURE;
                 break;
         }
-    
-    } // End GAME LOOP
+    }
 
     sfRenderWindow_destroy(window);
-
     return EXIT_SUCCESS;
 }

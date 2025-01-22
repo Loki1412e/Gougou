@@ -30,6 +30,10 @@
     #define TMP_game 4
     #define QUIT_step 5
 
+    /* Size window*/
+    #define _1920 6
+    #define _1680 7
+    #define _1280 8
 
     /* Attributs Player */
     #define JUMP_player 10.0
