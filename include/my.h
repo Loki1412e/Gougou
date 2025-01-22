@@ -38,7 +38,7 @@
 
     /* Gravity */
     #define GRAVITY 9.81
-    #define JUMP_FORCE  80
+    #define JUMP_FORCE  60
     #define TIME 1.0/32.0
 
 
