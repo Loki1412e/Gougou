@@ -16,6 +16,9 @@ int event_behavior(sfRenderWindow *window, sfEvent event, myWindowInfo *window_i
 
         switch (event.key.code) {
 
+            case sfKeyEscape:
+                *program_step = SETTINGS_step;
+
             case sfKeyNum1:
                 *program_step = MENU_step;
                 break;

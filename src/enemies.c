@@ -14,13 +14,18 @@ void interactWithPlayer(myEnemy *enemy, myPlayer *player, myWindowInfo window_in
     sfVector2f position_enemy = sfSprite_getPosition(enemy->object.sprite);
 
     position_player.y = position_player.y + (size_player.y * scale_player.y);
+
+    if (sfKeyboard_isKeyPressed(sfKeyA)) printf("P(%.2f)\nE(%.2f)\n\n", position_player.y, position_enemy.y);
     
     if (!check_collision(player->object.sprite, enemy->object.sprite)) return; // pas en collision
 
     if (position_player.y >= position_enemy.y)
         enemy->hp = 0; // enemy est mort        
     
-    else player->hp = 0; // player est mort
+    else {
+        player->hp = 0; // player est mort
+        printf("OUIIIIIIIIIIIIII");
+    }
 }
 
 
