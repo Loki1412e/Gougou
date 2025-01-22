@@ -51,6 +51,7 @@
         int on_jump;
         char direction; // voir #define dans le my.h
         float hp;
+        int isAlive;
     } myEnemy;
 
 #endif

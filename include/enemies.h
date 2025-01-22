@@ -6,5 +6,6 @@
     #include "map.h"
 
     void applyGravityEnemy(sfRenderWindow* window, myEnemy *enemy, myObject floor, myWindowInfo window_info);
+    void interactWithPlayer(myEnemy *enemy, myPlayer *player, myWindowInfo window_info);
 
 #endif

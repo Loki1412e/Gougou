@@ -30,7 +30,14 @@ int game_view(sfRenderWindow* window, sfEvent event, myWindowInfo *window_info, 
     if (create_sprite(&(player.object), "./assets/player/tmp.png", (sfVector2f) {6, 6})) { EXIT_DEBUG_TEXTURE };
     set_position_center(window, player.object.texture, player.object.sprite, *window_info);
 
-    myEnemy enemy;
+    // Enemy
+    myEnemy enemy = {
+        .on_jump = 1,
+        .direction = LEFT,
+        .speed = (sfVector2f) { SPEED_X_player * 0.8 , 0 },
+        .hp = HP_player,
+        .isAlive = 1
+    };
     if (create_sprite(&(enemy.object), "./assets/enemy/dino-idle1.png", (sfVector2f) {6., 6.})) { EXIT_DEBUG_TEXTURE };
     set_position_center(window, enemy.object.texture, enemy.object.sprite, *window_info);
     position = sfSprite_getPosition(enemy.object.sprite);
@@ -54,8 +61,6 @@ int game_view(sfRenderWindow* window, sfEvent event, myWindowInfo *window_info, 
                     break;
             }
         }
-
-        
         /* PLAYER */
         player_movements(window, *window_info, &player, floor);
         
@@ -63,18 +68,16 @@ int game_view(sfRenderWindow* window, sfEvent event, myWindowInfo *window_info, 
         size = sfTexture_getSize(player.object.texture);
         scale = sfSprite_getScale(player.object.sprite);
         position = sfSprite_getPosition(player.object.sprite);
-        if (position.y + ((float) size.y * scale.y) > window_info->size.y)
+        if (position.y + (size.y * scale.y) > window_info->size.y + 100)
             player.hp = 0;
-        
-        // Mort par enemy
-        deathByEnemy(&player, enemy);
         
         // fin de partie :/
         if (player.hp <= 0.) *program_step = DEATHMENU_step;
         
         
         /* ENEMY */
-        applyGravityEnemy(window, &enemy, floor, *window_info);
+        if (enemy.hp > 0) interactWithPlayer(&enemy, &player, *window_info);
+        if (enemy.isAlive) applyGravityEnemy(window, &enemy, floor, *window_info);
 
 
         /* MAIN */
@@ -83,7 +86,6 @@ int game_view(sfRenderWindow* window, sfEvent event, myWindowInfo *window_info, 
         sfView_setSize(view, (sfVector2f) { window_info->size.x , window_info->size.y });
         sfView_setCenter(view, (sfVector2f) { sfSprite_getPosition(player.object.sprite).x , sfSprite_getPosition(player.object.sprite).y - window_info->size.y / 11 });
         sfRenderWindow_setView(window, view);
-
 
 
         /* DRAW */
@@ -99,7 +101,7 @@ int game_view(sfRenderWindow* window, sfEvent event, myWindowInfo *window_info, 
         setup_sprite(window, player.object.texture, player.object.sprite, *window_info);
 
         // Draw enemy
-        setup_sprite(window, enemy.object.texture, enemy.object.sprite, *window_info);
+        if (enemy.isAlive) setup_sprite(window, enemy.object.texture, enemy.object.sprite, *window_info);
 
         // On applique les dessins
         sfRenderWindow_display(window);

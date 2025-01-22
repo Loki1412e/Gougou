@@ -9,24 +9,12 @@ void playerMoovRL(myPlayer *player, sfVector2f *position);
 void player_movements(sfRenderWindow* window, myWindowInfo window_info, myPlayer *player, myObject floor);
 
 
-int deathByEnemy(myPlayer *player, myEnemy enemy);
-
-
-int deathByEnemy(myPlayer *player, myEnemy enemy) {
-    if (!check_collision(player->object.sprite, enemy.object.sprite)) return 0;
-    player->hp = 0;
-    return 1;
-}
-
-
 // Applique la gravité si le joueur ne touche pas le sol
 void applyGravity(myPlayer *player, sfVector2f* position, myObject floor) {
 
     if(!check_collision(player->object.sprite, floor.sprite)) {
         player->velocity.y += GRAVITY * TIME;
     } else {
-        sfFloatRect player_bounds = sfSprite_getGlobalBounds(player->object.sprite);
-        sfFloatRect floor_bounds =  sfSprite_getGlobalBounds(floor.sprite);
         player->velocity.y = 0;
         player->on_jump = 0;
     }
@@ -72,7 +60,7 @@ void playerDash(myPlayer *player, sfVector2f *position) {
     ) {
         player->dash_duration = DASH_DURATION_player;
         player->dash_cooldown = DASH_COOLDOWN_player;
-        player->on_jump = 0;
+        player->on_jump = 2;
         player->velocity.y = 0;
     }
 
