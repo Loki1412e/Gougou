@@ -3,7 +3,8 @@
 
     #include "my.h"
     #include "events.h"
+    #include "button.h"
 
-    int settings_view(sfRenderWindow* window, sfEvent *event, myWindowInfo *window_info, int *program_step);
+    int settings_view(sfRenderWindow* window, sfEvent event, myWindowInfo *window_info, int *program_step);
 
 #endif
