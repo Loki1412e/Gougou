@@ -1,10 +1,3 @@
-/*
-    Sujet : Projet en C / ESGI 2i1 / 2024-2025
-    Auteur : JAIEL FERRO Milhane
-    Date de création : 09/11/2024 (c'est pas vrai oof mais tqt)
-*/
-
-
 #include "../include/main.h"
 
 
@@ -20,7 +13,7 @@ int main(int argc, char **argv) {
     /* Create the main window */
     window = sfRenderWindow_create((sfVideoMode) {window_info.size.x, window_info.size.y, 32}, "Googoo Gagaga", sfClose, NULL);
     if (!window) { EXIT_DEBUG_WINDOW }
-
+    
 
     /* Start GAME LOOP */
     while (sfRenderWindow_isOpen(window)) {
@@ -28,7 +21,7 @@ int main(int argc, char **argv) {
         /* Process events */
         while (sfRenderWindow_pollEvent(window, &event)) {
             // Close window
-            if (event.type == sfEvtClosed)
+            if (event.type == sfEvtClosed || (sfKeyboard_isKeyPressed(sfKeyLControl) && sfKeyboard_isKeyPressed(sfKeyEnter)))
                 sfRenderWindow_close(window);
         }
 
@@ -36,14 +29,26 @@ int main(int argc, char **argv) {
         switch (program_step) {
 
             case MENU_step:
-                if (menu_view(window, event, &window_info, &program_step)) return EXIT_FAILURE;
+                if (menu_view(window, &event, &window_info, &program_step)) return EXIT_FAILURE;
                 break;
             
             case GAME_step:
                 if (game_view(window, event, &window_info, &program_step)) return EXIT_FAILURE;
                 break;
-        }
+            
+            case TMP_game:
+                if (tmp_game(window, event, &window_info, &program_step)) return EXIT_FAILURE;
+                break;
 
+            case DEATHMENU_step:
+                if (deathmenu_view(window, &event, &window_info, &program_step)) return EXIT_FAILURE;
+                break;
+
+            case SETTINGS_step:
+                if (settings_view(window, &event, &window_info, &program_step)) return EXIT_FAILURE;
+                break;
+        }
+    
     } // End GAME LOOP
 
     sfRenderWindow_destroy(window);

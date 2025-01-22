@@ -3,20 +3,45 @@
 
 
 int game_view(sfRenderWindow* window, sfEvent event, myWindowInfo *window_info, int *program_step);
-void moove_player(sfRenderWindow* window, myWindowInfo window_info, myObject *object);
 
 
 int game_view(sfRenderWindow* window, sfEvent event, myWindowInfo *window_info, int *program_step) {
 
+    sfVector2u size;
+    sfVector2f scale;
+    sfVector2f position;
+
+    // Camera (view)
+    sfView* view = sfView_create();
+    sfView_setSize(view, (sfVector2f) { window_info->size.x , window_info->size.y });
+
     // Floor
     myObject floor;
-    if (create_sprite(&floor, "./assets/game/floor.png", (sfVector2f) {0.8, 0.8})) { EXIT_DEBUG_TEXTURE };
+    if (create_sprite(&floor, "./assets/game/terre.png", (sfVector2f) {30., 1.5})) { EXIT_DEBUG_TEXTURE };
 
     // Player
-    myObject player;
-    if (create_sprite(&player, "./assets/game/player.gif", (sfVector2f) {0.6, 0.6})) { EXIT_DEBUG_TEXTURE };
-    set_position_center(window, player.texture, player.sprite, *window_info);
+    myPlayer player = {
+        .on_jump = 1,
+        .dash_cooldown = 0,
+        .direction = RIGHT,
+        .speed = (sfVector2f) { SPEED_X_player , 0 },
+        .hp = HP_player
+    };
+    if (create_sprite(&(player.object), "./assets/player/tmp.png", (sfVector2f) {6, 6})) { EXIT_DEBUG_TEXTURE };
+    set_position_center(window, player.object.texture, player.object.sprite, *window_info);
 
+    // Enemy
+    myEnemy enemy = {
+        .on_jump = 1,
+        .direction = LEFT,
+        .speed = (sfVector2f) { SPEED_X_player * 0.8 , 0 },
+        .hp = HP_player,
+        .isAlive = 1
+    };
+    if (create_sprite(&(enemy.object), "./assets/enemy/dino-idle1.png", (sfVector2f) {6., 6.})) { EXIT_DEBUG_TEXTURE };
+    set_position_center(window, enemy.object.texture, enemy.object.sprite, *window_info);
+    position = sfSprite_getPosition(enemy.object.sprite);
+    sfSprite_setPosition(enemy.object.sprite, (sfVector2f) { position.x + 200 , position.y });
 
     // Start GAME LOOP
     while (sfRenderWindow_isOpen(window) && *program_step == GAME_step) {
@@ -31,95 +56,66 @@ int game_view(sfRenderWindow* window, sfEvent event, myWindowInfo *window_info, 
                     EXIT_DEBUG_WINDOW;
                 
                 case 2:
-                    set_position_center(window, player.texture, player.sprite, *window_info);
+                    position = sfSprite_getPosition(player.object.sprite);
+                    sfSprite_setPosition(player.object.sprite, (sfVector2f) { position.x / window_info->scale.x, position.y / window_info->scale.y });
                     break;
             }
         }
+        /* PLAYER */
+        player_movements(window, *window_info, &player, floor);
+        
+        // Mort par vide
+        size = sfTexture_getSize(player.object.texture);
+        scale = sfSprite_getScale(player.object.sprite);
+        position = sfSprite_getPosition(player.object.sprite);
+        if (position.y + (size.y * scale.y) > window_info->size.y + 100)
+            player.hp = 0;
+        
+        // fin de partie :/
+        if (player.hp <= 0.) *program_step = DEATHMENU_step;
+        
+        
+        /* ENEMY */
+        if (enemy.hp > 0) interactWithPlayer(&enemy, &player, *window_info);
+        if (enemy.isAlive) applyGravityEnemy(window, &enemy, floor, *window_info);
 
-        
+
         /* MAIN */
-        
+
+        // Recharge la camera a partir du Player
+        sfView_setSize(view, (sfVector2f) { window_info->size.x , window_info->size.y });
+        sfView_setCenter(view, (sfVector2f) { sfSprite_getPosition(player.object.sprite).x , sfSprite_getPosition(player.object.sprite).y - window_info->size.y / 11 });
+        sfRenderWindow_setView(window, view);
+
+
+        /* DRAW */
+
+        // Clear la window
         sfRenderWindow_clear(window, sfBlack);
 
         // Dessine le sol
-        set_position_center(window, floor.texture, floor.sprite, *window_info);
+        set_position_bottom(window, floor.texture, floor.sprite, *window_info);
         setup_sprite(window, floor.texture, floor.sprite, *window_info);
 
         // Dessine le Joueur
-        setup_sprite(window, player.texture, player.sprite, *window_info);
+        setup_sprite(window, player.object.texture, player.object.sprite, *window_info);
 
-        // Pour bouger le joueur
-        moove_player(window, *window_info, &player);
-        
-        
-        sfRenderWindow_display(window); // On recharge la window
+        // Draw enemy
+        if (enemy.isAlive) setup_sprite(window, enemy.object.texture, enemy.object.sprite, *window_info);
+
+        // On applique les dessins
+        sfRenderWindow_display(window);
 
     } // End GAME LOOP
 
 
     /* Cleanup Resources */
-
-    sfSprite_destroy(floor.sprite);
-    sfTexture_destroy(floor.texture);
-
-    sfSprite_destroy(player.sprite);
-    sfTexture_destroy(player.texture);
+    destroy_object(&floor);
+    destroy_object(&(player.object));
+    destroy_object(&(enemy.object));
+    
+    sfRenderWindow_setView(window, sfRenderWindow_getDefaultView(window));
+    sfView_destroy(view);
 
     return 0;
 }
-
-
-void moove_player(sfRenderWindow* window, myWindowInfo window_info, myObject *object) {
-
-/*///////////////////////////////////////////////////////////////////////////////
-
-    > (window_info.size.x - size.x * scale.x)
-                
-    - Correspond à la taille de l'écran en x moins la taille du btn en x (size * scale pour avoir la taille du sprite)
-    - Ainsi on empeche le sprite de sortir de la fenetre HEHEHEHE
-
-/*///////////////////////////////////////////////////////////////////////////////
-
-    sfVector2u size = sfTexture_getSize(object->texture);
-    sfVector2f scale = sfSprite_getScale(object->sprite);
-    sfVector2f position = sfSprite_getPosition(object->sprite);
-    sfVector2f SPEED = (sfVector2f) { 0.8, 0.8 };
-
-    if (sfKeyboard_isKeyPressed(sfKeyRight) && position.x <= (window_info.size.x - size.x * scale.x) - 100)
-        position.x += SPEED.x;
-
-    if (sfKeyboard_isKeyPressed(sfKeyLeft) && position.x >= 100)
-        position.x -= SPEED.x;
-
-    if (sfKeyboard_isKeyPressed(sfKeyUp) && position.y >= 100)
-        position.y -= SPEED.y;
-
-    if (sfKeyboard_isKeyPressed(sfKeyDown) && position.y <= (window_info.size.y - size.y * scale.y) - 100)
-        position.y += SPEED.y;
-                
-    sfSprite_setPosition(object->sprite, position);
-    setup_sprite(window, object->texture, object->sprite, window_info);
-}
-
-
-/*
-int on_collision(myObject obj1, myObject obj2) {
-
-    sfVector2u size_obj1 = sfTexture_getSize(obj1.texture), size_obj2 = sfTexture_getSize(obj2.texture);
-    sfVector2f scale_obj1 = sfSprite_getScale(obj1.sprite), scale_obj2 = sfSprite_getScale(obj2.sprite);
-    sfVector2f position_obj1 = sfSprite_getPosition(obj1.sprite), position_obj2 = sfSprite_getPosition(obj2.sprite);
-
-    if (position_obj1.x <= (size.x - size.x * scale.x) - 100)
-        return 'l';
-
-    if (position_obj1.x >= 100)
-        return 
-
-    if (position_obj1.y >= 100)
-        position.y -= SPEED.y;
-
-    if (position_obj1.y <= (window_info.size.y - size.y * scale.y) - 100)
-        position.y += SPEED.y;
-        
-}
-*/

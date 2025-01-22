@@ -2,8 +2,7 @@
     #define SCREEN_H_
 
 
-    #include "../include/my.h"
-    #include "../include/mystructs.h"
+    #include "my.h"
     
 
     /* Window Resolution */
