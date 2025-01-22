@@ -1,2 +1,0 @@
-// windres rc/icon.rc -o rc/icon.o
-1 ICON "../assets/myicon.ico"
