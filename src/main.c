@@ -16,7 +16,6 @@ int main(int argc, char **argv) {
 
     int program_step = MENU_step;
 
-
     /* Create the main window */
     window = sfRenderWindow_create((sfVideoMode) {window_info.size.x, window_info.size.y, 32}, "Googoo Gagaga", sfClose, NULL);
     if (!window) { EXIT_DEBUG_WINDOW }

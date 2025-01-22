@@ -18,14 +18,15 @@ LIB_DIR = ./lib/CSFML_2.6.1/lib/gcc
 # Bibliothèques nécessaires pour la liaison
 CSFML = -lcsfml-graphics -lcsfml-system -lcsfml-audio -lcsfml-window
 
+WIND = -lwinmm
+
 # Permet à GCC de compiler ton programme en une application graphique, sans associer un terminal à l'exécutable.
 NO_TERMINAL = 
 
 # Compilation et Liaison du projet
 all:
 	windres rc/icon.rc -o rc/icon.o
-	gcc $(SRC) ./rc/icon.o -o ./output/$(NAME) -I$(INCLUDE_DIR) -L$(LIB_DIR) $(CFLAGS) $(CSFML) $(NO_TERMINAL)
-
+	gcc $(SRC) ./rc/icon.o -o ./output/$(NAME) -I$(INCLUDE_DIR) -L$(LIB_DIR) $(CFLAGS) $(CSFML) $(NO_TERMINAL) $(WIND)
 #Version sans terminale (pas de debug oof)
 noterm: NO_TERMINAL += -mwindows
 noterm: all

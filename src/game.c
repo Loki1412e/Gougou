@@ -1,5 +1,7 @@
-
+#include <windows.h>
+#include <mmsystem.h>
 #include "../include/game.h"
+
 
 
 int game_view(sfRenderWindow* window, sfEvent event, myWindowInfo *window_info, int *program_step);
@@ -7,6 +9,23 @@ void moove_player(sfRenderWindow* window, myWindowInfo window_info, myObject *ob
 
 
 int game_view(sfRenderWindow* window, sfEvent event, myWindowInfo *window_info, int *program_step) {
+
+    // Chemin vers le fichier audio .wav
+    const char* music = "./assets/music/game.wav";
+
+    FILE* fichier = fopen(music, "r");
+    if (!fichier) {
+        printf("Erreur : Impossible de trouver le fichier '%s'.\n", music);
+        return 1;
+    }
+    fclose(fichier);
+
+    // Lecture du fichier audio
+    if (PlaySound(music, NULL, SND_FILENAME | SND_ASYNC | SND_LOOP)) {
+        printf("Lecture du son...\n");
+    } else {
+        printf("Erreur : Impossible de lire le son.\n");
+    }
 
     // Floor
     myObject floor;
