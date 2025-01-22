@@ -13,4 +13,6 @@
     void playerMoovRL(myPlayer *player, sfVector2f *position);
     void player_movements(sfRenderWindow* window, myWindowInfo window_info, myPlayer *player, myObject floor);
 
+    int deathByEnemy(myPlayer *player, myEnemy enemy);
+
 #endif

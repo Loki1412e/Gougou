@@ -9,6 +9,16 @@ void playerMoovRL(myPlayer *player, sfVector2f *position);
 void player_movements(sfRenderWindow* window, myWindowInfo window_info, myPlayer *player, myObject floor);
 
 
+int deathByEnemy(myPlayer *player, myEnemy enemy);
+
+
+int deathByEnemy(myPlayer *player, myEnemy enemy) {
+    if (!check_collision(player->object.sprite, enemy.object.sprite)) return 0;
+    player->hp = 0;
+    return 1;
+}
+
+
 // Applique la gravité si le joueur ne touche pas le sol
 void applyGravity(myPlayer *player, sfVector2f* position, myObject floor) {
 
@@ -56,13 +66,14 @@ void applyTileGravity(int** map, sfVector2u map_dimensions, sfSprite* map_tile, 
 // Donc pour dash le bouton sera : sfKeyLShift
 void playerDash(myPlayer *player, sfVector2f *position) {
 
-    if (((sfKeyboard_isKeyPressed(sfKeyRight) || sfKeyboard_isKeyPressed(sfKeyLeft)) && \
-        !(sfKeyboard_isKeyPressed(sfKeyRight) && sfKeyboard_isKeyPressed(sfKeyLeft))) && \
-        sfKeyboard_isKeyPressed(sfKeyLShift) && \
-        !player->dash_cooldown
+    if (!player->dash_cooldown && \
+        (sfKeyboard_isKeyPressed(sfKeyRight) || sfKeyboard_isKeyPressed(sfKeyLeft)) && \
+        sfKeyboard_isKeyPressed(sfKeyLShift)
     ) {
         player->dash_duration = DASH_DURATION_player;
         player->dash_cooldown = DASH_COOLDOWN_player;
+        player->on_jump = 0;
+        player->velocity.y = 0;
     }
 
     else if (player->dash_cooldown) {
@@ -107,11 +118,11 @@ void player_movements(sfRenderWindow* window, myWindowInfo window_info, myPlayer
     // Récupère la position du joueur
     sfVector2f position = sfSprite_getPosition(player->object.sprite);
 
-    // Applique la gravité si le joueur ne touche pas le sol
-    applyGravity(player, &position, floor);
-
     // Dash du joueur
     playerDash(player, &position);
+
+    // Applique la gravité si le joueur ne touche pas le sol
+    if (!player->dash_duration) applyGravity(player, &position, floor);
     
     // Deplacements : quand le joueur dash il ne peut pas bouger
     if (!player->dash_duration) playerMoovRL(player, &position);
@@ -126,11 +137,11 @@ void player_TileMovements(sfRenderWindow* window, myWindowInfo window_info, myPl
     // Récupère la position du joueur
     sfVector2f position = sfSprite_getPosition(player->object.sprite);
 
-    // Applique la gravité si le joueur ne touche pas le sol
-    applyTileGravity(map, map_dimensions, map_tile, player, &position);
-
     // Dash du joueur
     playerDash(player, &position);
+
+    // Applique la gravité si le joueur ne touche pas le sol
+    if (!player->dash_duration) applyTileGravity(map, map_dimensions, map_tile, player, &position);
     
     // Deplacements : quand le joueur dash il ne peut pas bouger
     if (!player->dash_duration) playerMoovRL(player, &position);

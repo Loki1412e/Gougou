@@ -37,17 +37,17 @@
     
 
     /* Gravity */
-    #define GRAVITY 200.81
-    #define JUMP_FORCE  200
+    #define GRAVITY 9.81
+    #define JUMP_FORCE  80
     #define TIME 1.0/32.0
 
 
     /* Attributs Player */
-    #define JUMP_player 10.0
-    #define SPEED_X_player 10.6
-    #define DASH_DURATION_player 200
-    #define DASH_SPEED_player 10
-    #define DASH_COOLDOWN_player (DASH_DURATION_player * 10)
+    #define JUMP_player 1.6
+    #define SPEED_X_player 0.6
+    #define DASH_DURATION_player 300
+    #define DASH_SPEED_player 3
+    #define DASH_COOLDOWN_player (DASH_DURATION_player * 2)
     #define HP_player 100
 
 

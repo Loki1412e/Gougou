@@ -12,11 +12,13 @@
         sfVector2f scale;
     } myWindowInfo;
 
+
     // Define an object
     typedef struct __my_object__ {
         sfTexture* texture;
         sfSprite* sprite;         
     } myObject;
+
 
     typedef struct __my_button__ {
         sfTexture* texture_normal;
@@ -26,6 +28,7 @@
         sfVector2f position;
         sfVector2f scale;
     } myButton;
+
 
     // Define Player
     typedef struct __my_player__ {
@@ -39,5 +42,15 @@
         int can_dash;
         float hp;
     } myPlayer;
+
+    
+    typedef struct __my_enemy__ {
+        myObject object;
+        sfVector2f speed;
+        sfVector2f velocity;
+        int on_jump;
+        char direction; // voir #define dans le my.h
+        float hp;
+    } myEnemy;
 
 #endif

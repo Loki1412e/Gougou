@@ -13,10 +13,7 @@ int main(int argc, char **argv) {
     /* Create the main window */
     window = sfRenderWindow_create((sfVideoMode) {window_info.size.x, window_info.size.y, 32}, "Googoo Gagaga", sfClose, NULL);
     if (!window) { EXIT_DEBUG_WINDOW }
-
-    // Limite les fps, max fps = FPS
-    sfRenderWindow_setFramerateLimit(window, FPS);
-
+    
 
     /* Start GAME LOOP */
     while (sfRenderWindow_isOpen(window)) {
