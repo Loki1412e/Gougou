@@ -19,13 +19,10 @@ void interactWithPlayer(myEnemy *enemy, myPlayer *player, myWindowInfo window_in
     
     if (!check_collision(player->object.sprite, enemy->object.sprite)) return; // pas en collision
 
-    if (position_player.y >= position_enemy.y)
+    if (position_player.y <= position_enemy.y + 50)
         enemy->hp = 0; // enemy est mort        
     
-    else {
-        player->hp = 0; // player est mort
-        printf("OUIIIIIIIIIIIIII");
-    }
+    else player->hp = 0; // player est mort
 }
 
 

@@ -72,11 +72,11 @@ int game_view(sfRenderWindow* window, sfEvent event, myWindowInfo *window_info, 
             player.hp = 0;
         
         // fin de partie :/
-        if (player.hp <= 0.) *program_step = DEATHMENU_step;
+        if (player.hp <= 0) *program_step = DEATHMENU_step;
         
         
         /* ENEMY */
-        if (enemy.hp > 0) interactWithPlayer(&enemy, &player, *window_info);
+        if (enemy.hp > 0 && player.hp > 0) interactWithPlayer(&enemy, &player, *window_info);
         if (enemy.isAlive) applyGravityEnemy(window, &enemy, floor, *window_info);
 
 
