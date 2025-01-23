@@ -3,6 +3,7 @@
 
 int event_behavior(sfRenderWindow *window, sfEvent event, myWindowInfo *window_info, int *program_step);
 int handle_button_event(myButton *button, sfRenderWindow *window, sfEvent *event, int *program_step, int action,  myWindowInfo *window_info, int *sound);
+int handle_button_Sound(myButton *mute_btn, myButton *unmute_btn, sfRenderWindow *window, sfEvent *event, int *sound, char *music);
 
 
 // return 1 => EXIT_DEBUG_WINDOW
@@ -50,7 +51,9 @@ int event_behavior(sfRenderWindow *window, sfEvent event, myWindowInfo *window_i
     return 0;
 }
 
+
 int handle_button_event(myButton *button, sfRenderWindow *window, sfEvent *event, int *program_step, int action,  myWindowInfo *window_info, int *sound) {
+    
     sfVector2i mouse_position = sfMouse_getPositionRenderWindow(window);
     sfFloatRect bounds = sfSprite_getGlobalBounds(button->sprite);
 
@@ -98,10 +101,6 @@ int handle_button_event(myButton *button, sfRenderWindow *window, sfEvent *event
                     if (save_config("./configs/config.test", window_info)) { EXIT_DEBUG_FILE } 
                     // printf("aled");
                     break;
-                
-                case SOUND_conf:
-                    *sound = *sound ? 0 : 1;
-                    break;
             }
         }
         
@@ -111,6 +110,65 @@ int handle_button_event(myButton *button, sfRenderWindow *window, sfEvent *event
         } else {
             sfSprite_setTexture(button->sprite, button->texture_normal, sfTrue);
         }
+    }
+
+    return 0; // pas de pbl
+}
+
+
+int handle_button_Sound(myButton *mute_btn, myButton *unmute_btn, sfRenderWindow *window, sfEvent *event, int *sound, char *music) {
+
+    myButton *button = *sound ? mute_btn : unmute_btn;
+
+    sfVector2i mouse_position = sfMouse_getPositionRenderWindow(window);
+    sfFloatRect bounds = sfSprite_getGlobalBounds(button->sprite);
+
+    if (event->type == sfEvtMouseMoved) {
+
+        // Change l'état en hover si la souris survole le bouton
+        if (sfFloatRect_contains(&bounds, mouse_position.x, mouse_position.y))
+            sfSprite_setTexture(button->sprite, button->texture_hovered, sfTrue);
+        
+        else
+            sfSprite_setTexture(button->sprite, button->texture_normal, sfTrue);
+    }
+    
+    else if (event->type == sfEvtMouseButtonPressed && event->mouseButton.button == sfMouseLeft) {
+        // Change l'état en click si le bouton est pressé
+        if (sfFloatRect_contains(&bounds, mouse_position.x, mouse_position.y))
+            sfSprite_setTexture(button->sprite, button->texture_clicked, sfTrue);
+    }
+    
+    else if (event->type == sfEvtMouseButtonReleased && event->mouseButton.button == sfMouseLeft) {
+        
+        // Effectue une action si le bouton est relâché sur lui-même
+        if (sfFloatRect_contains(&bounds, mouse_position.x, mouse_position.y)) {
+
+            if (!sound) {
+                    
+                FILE* fichier = fopen(music, "r");
+                    
+                if (!fichier) {
+                    printf("Erreur : Impossible de trouver le fichier '%s'", music);
+                    EXIT_DEBUG_FILE
+                }
+                fclose(fichier);
+                    
+                // Lecture du fichier audio
+                PlaySound(music, NULL, SND_FILENAME | SND_ASYNC | SND_LOOP);
+            }
+
+            else PlaySound(NULL, 0, 0);
+            
+            *sound = *sound ? 0 : 1;
+        }
+        
+        // Retourne à l'état normal ou hover après le clic
+        if (sfFloatRect_contains(&bounds, mouse_position.x, mouse_position.y))
+            sfSprite_setTexture(button->sprite, button->texture_hovered, sfTrue);
+        
+        else
+            sfSprite_setTexture(button->sprite, button->texture_normal, sfTrue);
     }
 
     return 0; // pas de pbl

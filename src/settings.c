@@ -6,14 +6,15 @@ int settings_view(sfRenderWindow* window, sfEvent *event, myWindowInfo *window_i
 
 int settings_view(sfRenderWindow* window, sfEvent *event, myWindowInfo *window_info, int *program_step, int *sound) {
     
+    // Chemin vers le fichier audio .wav
+    char* music = "./assets/music/menu.wav";
+
     if (sound) {
-        // Chemin vers le fichier audio .wav
-        char* music = "./assets/music/menu.wav";
 
         FILE* fichier = fopen(music, "r");
         if (!fichier) {
-            printf("Erreur : Impossible de trouver le fichier '%s'.\n", music);
-            return 1;
+            printf("Erreur : Impossible de trouver le fichier '%s'", music);
+            EXIT_DEBUG_FILE
         }
         fclose(fichier);
 
@@ -27,13 +28,14 @@ int settings_view(sfRenderWindow* window, sfEvent *event, myWindowInfo *window_i
     if (create_sprite(&background, "./assets/settings/background.png", (sfVector2f) {1., 1.})) { EXIT_DEBUG_TEXTURE }
 
     // Boutons
-    myButton back_btn, btn_1920x1200,  btn_1280x800, btn_1680x1050, music_btn;
+    myButton back_btn, btn_1920x1200,  btn_1280x800, btn_1680x1050, mute_btn, unmute_btn;
      
     if (create_button(&back_btn, "./assets/buttons/retry_normal.png", "./assets/buttons/retry_hovered.png", "./assets/buttons/retry_clicked.png", (sfVector2f) {8., 8.}, (sfVector2f) {50, 50})) { EXIT_DEBUG_TEXTURE }
     if (create_button(&btn_1680x1050, "./assets/buttons/1680_normal.png", "./assets/buttons/1680_hovered.png", "./assets/buttons/1680_clicked.png", (sfVector2f) {8., 8.}, (sfVector2f) {750, 150})) { EXIT_DEBUG_TEXTURE }
     if (create_button(&btn_1920x1200, "./assets/buttons/1920_normal.png", "./assets/buttons/1920_hovered.png", "./assets/buttons/1920_clicked.png", (sfVector2f) {8., 8.}, (sfVector2f) {1050, 150})) { EXIT_DEBUG_TEXTURE }
     if (create_button(&btn_1280x800, "./assets/buttons/1280_normal.png", "./assets/buttons/1280_hovered.png", "./assets/buttons/1280_clicked.png", (sfVector2f) {8., 8.}, (sfVector2f) {450, 150})) { EXIT_DEBUG_TEXTURE }
-    if (create_button(&music_btn, "./assets/buttons/music_normal.png", "./assets/buttons/music_hovered.png", "./assets/buttons/music_clicked.png", (sfVector2f) {8., 8.}, (sfVector2f) {50, 750})) { EXIT_DEBUG_TEXTURE }
+    if (create_button(&mute_btn, "./assets/buttons/mute_normal.png", "./assets/buttons/mute_hovered.png", "./assets/buttons/mute_clicked.png", (sfVector2f) {8., 8.}, (sfVector2f) {50, 750})) { EXIT_DEBUG_TEXTURE }
+    if (create_button(&unmute_btn, "./assets/buttons/unmute_normal.png", "./assets/buttons/unmute_hovered.png", "./assets/buttons/unmute_clicked.png", (sfVector2f) {8., 8.}, (sfVector2f) {50, 750})) { EXIT_DEBUG_TEXTURE }
     
 
     while (sfRenderWindow_isOpen(window) && *program_step == SETTINGS_step) {
@@ -46,7 +48,7 @@ int settings_view(sfRenderWindow* window, sfEvent *event, myWindowInfo *window_i
             handle_button_event(&btn_1680x1050, window, event, program_step, _1680, window_info, sound); 
             handle_button_event(&btn_1920x1200, window, event, program_step, _1920, window_info, sound); 
             handle_button_event(&btn_1280x800, window, event, program_step, _1280, window_info, sound);
-            handle_button_event(&music_btn, window, event, program_step, MENU_step, window_info, sound);
+            handle_button_Sound(&mute_btn, &unmute_btn, window, event, sound, music);
         }
 
         // Dessin
@@ -61,7 +63,8 @@ int settings_view(sfRenderWindow* window, sfEvent *event, myWindowInfo *window_i
         sfRenderWindow_drawSprite(window, btn_1680x1050.sprite, NULL);
         sfRenderWindow_drawSprite(window, btn_1920x1200.sprite, NULL);
         sfRenderWindow_drawSprite(window, btn_1280x800.sprite, NULL);
-        sfRenderWindow_drawSprite(window, music_btn.sprite, NULL);
+        if (*sound) sfRenderWindow_drawSprite(window, mute_btn.sprite, NULL);
+        else sfRenderWindow_drawSprite(window, unmute_btn.sprite, NULL);
 
         sfRenderWindow_display(window); // Affichage
     }
@@ -72,7 +75,8 @@ int settings_view(sfRenderWindow* window, sfEvent *event, myWindowInfo *window_i
     destroy_button(&btn_1680x1050);
     destroy_button(&btn_1920x1200);
     destroy_button(&btn_1280x800);
-    destroy_button(&music_btn);
+    destroy_button(&unmute_btn);
+    destroy_button(&mute_btn);
 
     if (sound) PlaySound(NULL, 0, 0);
 
