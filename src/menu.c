@@ -1,10 +1,10 @@
 #include "../include/menu.h"
-#include "../include/button.h"
-#include "../include/sprites.h"
 
-int menu_view(sfRenderWindow* window, sfEvent *event, myWindowInfo *window_info, int *program_step);
 
-int menu_view(sfRenderWindow* window, sfEvent *event, myWindowInfo *window_info, int *program_step) {
+int menu_view(sfRenderWindow* window, sfEvent *event, myWindowInfo *window_info, int *program_step, int sound);
+
+
+int menu_view(sfRenderWindow* window, sfEvent *event, myWindowInfo *window_info, int *program_step, int sound) {
     // Background
     myObject background;
     if (create_sprite(&background, "./assets/menu/background.png", (sfVector2f) {1., 1.})) { EXIT_DEBUG_TEXTURE }

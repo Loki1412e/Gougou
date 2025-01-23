@@ -1,9 +1,8 @@
 #include "../include/deathmenu.h"
-#include "../include/button.h"
 
-int deathmenu_view(sfRenderWindow* window, sfEvent *event, myWindowInfo *window_info, int *program_step);
+int deathmenu_view(sfRenderWindow* window, sfEvent *event, myWindowInfo *window_info, int *program_step, int sound);
 
-int deathmenu_view(sfRenderWindow* window, sfEvent *event, myWindowInfo *window_info, int *program_step) {
+int deathmenu_view(sfRenderWindow* window, sfEvent *event, myWindowInfo *window_info, int *program_step, int sound) {
     // Background
     myObject background;
     if (create_sprite(&background, "./assets/deathmenu/background.png", (sfVector2f) {0.8, 0.8})) { EXIT_DEBUG_TEXTURE }

@@ -1,8 +1,8 @@
 #include "../include/winmenu.h"
 
-int winmenu_view(sfRenderWindow* window, sfEvent *event, myWindowInfo *window_info, int *program_step);
+int winmenu_view(sfRenderWindow* window, sfEvent *event, myWindowInfo *window_info, int *program_step, int sound);
 
-int winmenu_view(sfRenderWindow* window, sfEvent *event, myWindowInfo *window_info, int *program_step) {
+int winmenu_view(sfRenderWindow* window, sfEvent *event, myWindowInfo *window_info, int *program_step, int sound) {
     // Background
     myObject background;
     if (create_sprite(&background, "./assets/winmenu/win.png", (sfVector2f) {0.8, 0.8})) { EXIT_DEBUG_TEXTURE }

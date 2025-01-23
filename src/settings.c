@@ -1,10 +1,10 @@
 #include "../include/settings.h"
 
 
-int settings_view(sfRenderWindow* window, sfEvent event, myWindowInfo *window_info, int *program_step);
+int settings_view(sfRenderWindow* window, sfEvent event, myWindowInfo *window_info, int *program_step, int sound);
 
 
-int settings_view(sfRenderWindow* window, sfEvent event, myWindowInfo *window_info, int *program_step) {
+int settings_view(sfRenderWindow* window, sfEvent event, myWindowInfo *window_info, int *program_step, int sound) {
     // Background
     myObject background;
     if (create_sprite(&background, "./assets/settings/background.png", (sfVector2f) {1., 1.})) { EXIT_DEBUG_TEXTURE }
