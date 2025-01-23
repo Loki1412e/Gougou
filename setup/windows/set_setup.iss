@@ -52,6 +52,7 @@ Source: "..\..\lib\CSFML_2.6.1\bin\csfml-graphics-2.dll"; DestDir: "{app}"; Flag
 Source: "..\..\lib\CSFML_2.6.1\bin\csfml-network-2.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\..\lib\CSFML_2.6.1\bin\csfml-system-2.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\..\lib\CSFML_2.6.1\bin\csfml-window-2.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\..\configs\*"; DestDir: "{app}\configs"; Flags: ignoreversion
 Source: "..\..\assets\*"; DestDir: "{app}\assets"; Flags: ignoreversion recursesubdirs createallsubdirs
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
