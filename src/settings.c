@@ -50,16 +50,19 @@ int settings_view(sfRenderWindow* window, sfEvent *event, myWindowInfo *window_i
                 handle_button_event(&btn_1280x800, window, event, program_step, _1280, window_info, sound) == 1
             ) return 1;
 
-            switch (handle_button_Sound(&mute_btn, &unmute_btn, window, window_info, event, sound, music))  { 
-                case 1: return 1;
-                case 2:
-                    FILE* fichier = fopen(music, "r");
-                    if (!fichier) {
-                        printf("Erreur : Impossible de trouver le fichier '%s'", music);
-                        EXIT_DEBUG_FILE
-                    }
-                    fclose(fichier);
-                    PlaySound(music, NULL, SND_FILENAME | SND_ASYNC | SND_LOOP);
+            switch (handle_button_Sound(&mute_btn, &unmute_btn, window, window_info, event, sound))  { 
+                    case 1:
+                        FILE* fichier = fopen(music, "r");
+                        if (!fichier) {
+                            printf("Erreur : Impossible de trouver le fichier '%s'", music);
+                            EXIT_DEBUG_FILE
+                        }
+                        fclose(fichier);
+                        PlaySound(music, NULL, SND_FILENAME | SND_ASYNC | SND_LOOP);
+                    
+                    // si case1 accepeter alors on change le conf file
+                    case 2:
+                        if (saveConfig("./configs/myconf.conf", window_info, sound)) return 1;
             }
         }
          

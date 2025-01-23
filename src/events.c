@@ -3,7 +3,7 @@
 
 int event_behavior(sfRenderWindow *window, sfEvent event, myWindowInfo *window_info, int *program_step);
 int handle_button_event(myButton *button, sfRenderWindow *window, sfEvent *event, int *program_step, int action,  myWindowInfo *window_info, int *sound);
-int handle_button_Sound(myButton *mute_btn, myButton *unmute_btn, sfRenderWindow *window, myWindowInfo *window_info, sfEvent *event, int *sound, char *music);
+int handle_button_Sound(myButton *mute_btn, myButton *unmute_btn, sfRenderWindow *window, myWindowInfo *window_info, sfEvent *event, int *sound);
 
 
 // return 1 => EXIT_DEBUG_WINDOW
@@ -115,7 +115,8 @@ int handle_button_event(myButton *button, sfRenderWindow *window, sfEvent *event
 }
 
 
-int handle_button_Sound(myButton *mute_btn, myButton *unmute_btn, sfRenderWindow *window, myWindowInfo *window_info, sfEvent *event, int *sound, char *music) {
+int handle_button_Sound(myButton *mute_btn, myButton *unmute_btn, sfRenderWindow *window, myWindowInfo *window_info, sfEvent *event, int *sound) {
+    
     int state;
     myButton *button = *sound ? mute_btn : unmute_btn;
 
@@ -145,10 +146,8 @@ int handle_button_Sound(myButton *mute_btn, myButton *unmute_btn, sfRenderWindow
             if (sound) PlaySound(NULL, 0, 0);
             state = *sound;
             *sound = *sound ? 0 : 1;
-            if (*sound && *sound != state) {
-                if (saveConfig("./configs/myconf.conf", window_info, sound)) return 1;
-                return 2;
-            }
+            if (*sound && *sound != state) return 1;
+            else if (*sound != state) return 2;
 
         }
         // Retourne à l'état normal ou hover après le clic

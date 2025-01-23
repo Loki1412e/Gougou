@@ -8,6 +8,6 @@
 
     int event_behavior(sfRenderWindow *window, sfEvent event, myWindowInfo *window_info, int *program_step);
     int handle_button_event(myButton *button, sfRenderWindow *window, sfEvent *event, int *program_step, int action,  myWindowInfo *window_info, int *sound);
-    int handle_button_Sound(myButton *mute_btn, myButton *unmute_btn, sfRenderWindow *window, myWindowInfo *window_info, sfEvent *event, int *sound, char *music);
+    int handle_button_Sound(myButton *mute_btn, myButton *unmute_btn, sfRenderWindow *window, myWindowInfo *window_info, sfEvent *event, int *sound);
 
 #endif
