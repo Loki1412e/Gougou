@@ -4,7 +4,7 @@ int winmenu_view(sfRenderWindow* window, sfEvent *event, myWindowInfo *window_in
 
 int winmenu_view(sfRenderWindow* window, sfEvent *event, myWindowInfo *window_info, int *program_step, int *sound) {
    
-    if (sound) {
+    if (*sound) {
         // Chemin vers le fichier audio .wav
         char* music = "./assets/music/win.wav";
 
@@ -68,7 +68,7 @@ int winmenu_view(sfRenderWindow* window, sfEvent *event, myWindowInfo *window_in
     destroy_button(&settings_btn);
     destroy_button(&quit_btn);
 
-    if (sound) PlaySound(NULL, 0, 0);
+    if (*sound) PlaySound(NULL, 0, 0);
     
     return EXIT_SUCCESS;
 }   

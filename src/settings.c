@@ -9,7 +9,7 @@ int settings_view(sfRenderWindow* window, sfEvent *event, myWindowInfo *window_i
     // Chemin vers le fichier audio .wav
     char* music = "./assets/music/menu.wav";
 
-    if (sound) {
+    if (*sound) {
 
         FILE* fichier = fopen(music, "r");
         if (!fichier) {
@@ -78,7 +78,7 @@ int settings_view(sfRenderWindow* window, sfEvent *event, myWindowInfo *window_i
     destroy_button(&unmute_btn);
     destroy_button(&mute_btn);
 
-    if (sound) PlaySound(NULL, 0, 0);
-
+    if (*sound) PlaySound(NULL, 0, 0);
+    
     return EXIT_SUCCESS;
 }

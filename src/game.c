@@ -7,7 +7,7 @@ int game_view(sfRenderWindow* window, sfEvent event, myWindowInfo *window_info, 
 
 int game_view(sfRenderWindow* window, sfEvent event, myWindowInfo *window_info, int *program_step, int *sound) {
 
-    if (sound) {
+    if (*sound) {
         // Chemin vers le fichier audio .wav
         char* music = "./assets/music/game.wav";
 
@@ -251,7 +251,7 @@ int game_view(sfRenderWindow* window, sfEvent event, myWindowInfo *window_info, 
     sfTexture_destroy(texture2);
     sfTexture_destroy(texture3);
 
-    if (sound) PlaySound(NULL, 0, 0);
+    if (*sound) PlaySound(NULL, 0, 0);
 
     return 0;
 }
