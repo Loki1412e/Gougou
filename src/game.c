@@ -26,13 +26,18 @@ int game_view(sfRenderWindow* window, sfEvent event, myWindowInfo *window_info, 
     sfVector2f scale;
     sfVector2f position;
 
+
     // Camera (view)
     sfView* view = sfView_create();
     sfView_setSize(view, (sfVector2f) { window_info->size.x , window_info->size.y });
 
+
     // Floor
     myObject floor;
-    if (create_sprite(&floor, "./assets/game/terre.png", (sfVector2f) {30., 1.5})) { EXIT_DEBUG_TEXTURE };
+    if (create_sprite(&floor, "./assets/game/terre.png", (sfVector2f) {40., 1.5})) { EXIT_DEBUG_TEXTURE };
+    set_position_center(window, floor.texture, floor.sprite, *window_info);
+    set_position_bottom(window, floor.texture, floor.sprite, *window_info);
+
 
     // Player
     myPlayer player = {
@@ -44,6 +49,9 @@ int game_view(sfRenderWindow* window, sfEvent event, myWindowInfo *window_info, 
     };
     if (create_sprite(&(player.object), "./assets/player/tmp.png", (sfVector2f) {6, 6})) { EXIT_DEBUG_TEXTURE };
     set_position_center(window, player.object.texture, player.object.sprite, *window_info);
+    position = sfSprite_getPosition(player.object.sprite);
+    sfSprite_setPosition(player.object.sprite, (sfVector2f) { position.x - 200 , position.y });
+
 
     // Enemy
     myEnemy enemy = {
@@ -57,6 +65,14 @@ int game_view(sfRenderWindow* window, sfEvent event, myWindowInfo *window_info, 
     set_position_center(window, enemy.object.texture, enemy.object.sprite, *window_info);
     position = sfSprite_getPosition(enemy.object.sprite);
     sfSprite_setPosition(enemy.object.sprite, (sfVector2f) { position.x + 200 , position.y });
+
+
+    // Portal
+    myPortal portal = {
+        .speed = (sfVector2f) { SPEED_X_player * 0.4 , 0 }
+    };
+    if (create_sprite(&(portal.object), "./assets/game/portal.png", (sfVector2f) {8., 6.})) { EXIT_DEBUG_TEXTURE };
+    set_position_center(window, portal.object.texture, portal.object.sprite, *window_info);
 
 
     // Création des layers du parallax
@@ -87,14 +103,6 @@ int game_view(sfRenderWindow* window, sfEvent event, myWindowInfo *window_info, 
     sfVector2u textureSize1 = sfTexture_getSize(texture1);
     sfVector2u textureSize2 = sfTexture_getSize(texture2);
     sfVector2u textureSize3 = sfTexture_getSize(texture3);
-
-
-    // Portal
-    myPortal portal = {
-        .speed = (sfVector2f) { SPEED_X_player * 0.8 , 0 }
-    };
-    if (create_sprite(&(portal.object), "./assets/game/portal.png", (sfVector2f) {6., 6.})) { EXIT_DEBUG_TEXTURE };
-    set_position_center(window, portal.object.texture, portal.object.sprite, *window_info);
 
 
     // Start GAME LOOP
@@ -158,6 +166,13 @@ int game_view(sfRenderWindow* window, sfEvent event, myWindowInfo *window_info, 
 
 
 
+        /* PORTAL if not enemy */
+        if (!enemy.isAlive) {
+            applyGravityPortal(window, &portal, floor, *window_info);
+            endLvlPortal(&portal, &player, program_step);
+        }
+
+
         /* PLAYER */
         player_movements(window, *window_info, &player, floor);
         
@@ -175,13 +190,6 @@ int game_view(sfRenderWindow* window, sfEvent event, myWindowInfo *window_info, 
         /* ENEMY */
         if (enemy.hp > 0 && player.hp > 0) interactWithPlayer(&enemy, &player, *window_info);
         if (enemy.isAlive) applyGravityEnemy(window, &enemy, floor, *window_info);
-
-
-        /* PORTAL if not enemy */
-        if (!enemy.isAlive) {
-            applyGravityPortal(window, &portal, floor, *window_info);
-            endLvlPortal(&portal, &player, program_step);
-        }
 
 
         /* MAIN */
@@ -217,17 +225,16 @@ int game_view(sfRenderWindow* window, sfEvent event, myWindowInfo *window_info, 
         sfRenderWindow_drawSprite(window, layer1, NULL);
         
         // Dessine le sol
-        set_position_bottom(window, floor.texture, floor.sprite, *window_info);
         setup_sprite(window, floor.texture, floor.sprite, *window_info);
+
+        // Dessine Portal
+        if (!enemy.isAlive) setup_sprite(window, portal.object.texture, portal.object.sprite, *window_info);
 
         // Dessine le Joueur
         setup_sprite(window, player.object.texture, player.object.sprite, *window_info);
 
         // Draw enemy
         if (enemy.isAlive) setup_sprite(window, enemy.object.texture, enemy.object.sprite, *window_info);
-
-        // Dessine Portal
-        if (!enemy.isAlive) setup_sprite(window, portal.object.texture, portal.object.sprite, *window_info);
 
         // On applique les dessins
         sfRenderWindow_display(window);

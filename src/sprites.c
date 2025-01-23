@@ -72,7 +72,9 @@ void set_position_bottom(sfRenderWindow* window, sfTexture* texture, sfSprite* s
     sfVector2u size = sfTexture_getSize(texture); // on recup la taille avec la texture
     sfVector2f scale = sfSprite_getScale(sprite); // on recup son scale (son echelle)
 
-    sfVector2f position = { 0, window_info.size.y - (size.y * scale.y) };
+    sfVector2f position = sfSprite_getPosition(sprite);
+
+    position.y = window_info.size.y - (size.y * scale.y);
 
     sfSprite_setPosition(sprite, position);
 }
