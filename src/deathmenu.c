@@ -69,7 +69,7 @@ int deathmenu_view(sfRenderWindow* window, sfEvent *event, myWindowInfo *window_
     destroy_button(&settings_btn);
     destroy_button(&quit_btn);
 
-    PlaySound(NULL, 0, 0);
+    if (sound) PlaySound(NULL, 0, 0);
 
     return EXIT_SUCCESS;
 }   

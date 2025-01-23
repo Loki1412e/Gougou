@@ -8,7 +8,7 @@ int game_view(sfRenderWindow* window, sfEvent event, myWindowInfo *window_info, 
 
     if (sound) {
         // Chemin vers le fichier audio .wav
-        char* music = "./assets/music/death.wav";
+        char* music = "./assets/music/game.wav";
 
         FILE* fichier = fopen(music, "r");
         if (!fichier) {
