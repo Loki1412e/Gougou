@@ -117,7 +117,7 @@ int handle_button_event(myButton *button, sfRenderWindow *window, sfEvent *event
 
 
 int handle_button_Sound(myButton *mute_btn, myButton *unmute_btn, sfRenderWindow *window, sfEvent *event, int *sound, char *music) {
-
+    int state;
     myButton *button = *sound ? mute_btn : unmute_btn;
 
     sfVector2i mouse_position = sfMouse_getPositionRenderWindow(window);
@@ -143,26 +143,12 @@ int handle_button_Sound(myButton *mute_btn, myButton *unmute_btn, sfRenderWindow
         
         // Effectue une action si le bouton est relâché sur lui-même
         if (sfFloatRect_contains(&bounds, mouse_position.x, mouse_position.y)) {
-
-            if (!sound) {
-                    
-                FILE* fichier = fopen(music, "r");
-                    
-                if (!fichier) {
-                    printf("Erreur : Impossible de trouver le fichier '%s'", music);
-                    EXIT_DEBUG_FILE
-                }
-                fclose(fichier);
-                    
-                // Lecture du fichier audio
-                PlaySound(music, NULL, SND_FILENAME | SND_ASYNC | SND_LOOP);
-            }
-
-            else PlaySound(NULL, 0, 0);
-            
+            if (sound) PlaySound(NULL, 0, 0);
+            state = *sound;
             *sound = *sound ? 0 : 1;
+            if (*sound && *sound != state) return 2;
+
         }
-        
         // Retourne à l'état normal ou hover après le clic
         if (sfFloatRect_contains(&bounds, mouse_position.x, mouse_position.y))
             sfSprite_setTexture(button->sprite, button->texture_hovered, sfTrue);

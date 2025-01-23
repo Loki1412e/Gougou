@@ -48,8 +48,18 @@ int settings_view(sfRenderWindow* window, sfEvent *event, myWindowInfo *window_i
             handle_button_event(&btn_1680x1050, window, event, program_step, _1680, window_info, sound); 
             handle_button_event(&btn_1920x1200, window, event, program_step, _1920, window_info, sound); 
             handle_button_event(&btn_1280x800, window, event, program_step, _1280, window_info, sound);
-            handle_button_Sound(&mute_btn, &unmute_btn, window, event, sound, music);
+            if (handle_button_Sound(&mute_btn, &unmute_btn, window, event, sound, music))  { 
+                FILE* fichier = fopen(music, "r");
+                if (!fichier) {
+                    printf("Erreur : Impossible de trouver le fichier '%s'", music);
+                    EXIT_DEBUG_FILE
+                }
+                fclose(fichier);
+                PlaySound(music, NULL, SND_FILENAME | SND_ASYNC | SND_LOOP);
+            }
         }
+         
+
 
         // Dessin
         sfRenderWindow_clear(window, sfBlack);
