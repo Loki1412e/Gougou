@@ -3,6 +3,7 @@
 
     #include "my.h"
     #include "mystructs.h"
+    #include "config.h"
 
     #include "events.h"
     #include "screen.h"

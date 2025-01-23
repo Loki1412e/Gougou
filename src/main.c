@@ -3,15 +3,21 @@
 
 
 int main(int argc, char **argv) {
-    myWindowInfo window_info = _1920x1200;
+
+    myWindowInfo window_info;
     sfRenderWindow* window;
     sfEvent event;
 
-    int program_step = MENU_step;
-    int sound = 1; // son activé par défaut
 
-    // Le chemin vers le fichier de configuration
-    const char config_path [] = "./configs/config.txt";
+    int program_step = MENU_step;
+    int sound;
+
+
+    // Si le dossier de conf n'arrive pas a charger des informations alors on applique les valeurs par défaut
+    if (load_config("./configs/myconf.conf", &window_info, &sound)) {
+        window_info = _1920x1200;
+        sound = 1;  // son activé par défaut
+    };
 
     // Initialisation de la fenêtre avec la configuration par défaut
     window = sfRenderWindow_create((sfVideoMode) {window_info.size.x, window_info.size.y, 32}, "Googoo Gagaga", sfClose, NULL);

@@ -3,7 +3,7 @@
 
 int event_behavior(sfRenderWindow *window, sfEvent event, myWindowInfo *window_info, int *program_step);
 int handle_button_event(myButton *button, sfRenderWindow *window, sfEvent *event, int *program_step, int action,  myWindowInfo *window_info, int *sound);
-int handle_button_Sound(myButton *mute_btn, myButton *unmute_btn, sfRenderWindow *window, sfEvent *event, int *sound, char *music);
+int handle_button_Sound(myButton *mute_btn, myButton *unmute_btn, sfRenderWindow *window, myWindowInfo *window_info, sfEvent *event, int *sound, char *music);
 
 
 // return 1 => EXIT_DEBUG_WINDOW
@@ -40,10 +40,8 @@ int event_behavior(sfRenderWindow *window, sfEvent event, myWindowInfo *window_i
         }
                 
         // NUMP PAD -> voir screen.c
-        if (resize_screen(event.key.code, window_info)) {
-            sfRenderWindow_destroy(window);
-            window = sfRenderWindow_create((sfVideoMode) {window_info->size.x, window_info->size.y, 32}, "Gogoo Gagaga", sfClose, NULL);
-            if (!window) return 1;
+        if (numpadResize(event.key.code, window_info)) {
+            if (resizeMyScreen(window, window_info)) return 1;
             return 2;
         }
     }
@@ -89,18 +87,19 @@ int handle_button_event(myButton *button, sfRenderWindow *window, sfEvent *event
 
                 case _1920:
                     *window_info = _1920x1200;
-                    if (save_config("./configs/config.test", window_info)) { EXIT_DEBUG_FILE }
-                    break;
+                    if (saveConfig("./configs/myconf.conf", window_info, sound)) { EXIT_DEBUG_FILE }
+                    if (resizeMyScreen(window, window_info)) { EXIT_DEBUG_WINDOW }
+                    return 2;
                 case _1680:
                     *window_info = _1680x1050;
-                    if (save_config("./configs/config.test", window_info)) { EXIT_DEBUG_FILE }
-                    break;
+                    if (saveConfig("./configs/myconf.conf", window_info, sound)) { EXIT_DEBUG_FILE }
+                    if (resizeMyScreen(window, window_info)) { EXIT_DEBUG_WINDOW }
+                    return 2;
                 case _1280:
-                    // printf("ouo");
                     *window_info = _1280x800; 
-                    if (save_config("./configs/config.test", window_info)) { EXIT_DEBUG_FILE } 
-                    // printf("aled");
-                    break;
+                    if (saveConfig("./configs/myconf.conf", window_info, sound)) { EXIT_DEBUG_FILE } 
+                    if (resizeMyScreen(window, window_info)) { EXIT_DEBUG_WINDOW }
+                    return 2;
             }
         }
         
@@ -116,7 +115,7 @@ int handle_button_event(myButton *button, sfRenderWindow *window, sfEvent *event
 }
 
 
-int handle_button_Sound(myButton *mute_btn, myButton *unmute_btn, sfRenderWindow *window, sfEvent *event, int *sound, char *music) {
+int handle_button_Sound(myButton *mute_btn, myButton *unmute_btn, sfRenderWindow *window, myWindowInfo *window_info, sfEvent *event, int *sound, char *music) {
     int state;
     myButton *button = *sound ? mute_btn : unmute_btn;
 
@@ -146,7 +145,10 @@ int handle_button_Sound(myButton *mute_btn, myButton *unmute_btn, sfRenderWindow
             if (sound) PlaySound(NULL, 0, 0);
             state = *sound;
             *sound = *sound ? 0 : 1;
-            if (*sound && *sound != state) return 2;
+            if (*sound && *sound != state) {
+                if (saveConfig("./configs/myconf.conf", window_info, sound)) return 1;
+                return 2;
+            }
 
         }
         // Retourne à l'état normal ou hover après le clic

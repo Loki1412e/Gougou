@@ -44,18 +44,22 @@ int settings_view(sfRenderWindow* window, sfEvent *event, myWindowInfo *window_i
             if (event_behavior(window, *event, window_info, program_step) == 1) { EXIT_DEBUG_WINDOW }
 
             // Gérer les événements des boutons
-            handle_button_event(&back_btn, window, event, program_step, MENU_step, window_info, sound); // Recommencer le jeu
-            handle_button_event(&btn_1680x1050, window, event, program_step, _1680, window_info, sound); 
-            handle_button_event(&btn_1920x1200, window, event, program_step, _1920, window_info, sound); 
-            handle_button_event(&btn_1280x800, window, event, program_step, _1280, window_info, sound);
-            if (handle_button_Sound(&mute_btn, &unmute_btn, window, event, sound, music))  { 
-                FILE* fichier = fopen(music, "r");
-                if (!fichier) {
-                    printf("Erreur : Impossible de trouver le fichier '%s'", music);
-                    EXIT_DEBUG_FILE
-                }
-                fclose(fichier);
-                PlaySound(music, NULL, SND_FILENAME | SND_ASYNC | SND_LOOP);
+            handle_button_event(&back_btn, window, event, program_step, MENU_step, window_info, sound);
+            if (handle_button_event(&btn_1680x1050, window, event, program_step, _1680, window_info, sound) == 1 || \ 
+                handle_button_event(&btn_1920x1200, window, event, program_step, _1920, window_info, sound) == 1 || \
+                handle_button_event(&btn_1280x800, window, event, program_step, _1280, window_info, sound) == 1
+            ) return 1;
+
+            switch (handle_button_Sound(&mute_btn, &unmute_btn, window, window_info, event, sound, music))  { 
+                case 1: return 1;
+                case 2:
+                    FILE* fichier = fopen(music, "r");
+                    if (!fichier) {
+                        printf("Erreur : Impossible de trouver le fichier '%s'", music);
+                        EXIT_DEBUG_FILE
+                    }
+                    fclose(fichier);
+                    PlaySound(music, NULL, SND_FILENAME | SND_ASYNC | SND_LOOP);
             }
         }
          

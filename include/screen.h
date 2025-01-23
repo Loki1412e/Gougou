@@ -3,6 +3,7 @@
 
 
     #include "my.h"
+    #include "config.h"
     
 
     /* Window Resolution */
@@ -11,6 +12,8 @@
     #define _1680x1050 (myWindowInfo) {(sfVector2u) {1680, 1050}, (sfVector2f) {0.875, 0.875}}          //OUI
     #define _1280x800  (myWindowInfo) {(sfVector2u) {1280, 800}, (sfVector2f) {0.666667, 0.666667}}     //OUI
 
-    int resize_screen(sfKeyCode code, myWindowInfo *window_info);
+
+    int resizeMyScreen(sfRenderWindow* window, myWindowInfo *window_info);
+    int numpadResize(sfKeyCode code, myWindowInfo *window_info);
 
 #endif
