@@ -7,6 +7,6 @@
     #include "player.h"
     #include "enemies.h"
 
-    int game_view(sfRenderWindow* window, sfEvent event, myWindowInfo *window_info, int *program_step);
+    int game_view(sfRenderWindow* window, sfEvent event, myWindowInfo *window_info, int *program_step, int sound);
 
 #endif

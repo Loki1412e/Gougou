@@ -1,9 +1,25 @@
 #include "../include/deathmenu.h"
 #include "../include/button.h"
 
-int deathmenu_view(sfRenderWindow* window, sfEvent *event, myWindowInfo *window_info, int *program_step);
+int deathmenu_view(sfRenderWindow* window, sfEvent *event, myWindowInfo *window_info, int *program_step, int sound);
 
-int deathmenu_view(sfRenderWindow* window, sfEvent *event, myWindowInfo *window_info, int *program_step) {
+int deathmenu_view(sfRenderWindow* window, sfEvent *event, myWindowInfo *window_info, int *program_step, int sound) {
+    
+    if (sound) {
+        // Chemin vers le fichier audio .wav
+        char* music = "./assets/music/death.wav";
+
+        FILE* fichier = fopen(music, "r");
+        if (!fichier) {
+            printf("Erreur : Impossible de trouver le fichier '%s'.\n", music);
+            return 1;
+        }
+        fclose(fichier);
+
+        // Lecture du fichier audio
+        PlaySound(music, NULL, SND_FILENAME | SND_ASYNC | SND_LOOP);
+    }
+    
     // Background
     myObject background;
     if (create_sprite(&background, "./assets/deathmenu/background.png", (sfVector2f) {0.8, 0.8})) { EXIT_DEBUG_TEXTURE }
@@ -52,6 +68,8 @@ int deathmenu_view(sfRenderWindow* window, sfEvent *event, myWindowInfo *window_
     destroy_button(&menu_btn);
     destroy_button(&settings_btn);
     destroy_button(&quit_btn);
+
+    PlaySound(NULL, 0, 0);
 
     return EXIT_SUCCESS;
 }   

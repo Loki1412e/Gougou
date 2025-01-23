@@ -15,6 +15,15 @@
     // Mes structs
     #include "mystructs.h"
 
+    /* Paralax Speed */
+    #define SPEED_LAYER1 1.0f
+    #define SPEED_LAYER2 0.5f
+    #define SPEED_LAYER3 0.2f
+
+    /* Son */
+    #include <windows.h>
+    #include <mmsystem.h>
+
 
     /* Debug */
     #define EXIT_DEBUG_WINDOW fprintf(stderr, "\n%s\n%d | WINDOW ERROR -> EXIT_FAILURE\n\n", __FILE__, __LINE__); return 1;

@@ -8,6 +8,8 @@ int main(int argc, char **argv) {
     sfEvent event;
 
     int program_step = MENU_step;
+    /* son activé par défaut */
+    int sound = 1;
 
 
     /* Create the main window */
@@ -29,11 +31,11 @@ int main(int argc, char **argv) {
         switch (program_step) {
 
             case MENU_step:
-                if (menu_view(window, &event, &window_info, &program_step)) return EXIT_FAILURE;
+                if (menu_view(window, &event, &window_info, &program_step, sound)) return EXIT_FAILURE;
                 break;
             
             case GAME_step:
-                if (game_view(window, event, &window_info, &program_step)) return EXIT_FAILURE;
+                if (game_view(window, event, &window_info, &program_step, sound)) return EXIT_FAILURE;
                 break;
             
             case TMP_game:
@@ -41,11 +43,11 @@ int main(int argc, char **argv) {
                 break;
 
             case DEATHMENU_step:
-                if (deathmenu_view(window, &event, &window_info, &program_step)) return EXIT_FAILURE;
+                if (deathmenu_view(window, &event, &window_info, &program_step, sound)) return EXIT_FAILURE;
                 break;
 
             case SETTINGS_step:
-                if (settings_view(window, &event, &window_info, &program_step)) return EXIT_FAILURE;
+                if (settings_view(window, &event, &window_info, &program_step, sound)) return EXIT_FAILURE;
                 break;
         }
     

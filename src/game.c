@@ -1,14 +1,25 @@
 
 #include "../include/game.h"
 
-#define SPEED_LAYER1 1.0f
-#define SPEED_LAYER2 0.5f
-#define SPEED_LAYER3 0.2f
-
-int game_view(sfRenderWindow* window, sfEvent event, myWindowInfo *window_info, int *program_step);
+int game_view(sfRenderWindow* window, sfEvent event, myWindowInfo *window_info, int *program_step, int sound);
 
 
-int game_view(sfRenderWindow* window, sfEvent event, myWindowInfo *window_info, int *program_step) {
+int game_view(sfRenderWindow* window, sfEvent event, myWindowInfo *window_info, int *program_step, int sound) {
+
+    if (sound) {
+        // Chemin vers le fichier audio .wav
+        char* music = "./assets/music/death.wav";
+
+        FILE* fichier = fopen(music, "r");
+        if (!fichier) {
+            printf("Erreur : Impossible de trouver le fichier '%s'.\n", music);
+            return 1;
+        }
+        fclose(fichier);
+
+        // Lecture du fichier audio
+        PlaySound(music, NULL, SND_FILENAME | SND_ASYNC | SND_LOOP);
+    }
 
     sfVector2u size;
     sfVector2f scale;
@@ -46,7 +57,7 @@ int game_view(sfRenderWindow* window, sfEvent event, myWindowInfo *window_info, 
     position = sfSprite_getPosition(enemy.object.sprite);
     sfSprite_setPosition(enemy.object.sprite, (sfVector2f) { position.x + 200 , position.y });
 
-    // Création des layers du paralax
+    // Création des layers du parallax
     sfTexture* texture1 = sfTexture_createFromFile("./assets/parallax/layer1.png", NULL);
     sfTexture* texture2 = sfTexture_createFromFile("./assets/parallax/layer2.png", NULL);
     sfTexture* texture3 = sfTexture_createFromFile("./assets/parallax/layer3.png", NULL);
@@ -94,7 +105,7 @@ int game_view(sfRenderWindow* window, sfEvent event, myWindowInfo *window_info, 
             }
         }
 
-        // Update les positions du paralax
+        // Update les positions du parallax
         float deltaTime = sfTime_asSeconds(sfClock_restart(clock));
         float offset = parallax_speed * deltaTime;
 
@@ -108,32 +119,26 @@ int game_view(sfRenderWindow* window, sfEvent event, myWindowInfo *window_info, 
             pos3.x += SPEED_LAYER3 * offset;
         }
 
-        // Reset positions for infinite scrolling
+        // Reset pos pour le scrolling infini
         if (pos1.x <= -((float)textureSize1.x)) {
             // Si la position de la première couche dépasse la largeur de la texture vers la gauche
-            pos1.x = pos1.x + (float)textureSize1.x; // Réinitialise la position en ajoutant la largeur de la texture
+            // Réinitialise la position en ajoutant la largeur de la texture
+            pos1.x = pos1.x + (float)textureSize1.x; 
         }
         if (pos1.x > 0) {
-            // Si la position de la première couche dépasse 0 vers la droite
-            pos1.x = pos1.x - (float)textureSize1.x; // Réinitialise la position en soustrayant la largeur de la texture
+            pos1.x = pos1.x - (float)textureSize1.x; 
         }
-
         if (pos2.x <= -((float)textureSize2.x)) {
-            // Si la position de la deuxième couche dépasse la largeur de la texture vers la gauche
-            pos2.x = pos2.x + (float)textureSize2.x; // Réinitialise la position en ajoutant la largeur de la texture
+            pos2.x = pos2.x + (float)textureSize2.x; 
         }
         if (pos2.x > 0) {
-            // Si la position de la deuxième couche dépasse 0 vers la droite
-            pos2.x = pos2.x - (float)textureSize2.x; // Réinitialise la position en soustrayant la largeur de la texture
+            pos2.x = pos2.x - (float)textureSize2.x;
         }
-
         if (pos3.x <= -((float)textureSize3.x)) {
-            // Si la position de la troisième couche dépasse la largeur de la texture vers la gauche
-            pos3.x = pos3.x + (float)textureSize3.x; // Réinitialise la position en ajoutant la largeur de la texture
+            pos3.x = pos3.x + (float)textureSize3.x;
         }
         if (pos3.x > 0) {
-            // Si la position de la troisième couche dépasse 0 vers la droite
-            pos3.x = pos3.x - (float)textureSize3.x; // Réinitialise la position en soustrayant la largeur de la texture
+            pos3.x = pos3.x - (float)textureSize3.x;
         }
 
         sfSprite_setPosition(layer1, pos1);
@@ -174,7 +179,7 @@ int game_view(sfRenderWindow* window, sfEvent event, myWindowInfo *window_info, 
         // Clear la window
         sfRenderWindow_clear(window, sfBlack);
 
-        // déssins du  parallax 
+        // Dessins du parallax 
         sfRenderWindow_drawSprite(window, layer3, NULL);
         sfSprite_setPosition(layer3, (sfVector2f){pos3.x + (float)textureSize3.x, pos3.y});
         sfRenderWindow_drawSprite(window, layer3, NULL);
@@ -193,7 +198,6 @@ int game_view(sfRenderWindow* window, sfEvent event, myWindowInfo *window_info, 
         sfSprite_setPosition(layer1, (sfVector2f){pos1.x - (float)textureSize1.x, pos1.y});
         sfRenderWindow_drawSprite(window, layer1, NULL);
         
-
         // Dessine le sol
         set_position_bottom(window, floor.texture, floor.sprite, *window_info);
         setup_sprite(window, floor.texture, floor.sprite, *window_info);
@@ -224,6 +228,8 @@ int game_view(sfRenderWindow* window, sfEvent event, myWindowInfo *window_info, 
     sfTexture_destroy(texture1);
     sfTexture_destroy(texture2);
     sfTexture_destroy(texture3);
+
+    if (sound) PlaySound(NULL, 0, 0);
 
     return 0;
 }

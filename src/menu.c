@@ -1,10 +1,25 @@
 #include "../include/menu.h"
-#include "../include/button.h"
-#include "../include/sprites.h"
 
-int menu_view(sfRenderWindow* window, sfEvent *event, myWindowInfo *window_info, int *program_step);
 
-int menu_view(sfRenderWindow* window, sfEvent *event, myWindowInfo *window_info, int *program_step) {
+
+int menu_view(sfRenderWindow* window, sfEvent *event, myWindowInfo *window_info, int *program_step, int sound);
+
+int menu_view(sfRenderWindow* window, sfEvent *event, myWindowInfo *window_info, int *program_step, int sound) {
+    
+    // Chemin vers le fichier audio .wav
+    char* music = "./assets/music/menu.wav";
+
+    FILE* fichier = fopen(music, "r");
+    if (!fichier) {
+        printf("Erreur : Impossible de trouver le fichier '%s'.\n", music);
+        return 1;
+    }
+    fclose(fichier);
+
+    // Lecture du fichier audio
+    PlaySound(music, NULL, SND_FILENAME | SND_ASYNC | SND_LOOP);
+    
+    
     // Background
     myObject background;
     if (create_sprite(&background, "./assets/menu/background.png", (sfVector2f) {1., 1.})) { EXIT_DEBUG_TEXTURE }
@@ -46,6 +61,8 @@ int menu_view(sfRenderWindow* window, sfEvent *event, myWindowInfo *window_info,
     destroy_button(&play_btn);
     destroy_button(&settings_btn);
     destroy_button(&quit_btn);
+
+    if (sound) PlaySound(NULL, 0, 0);
 
     return 0;
 }
