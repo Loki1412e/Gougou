@@ -1,23 +1,27 @@
 #include "../include/settings.h"
-#include "../include/button.h"
+
 
 int settings_view(sfRenderWindow* window, sfEvent *event, myWindowInfo *window_info, int *program_step, int sound);
 
+
 int settings_view(sfRenderWindow* window, sfEvent *event, myWindowInfo *window_info, int *program_step, int sound) {
     
-    // Chemin vers le fichier audio .wav
-    char* music = "./assets/music/menu.wav";
+    if (sound) {
+        // Chemin vers le fichier audio .wav
+        char* music = "./assets/music/menu.wav";
 
-    FILE* fichier = fopen(music, "r");
-    if (!fichier) {
-        printf("Erreur : Impossible de trouver le fichier '%s'.\n", music);
-        return 1;
+        FILE* fichier = fopen(music, "r");
+        if (!fichier) {
+            printf("Erreur : Impossible de trouver le fichier '%s'.\n", music);
+            return 1;
+        }
+        fclose(fichier);
+
+        // Lecture du fichier audio
+        PlaySound(music, NULL, SND_FILENAME | SND_ASYNC | SND_LOOP);
     }
-    fclose(fichier);
-
-    // Lecture du fichier audio
-    PlaySound(music, NULL, SND_FILENAME | SND_ASYNC | SND_LOOP);
     
+
     // Background
     myObject background;
     if (create_sprite(&background, "./assets/settings/background.png", (sfVector2f) {1., 1.})) { EXIT_DEBUG_TEXTURE }
@@ -34,7 +38,7 @@ int settings_view(sfRenderWindow* window, sfEvent *event, myWindowInfo *window_i
 
     while (sfRenderWindow_isOpen(window) && *program_step == SETTINGS_step) {
         // Process events
-        while (sfRenderWindow_pollEvent(window, event)) {
+        while (sfRenderWindow_pollEvent(window, &event)) {
             if (event_behavior(window, *event, window_info, program_step) == 1) { EXIT_DEBUG_WINDOW }
 
             // Gérer les événements des boutons
@@ -42,7 +46,7 @@ int settings_view(sfRenderWindow* window, sfEvent *event, myWindowInfo *window_i
             handle_button_event(&btn_1680x1050, window, event, program_step, _1680); 
             handle_button_event(&btn_1920x1200, window, event, program_step, _1920); 
             handle_button_event(&btn_1280x800, window, event, program_step, _1280);
-            handle_button_event(&music_btn, window, event, program_step, MENU_step); 
+            handle_button_event(&music_btn, window, event, program_step, MENU_step);
         }
 
         // Dessin

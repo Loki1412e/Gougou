@@ -6,6 +6,7 @@
     #include "sprites.h"
     #include "player.h"
     #include "enemies.h"
+    #include "portal.h"
 
     int game_view(sfRenderWindow* window, sfEvent event, myWindowInfo *window_info, int *program_step, int sound);
 

@@ -25,8 +25,6 @@
     #define SPEED_LAYER3 0.2f
 
 
-
-
     /* Debug */
     #define EXIT_DEBUG_WINDOW fprintf(stderr, "\n%s\n%d | WINDOW ERROR -> EXIT_FAILURE\n\n", __FILE__, __LINE__); return 1;
     #define EXIT_DEBUG_TEXTURE fprintf(stderr, "\n%s\n%d | TEXTURE ERROR -> EXIT_FAILURE\n\n", __FILE__, __LINE__); return 1;
@@ -41,9 +39,12 @@
     #define SETTINGS_step 3
     #define TMP_game 4
     #define QUIT_step 5
+    #define WINMENU_step 15
+    
+
     /* Gravity */
     #define GRAVITY 9.81
-    #define JUMP_FORCE  80
+    #define JUMP_FORCE  60
     #define TIME 1.0/32.0
     /* Size window*/
     #define _1920 6

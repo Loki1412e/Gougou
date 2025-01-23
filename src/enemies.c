@@ -19,13 +19,10 @@ void interactWithPlayer(myEnemy *enemy, myPlayer *player, myWindowInfo window_in
     
     if (!check_collision(player->object.sprite, enemy->object.sprite)) return; // pas en collision
 
-    if (position_player.y >= position_enemy.y)
+    if (position_player.y <= position_enemy.y + 50)
         enemy->hp = 0; // enemy est mort        
     
-    else {
-        player->hp = 0; // player est mort
-        printf("OUIIIIIIIIIIIIII");
-    }
+    else player->hp = 0; // player est mort
 }
 
 
@@ -44,13 +41,10 @@ void applyGravityEnemy(sfRenderWindow* window, myEnemy *enemy, myObject floor, m
     // Si enemy est mort ou ne touche pas le sol il subit la gravité
     if ((enemy->hp == 0 && enemy->isAlive) || !check_collision(enemy->object.sprite, floor.sprite)) {
         enemy->velocity.y += GRAVITY * TIME;
+        position.y += enemy->velocity.y * TIME;
+        sfSprite_setPosition(enemy->object.sprite, position);
     } else {
         enemy->velocity.y = 0;
         enemy->on_jump = 0;
     }
-
-    position.y += enemy->velocity.y * TIME;
-
-    sfSprite_setPosition(enemy->object.sprite, position);
-    setup_sprite(window, enemy->object.texture, enemy->object.sprite, window_info);
 }

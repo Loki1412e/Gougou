@@ -1,6 +1,7 @@
 
 #include "../include/game.h"
 
+
 int game_view(sfRenderWindow* window, sfEvent event, myWindowInfo *window_info, int *program_step, int sound);
 
 
@@ -57,6 +58,7 @@ int game_view(sfRenderWindow* window, sfEvent event, myWindowInfo *window_info, 
     position = sfSprite_getPosition(enemy.object.sprite);
     sfSprite_setPosition(enemy.object.sprite, (sfVector2f) { position.x + 200 , position.y });
 
+
     // Création des layers du parallax
     sfTexture* texture1 = sfTexture_createFromFile("./assets/parallax/layer1.png", NULL);
     sfTexture* texture2 = sfTexture_createFromFile("./assets/parallax/layer2.png", NULL);
@@ -85,6 +87,15 @@ int game_view(sfRenderWindow* window, sfEvent event, myWindowInfo *window_info, 
     sfVector2u textureSize1 = sfTexture_getSize(texture1);
     sfVector2u textureSize2 = sfTexture_getSize(texture2);
     sfVector2u textureSize3 = sfTexture_getSize(texture3);
+
+
+    // Portal
+    myPortal portal = {
+        .speed = (sfVector2f) { SPEED_X_player * 0.8 , 0 }
+    };
+    if (create_sprite(&(portal.object), "./assets/game/portal.png", (sfVector2f) {6., 6.})) { EXIT_DEBUG_TEXTURE };
+    set_position_center(window, portal.object.texture, portal.object.sprite, *window_info);
+
 
     // Start GAME LOOP
     while (sfRenderWindow_isOpen(window) && *program_step == GAME_step) {
@@ -158,12 +169,19 @@ int game_view(sfRenderWindow* window, sfEvent event, myWindowInfo *window_info, 
             player.hp = 0;
         
         // fin de partie :/
-        if (player.hp <= 0.) *program_step = DEATHMENU_step;
+        if (player.hp <= 0) *program_step = DEATHMENU_step;
         
         
         /* ENEMY */
-        if (enemy.hp > 0) interactWithPlayer(&enemy, &player, *window_info);
+        if (enemy.hp > 0 && player.hp > 0) interactWithPlayer(&enemy, &player, *window_info);
         if (enemy.isAlive) applyGravityEnemy(window, &enemy, floor, *window_info);
+
+
+        /* PORTAL if not enemy */
+        if (!enemy.isAlive) {
+            applyGravityPortal(window, &portal, floor, *window_info);
+            endLvlPortal(&portal, &player, program_step);
+        }
 
 
         /* MAIN */
@@ -208,6 +226,9 @@ int game_view(sfRenderWindow* window, sfEvent event, myWindowInfo *window_info, 
         // Draw enemy
         if (enemy.isAlive) setup_sprite(window, enemy.object.texture, enemy.object.sprite, *window_info);
 
+        // Dessine Portal
+        if (!enemy.isAlive) setup_sprite(window, portal.object.texture, portal.object.sprite, *window_info);
+
         // On applique les dessins
         sfRenderWindow_display(window);
 
@@ -217,7 +238,8 @@ int game_view(sfRenderWindow* window, sfEvent event, myWindowInfo *window_info, 
     /* Cleanup Resources */
     destroy_object(&floor);
     destroy_object(&(player.object));
-    destroy_object(&(enemy.object));
+    if (enemy.isAlive) destroy_object(&(enemy.object));
+    destroy_object(&(portal.object));
     
     sfRenderWindow_setView(window, sfRenderWindow_getDefaultView(window));
     sfView_destroy(view);

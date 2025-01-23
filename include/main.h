@@ -15,6 +15,7 @@
     #include "game.h"
     #include "level_test.h"
     #include "deathmenu.h"
+    #include "winmenu.h"
     #include "settings.h"
 
 

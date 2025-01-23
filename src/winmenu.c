@@ -1,31 +1,11 @@
-#include "../include/deathmenu.h"
+#include "../include/winmenu.h"
 
+int winmenu_view(sfRenderWindow* window, sfEvent *event, myWindowInfo *window_info, int *program_step, int sound);
 
-int deathmenu_view(sfRenderWindow* window, sfEvent *event, myWindowInfo *window_info, int *program_step, int sound);
-
-
-int deathmenu_view(sfRenderWindow* window, sfEvent *event, myWindowInfo *window_info, int *program_step, int sound) {
-    
-    if (sound) {
-        // Chemin vers le fichier audio .wav
-        char* music = "./assets/music/death.wav";
-
-        FILE* fichier = fopen(music, "r");
-        if (!fichier) {
-            printf("Erreur : Impossible de trouver le fichier '%s'.\n", music);
-            return 1;
-        }
-        fclose(fichier);
-
-        // Lecture du fichier audio
-        PlaySound(music, NULL, SND_FILENAME | SND_ASYNC | SND_LOOP);
-    }
-    
-    
+int winmenu_view(sfRenderWindow* window, sfEvent *event, myWindowInfo *window_info, int *program_step, int sound) {
     // Background
     myObject background;
-    if (create_sprite(&background, "./assets/deathmenu/background.png", (sfVector2f) {0.8, 0.8})) { EXIT_DEBUG_TEXTURE }
-
+    if (create_sprite(&background, "./assets/winmenu/win.png", (sfVector2f) {0.8, 0.8})) { EXIT_DEBUG_TEXTURE }
 
     // Boutons
     myButton retry_btn, menu_btn, quit_btn, settings_btn;
@@ -35,8 +15,7 @@ int deathmenu_view(sfRenderWindow* window, sfEvent *event, myWindowInfo *window_
     if (create_button(&quit_btn, "./assets/buttons/quit_normal.png", "./assets/buttons/quit_hovered.png", "./assets/buttons/quit_clicked.png", (sfVector2f) {8., 8.}, (sfVector2f) {100, 850})) { EXIT_DEBUG_TEXTURE }
     
 
-
-    while (sfRenderWindow_isOpen(window) && *program_step == DEATHMENU_step) {
+    while (sfRenderWindow_isOpen(window) && *program_step == WINMENU_step) {
         // Process events
         while (sfRenderWindow_pollEvent(window, event)) {
             if (event_behavior(window, *event, window_info, program_step) == 1) { EXIT_DEBUG_WINDOW }
@@ -71,8 +50,6 @@ int deathmenu_view(sfRenderWindow* window, sfEvent *event, myWindowInfo *window_
     destroy_button(&menu_btn);
     destroy_button(&settings_btn);
     destroy_button(&quit_btn);
-
-    if (sound) PlaySound(NULL, 0, 0);
 
     return EXIT_SUCCESS;
 }   

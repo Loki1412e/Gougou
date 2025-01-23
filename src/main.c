@@ -8,8 +8,7 @@ int main(int argc, char **argv) {
     sfEvent event;
 
     int program_step = MENU_step;
-    /* son activé par défaut */
-    int sound = 1;
+    int sound = 1; // son activé par défaut
 
     // Le chemin vers le fichier de configuration
     const char config_path [] = "./configs/config.txt";
@@ -47,10 +46,13 @@ int main(int argc, char **argv) {
             case DEATHMENU_step:
                 if (deathmenu_view(window, &event, &window_info, &program_step, sound)) return EXIT_FAILURE;
                 break;
+            
+            case WINMENU_step:
+                if (winmenu_view(window, &event, &window_info, &program_step, sound)) return EXIT_FAILURE;
+                break;
 
             case SETTINGS_step:
                 if (settings_view(window, &event, &window_info, &program_step, sound)) return EXIT_FAILURE;
-                break;
         }
     }
 
