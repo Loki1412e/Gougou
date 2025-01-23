@@ -1,10 +1,10 @@
 #include "../include/settings.h"
 
 
-int settings_view(sfRenderWindow* window, sfEvent *event, myWindowInfo *window_info, int *program_step, int sound);
+int settings_view(sfRenderWindow* window, sfEvent *event, myWindowInfo *window_info, int *program_step, int *sound);
 
 
-int settings_view(sfRenderWindow* window, sfEvent *event, myWindowInfo *window_info, int *program_step, int sound) {
+int settings_view(sfRenderWindow* window, sfEvent *event, myWindowInfo *window_info, int *program_step, int *sound) {
     
     if (sound) {
         // Chemin vers le fichier audio .wav
@@ -38,15 +38,15 @@ int settings_view(sfRenderWindow* window, sfEvent *event, myWindowInfo *window_i
 
     while (sfRenderWindow_isOpen(window) && *program_step == SETTINGS_step) {
         // Process events
-        while (sfRenderWindow_pollEvent(window, &event)) {
+        while (sfRenderWindow_pollEvent(window, event)) {
             if (event_behavior(window, *event, window_info, program_step) == 1) { EXIT_DEBUG_WINDOW }
 
             // Gérer les événements des boutons
-            handle_button_event(&back_btn, window, event, program_step, MENU_step); // Recommencer le jeu
-            handle_button_event(&btn_1680x1050, window, event, program_step, _1680); 
-            handle_button_event(&btn_1920x1200, window, event, program_step, _1920); 
-            handle_button_event(&btn_1280x800, window, event, program_step, _1280);
-            handle_button_event(&music_btn, window, event, program_step, MENU_step);
+            handle_button_event(&back_btn, window, event, program_step, MENU_step, window_info, sound); // Recommencer le jeu
+            handle_button_event(&btn_1680x1050, window, event, program_step, _1680, window_info, sound); 
+            handle_button_event(&btn_1920x1200, window, event, program_step, _1920, window_info, sound); 
+            handle_button_event(&btn_1280x800, window, event, program_step, _1280, window_info, sound);
+            handle_button_event(&music_btn, window, event, program_step, MENU_step, window_info, sound);
         }
 
         // Dessin

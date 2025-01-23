@@ -3,8 +3,8 @@
 
     #include "my.h"
     #include "events.h"
-    #include "button.h"
+    #include "sprites.h"
 
-    int winmenu_view(sfRenderWindow* window, sfEvent *event, myWindowInfo *window_info, int *program_step, int sound);
+    int winmenu_view(sfRenderWindow* window, sfEvent *event, myWindowInfo *window_info, int *program_step, int *sound);
 
 #endif

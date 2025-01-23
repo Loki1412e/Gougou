@@ -3,8 +3,8 @@
 
     #include "my.h"
     #include "events.h"
-    #include "button.h"
+    #include "sprites.h"
 
-    int deathmenu_view(sfRenderWindow* window, sfEvent *event, myWindowInfo *window_info, int *program_step, int sound);
+    int deathmenu_view(sfRenderWindow* window, sfEvent *event, myWindowInfo *window_info, int *program_step, int *sound);
 
 #endif

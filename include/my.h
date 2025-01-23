@@ -39,17 +39,20 @@
     #define SETTINGS_step 3
     #define TMP_game 4
     #define QUIT_step 5
-    #define WINMENU_step 15
+    #define WINMENU_step 6
+    /* Size window*/
+    #define _1920 100
+    #define _1680 101
+    #define _1280 102
+    /* SOUND */
+    #define SOUND_conf 200
     
 
     /* Gravity */
     #define GRAVITY 9.81
     #define JUMP_FORCE  60
     #define TIME 1.0/32.0
-    /* Size window*/
-    #define _1920 6
-    #define _1680 7
-    #define _1280 8
+
 
     /* Attributs Player */
     #define JUMP_player 1.6

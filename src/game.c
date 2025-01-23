@@ -2,10 +2,10 @@
 #include "../include/game.h"
 
 
-int game_view(sfRenderWindow* window, sfEvent event, myWindowInfo *window_info, int *program_step, int sound);
+int game_view(sfRenderWindow* window, sfEvent event, myWindowInfo *window_info, int *program_step, int *sound);
 
 
-int game_view(sfRenderWindow* window, sfEvent event, myWindowInfo *window_info, int *program_step, int sound) {
+int game_view(sfRenderWindow* window, sfEvent event, myWindowInfo *window_info, int *program_step, int *sound) {
 
     if (sound) {
         // Chemin vers le fichier audio .wav

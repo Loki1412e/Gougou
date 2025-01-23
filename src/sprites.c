@@ -1,6 +1,5 @@
 
 #include "../include/sprites.h"
-#include "../include/button.h"
 
 
 int create_sprite(myObject *object, char *texure_path, sfVector2f scale);

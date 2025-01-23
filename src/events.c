@@ -1,8 +1,8 @@
 #include "../include/events.h"
-#include "../include/config.h"
+
 
 int event_behavior(sfRenderWindow *window, sfEvent event, myWindowInfo *window_info, int *program_step);
-void handle_button_event(myButton *button, sfRenderWindow *window, sfEvent *event, int *program_step, int action);
+int handle_button_event(myButton *button, sfRenderWindow *window, sfEvent *event, int *program_step, int action,  myWindowInfo *window_info, int *sound);
 
 
 // return 1 => EXIT_DEBUG_WINDOW
@@ -50,7 +50,7 @@ int event_behavior(sfRenderWindow *window, sfEvent event, myWindowInfo *window_i
     return 0;
 }
 
-void handle_button_event(myButton *button, sfRenderWindow *window, sfEvent *event, int *program_step, int action,  myWindowInfo *window_info) {
+int handle_button_event(myButton *button, sfRenderWindow *window, sfEvent *event, int *program_step, int action,  myWindowInfo *window_info, int *sound) {
     sfVector2i mouse_position = sfMouse_getPositionRenderWindow(window);
     sfFloatRect bounds = sfSprite_getGlobalBounds(button->sprite);
 
@@ -70,6 +70,7 @@ void handle_button_event(myButton *button, sfRenderWindow *window, sfEvent *even
         // Effectue une action si le bouton est relâché sur lui-même
         if (sfFloatRect_contains(&bounds, mouse_position.x, mouse_position.y)) {
             switch (action) {
+                
                 case QUIT_step:
                     sfRenderWindow_close(window);
                     break;
@@ -82,6 +83,7 @@ void handle_button_event(myButton *button, sfRenderWindow *window, sfEvent *even
                 case SETTINGS_step:
                     *program_step = action;
                     break;
+
                 case _1920:
                     *window_info = _1920x1200;
                     if (save_config("./configs/config.test", window_info)) { EXIT_DEBUG_FILE }
@@ -91,10 +93,14 @@ void handle_button_event(myButton *button, sfRenderWindow *window, sfEvent *even
                     if (save_config("./configs/config.test", window_info)) { EXIT_DEBUG_FILE }
                     break;
                 case _1280:
-                    printf("ouo");
+                    // printf("ouo");
                     *window_info = _1280x800; 
                     if (save_config("./configs/config.test", window_info)) { EXIT_DEBUG_FILE } 
-                    printf("aled");
+                    // printf("aled");
+                    break;
+                
+                case SOUND_conf:
+                    *sound = *sound ? 0 : 1;
                     break;
             }
         }
@@ -106,4 +112,6 @@ void handle_button_event(myButton *button, sfRenderWindow *window, sfEvent *even
             sfSprite_setTexture(button->sprite, button->texture_normal, sfTrue);
         }
     }
+
+    return 0; // pas de pbl
 }

@@ -1,10 +1,10 @@
 #include "../include/menu.h"
 
 
-int menu_view(sfRenderWindow* window, sfEvent *event, myWindowInfo *window_info, int *program_step, int sound);
+int menu_view(sfRenderWindow* window, sfEvent *event, myWindowInfo *window_info, int *program_step, int *sound);
 
 
-int menu_view(sfRenderWindow* window, sfEvent *event, myWindowInfo *window_info, int *program_step, int sound) {
+int menu_view(sfRenderWindow* window, sfEvent *event, myWindowInfo *window_info, int *program_step, int *sound) {
     
     if (sound) {
         // Chemin vers le fichier audio .wav
@@ -39,9 +39,9 @@ int menu_view(sfRenderWindow* window, sfEvent *event, myWindowInfo *window_info,
             if (event_behavior(window, *event, window_info, program_step) == 1) { EXIT_DEBUG_WINDOW }
 
             // Gérer les événements des boutons
-            handle_button_event(&play_btn, window, event, program_step, GAME_step);      // Aller au jeu
-            handle_button_event(&settings_btn, window, event, program_step, SETTINGS_step); // Aller aux paramètres
-            handle_button_event(&quit_btn, window, event, program_step, QUIT_step);     // Quitter
+            handle_button_event(&play_btn, window, event, program_step, GAME_step, window_info, sound);      // Aller au jeu
+            handle_button_event(&settings_btn, window, event, program_step, SETTINGS_step, window_info, sound); // Aller aux paramètres
+            handle_button_event(&quit_btn, window, event, program_step, QUIT_step, window_info, sound);     // Quitter
         }
         // Dessin
         sfRenderWindow_clear(window, sfBlack);
