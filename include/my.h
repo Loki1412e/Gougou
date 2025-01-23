@@ -7,6 +7,10 @@
     #include <string.h>
     #include <math.h>
 
+    /* Son */
+    #include <windows.h>
+    #include <mmsystem.h>
+
     /* CSFML */
     #include <SFML/Graphics.h>
     #include <SFML/Graphics/Rect.h>
@@ -20,9 +24,7 @@
     #define SPEED_LAYER2 0.5f
     #define SPEED_LAYER3 0.2f
 
-    /* Son */
-    #include <windows.h>
-    #include <mmsystem.h>
+
 
 
     /* Debug */
@@ -30,11 +32,7 @@
     #define EXIT_DEBUG_TEXTURE fprintf(stderr, "\n%s\n%d | TEXTURE ERROR -> EXIT_FAILURE\n\n", __FILE__, __LINE__); return 1;
     #define EXIT_DEBUG_MAP fprintf(stderr, "\n%s\n%d | MAP ERROR -> EXIT_FAILURE\n\n", __FILE__, __LINE__); return 1;
     #define EXIT_DEBUG_SPAWN_PLAYER fprintf(stderr, "\n%s\n%d | SPAWN PLAYER ERROR -> EXIT_FAILURE\n\n", __FILE__, __LINE__); return 1;
-    
-    
-    /* FPS */
-    #define FPS 60.0
-    
+    #define EXIT_DEBUG_FILE fprintf(stderr, "\n%s\n%d | FILE ERROR -> EXIT_FAILURE\n\n", __FILE__, __LINE__); return 1;
 
     /* Program Steps */
     #define MENU_step 0
@@ -43,13 +41,14 @@
     #define SETTINGS_step 3
     #define TMP_game 4
     #define QUIT_step 5
-    
-
     /* Gravity */
     #define GRAVITY 9.81
     #define JUMP_FORCE  80
     #define TIME 1.0/32.0
-
+    /* Size window*/
+    #define _1920 6
+    #define _1680 7
+    #define _1280 8
 
     /* Attributs Player */
     #define JUMP_player 1.6

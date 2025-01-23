@@ -1,6 +1,5 @@
-
 #include "../include/events.h"
-
+#include "../include/config.h"
 
 int event_behavior(sfRenderWindow *window, sfEvent event, myWindowInfo *window_info, int *program_step);
 
@@ -40,7 +39,7 @@ int event_behavior(sfRenderWindow *window, sfEvent event, myWindowInfo *window_i
         // NUMP PAD -> voir screen.c
         if (resize_screen(event.key.code, window_info)) {
             sfRenderWindow_destroy(window);
-            window = sfRenderWindow_create((sfVideoMode) {window_info->size.x, window_info->size.y, 32}, "Googoo Gagaga", sfClose, NULL);
+            window = sfRenderWindow_create((sfVideoMode) {window_info->size.x, window_info->size.y, 32}, "Gogoo Gagaga", sfClose, NULL);
             if (!window) return 1;
             return 2;
         }
@@ -49,7 +48,7 @@ int event_behavior(sfRenderWindow *window, sfEvent event, myWindowInfo *window_i
     return 0;
 }
 
-void handle_button_event(myButton *button, sfRenderWindow *window, sfEvent *event, int *program_step, int action) {
+void handle_button_event(myButton *button, sfRenderWindow *window, sfEvent *event, int *program_step, int action,  myWindowInfo *window_info) {
     sfVector2i mouse_position = sfMouse_getPositionRenderWindow(window);
     sfFloatRect bounds = sfSprite_getGlobalBounds(button->sprite);
 
@@ -68,8 +67,34 @@ void handle_button_event(myButton *button, sfRenderWindow *window, sfEvent *even
     } else if (event->type == sfEvtMouseButtonReleased && event->mouseButton.button == sfMouseLeft) {
         // Effectue une action si le bouton est relâché sur lui-même
         if (sfFloatRect_contains(&bounds, mouse_position.x, mouse_position.y)) {
-            if (action == QUIT_step) sfRenderWindow_close(window);
-            else *program_step = action;
+            switch (action) {
+                case QUIT_step:
+                    sfRenderWindow_close(window);
+                    break;
+                case MENU_step:
+                    *program_step = action;
+                    break;
+                case GAME_step:
+                    *program_step = action;
+                    break;
+                case SETTINGS_step:
+                    *program_step = action;
+                    break;
+                case _1920:
+                    *window_info = _1920x1200;
+                    if (save_config("./configs/config.test", window_info)) { EXIT_DEBUG_FILE }
+                    break;
+                case _1680:
+                    *window_info = _1680x1050;
+                    if (save_config("./configs/config.test", window_info)) { EXIT_DEBUG_FILE }
+                    break;
+                case _1280:
+                    printf("ouo");
+                    *window_info = _1280x800; 
+                    if (save_config("./configs/config.test", window_info)) { EXIT_DEBUG_FILE } 
+                    printf("aled");
+                    break;
+            }
         }
         
         // Retourne à l'état normal ou hover après le clic
