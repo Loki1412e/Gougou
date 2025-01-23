@@ -42,6 +42,10 @@ int main(int argc, char **argv) {
             case DEATHMENU_step:
                 if (deathmenu_view(window, &event, &window_info, &program_step)) return EXIT_FAILURE;
                 break;
+            
+            case WINMENU_step:
+                if (winmenu_view(window, &event, &window_info, &program_step)) return EXIT_FAILURE;
+                break;
 
             case SETTINGS_step:
                 if (settings_view(window, event, &window_info, &program_step)) return EXIT_FAILURE;

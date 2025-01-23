@@ -43,6 +43,15 @@ int game_view(sfRenderWindow* window, sfEvent event, myWindowInfo *window_info, 
     position = sfSprite_getPosition(enemy.object.sprite);
     sfSprite_setPosition(enemy.object.sprite, (sfVector2f) { position.x + 200 , position.y });
 
+
+    // Portal
+    myPortal portal = {
+        .speed = (sfVector2f) { SPEED_X_player * 0.8 , 0 }
+    };
+    if (create_sprite(&(portal.object), "./assets/game/portal.png", (sfVector2f) {6., 6.})) { EXIT_DEBUG_TEXTURE };
+    set_position_center(window, portal.object.texture, portal.object.sprite, *window_info);
+
+
     // Start GAME LOOP
     while (sfRenderWindow_isOpen(window) && *program_step == GAME_step) {
 
@@ -80,6 +89,13 @@ int game_view(sfRenderWindow* window, sfEvent event, myWindowInfo *window_info, 
         if (enemy.isAlive) applyGravityEnemy(window, &enemy, floor, *window_info);
 
 
+        /* PORTAL if not enemy */
+        if (!enemy.isAlive) {
+            applyGravityPortal(window, &portal, floor, *window_info);
+            endLvlPortal(&portal, &player, program_step);
+        }
+
+
         /* MAIN */
 
         // Recharge la camera a partir du Player
@@ -103,6 +119,9 @@ int game_view(sfRenderWindow* window, sfEvent event, myWindowInfo *window_info, 
         // Draw enemy
         if (enemy.isAlive) setup_sprite(window, enemy.object.texture, enemy.object.sprite, *window_info);
 
+        // Dessine Portal
+        if (!enemy.isAlive) setup_sprite(window, portal.object.texture, portal.object.sprite, *window_info);
+
         // On applique les dessins
         sfRenderWindow_display(window);
 
@@ -113,6 +132,7 @@ int game_view(sfRenderWindow* window, sfEvent event, myWindowInfo *window_info, 
     destroy_object(&floor);
     destroy_object(&(player.object));
     if (enemy.isAlive) destroy_object(&(enemy.object));
+    destroy_object(&(portal.object));
     
     sfRenderWindow_setView(window, sfRenderWindow_getDefaultView(window));
     sfView_destroy(view);

@@ -34,6 +34,7 @@
     #define SETTINGS_step 3
     #define TMP_game 4
     #define QUIT_step 5
+    #define WINMENU_step 15
     
 
     /* Gravity */

@@ -54,4 +54,11 @@
         int isAlive;
     } myEnemy;
 
+    
+    typedef struct __my_portal__ {
+        myObject object;
+        sfVector2f speed;
+        sfVector2f velocity;
+    } myPortal;
+
 #endif
