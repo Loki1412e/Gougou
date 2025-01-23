@@ -75,8 +75,6 @@ int saveConfig(char *filename, myWindowInfo *window_info, int *sound) {
         printf("Erreur lors de l'ouverture du fichier de configuration.");
         return 1;
     }
-
-    printf("sound=%d\n", *sound);
     
     // save la resolution actuelle dans le dossier de conf
     fprintf(file, "resolution=%dx%d\n", window_info->size.x, window_info->size.y);
